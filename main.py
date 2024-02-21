@@ -1,4 +1,4 @@
-from flask import Flask, render_template, redirect, url_for, request
+from app import *
 
 app = Flask(__name__)
 
@@ -29,7 +29,7 @@ def recuperar():
 def redefinir():
     if request.method == 'POST':
         # Processar os dados do formulário de redefinição de senha
-        return redirect(url_for('login'))  # Redirecionar para a tela de login após redefinição de senha
+        return redirect(url_for('login'))
 
     return render_template('redefinir.html')
 
