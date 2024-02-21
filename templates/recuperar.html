@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/recuperar.css') }}">
+    <title>Recuperação de Email</title>
+</head>
+<body>
+    <div class="container">
+        <div class="background-image">
+            <img src="{{ url_for('static', filename='images/recuperar.jpg') }}" alt="Background Image">
+        </div>
+        <div class="content">
+            <form action="/recuperar" method="POST">
+                <h2>Recuperação de Email</h2>
+                <div class="form-group">
+                    <label for="email">Email:</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+
+                <input type="submit" class="btn-recover" value="Recuperar Email">
+            </form>
+        </div>
+    </div>
+</body>
+</html>
