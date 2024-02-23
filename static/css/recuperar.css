@@ -38,7 +38,7 @@ body {
     margin: 100px auto;
     background-color: rgba(255, 255, 255, 0.5); /* Opacidade do quadrado do formulário */
     padding: 20px;
-    border-radius: 10px;
+    border-radius: 15px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.6); /* Sombra ao redor do quadrado do formulário */
 }
 
@@ -54,7 +54,7 @@ input[type="email"] {
     width: 100%;
     padding: 10px;
     border: 1px solid #ccc;
-    border-radius: 5px;
+    border-radius: 15px;
     box-sizing: border-box;
 }
 
@@ -64,7 +64,7 @@ input[type="email"] {
     background-color: #007bff;
     color: #fff;
     border: none;
-    border-radius: 5px;
+    border-radius: 15px;
     cursor: pointer;
     transition: background-color 0.3s;
 }
