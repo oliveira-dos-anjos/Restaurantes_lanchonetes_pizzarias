@@ -1,10 +1,46 @@
 import os
+import pyotp
+import smtplib
+from random import randint
 from flask_login import LoginManager
+from email.mime.text import MIMEText
 from flask_sqlalchemy import SQLAlchemy
-from flask_sqlalchemy import SQLAlchemy
-from flask import Flask, render_template, redirect, url_for, request
+from email.mime.multipart import MIMEMultipart
+from flask import Flask, render_template, request, redirect, url_for
 
 app = Flask(__name__)
+
+
+
+# Chave mestra para geração de códigos TOTP
+chave_mestra = "K4XO47QRE75L4KTTPM775SOY4ESGSMIN"
+
+# Função para enviar email
+def enviar_email(destinatario, assunto, mensagem):
+    # Configuração do servidor SMTP
+    email_enviador = 'seu_email@gmail.com'
+    senha = 'sua_senha'
+    servidor_smtp = 'smtp.gmail.com'
+    porta = 587
+
+    # Criar objeto MIMEText para o conteúdo do email
+    msg = MIMEMultipart()
+    msg['From'] = email_enviador
+    msg['To'] = destinatario
+    msg['Subject'] = assunto
+    msg.attach(MIMEText(mensagem, 'plain'))
+
+    # Iniciar conexão SMTP
+    server = smtplib.SMTP(servidor_smtp, porta)
+    server.starttls()
+    server.login(email_enviador, senha)
+
+    # Enviar email
+    server.send_message(msg)
+
+    # Encerrar conexão SMTP
+    server.quit()
+
 
 # Defina o caminho para o arquivo do banco de dados SQLite
 db_path = 'Data/banco.db'

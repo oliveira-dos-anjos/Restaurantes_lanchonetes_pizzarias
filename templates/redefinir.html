@@ -14,8 +14,18 @@
         <div class="content">
             <form action="/redefinir" method="POST">
                 <h2>Redefinição de Senha</h2>
+                
+                {% if mensagem %}
+                <p>{{ mensagem }}</p>
+                {% endif %}
+
                 <div class="form-group">
-                    <label for="codigo">Código:</label>
+                    <label for="email">Email:</label>
+                    <input type="email" id="email" name="email" value="{{ email }}" readonly>
+                </div>
+
+                <div class="form-group">
+                    <label for="codigo">Código de Autenticação:</label>
                     <input type="text" id="codigo" name="codigo" required>
                 </div>
 
@@ -29,7 +39,7 @@
                     <input type="password" id="confirmar_senha" name="confirmar_senha" required>
                 </div>
 
-                <input type="submit" class="btn-redefinir" value="login">
+                <input type="submit" class="btn-redefinir" value="Redefinir Senha">
             </form>
         </div>
     </div>
