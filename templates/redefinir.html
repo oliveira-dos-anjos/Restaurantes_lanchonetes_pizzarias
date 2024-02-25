@@ -14,10 +14,12 @@
         <div class="content">
             <form action="/redefinir" method="POST">
                 <h2>Redefinição de Senha</h2>
-                
-                {% if mensagem %}
-                <p>{{ mensagem }}</p>
-                {% endif %}
+
+                <div>             
+                    {% if mensagem %}
+                        <p>{{ mensagem }}</p>
+                    {% endif %}
+                </div>
 
                 <div class="form-group">
                     <label for="email">Email:</label>

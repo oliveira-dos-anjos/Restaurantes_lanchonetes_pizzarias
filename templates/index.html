@@ -15,8 +15,15 @@
             <div class="title-container">
                 <h2>Login</h2>
             </div>
+
+            
             <div class="title-before"></div>
             <div class="title-after"></div>               
+            <div>
+                {% if mensagem %}
+                    <p>{{ mensagem }}</p>
+                {% endif %}
+            </div>
             <form action="/login" method="POST">
                 <div class="form-group">
                     <label for="username"><i class="fas fa-user"></i> Usuario ou Email:</label>
