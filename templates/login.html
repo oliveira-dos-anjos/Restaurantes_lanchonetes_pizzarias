@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/login.css') }}">
+    <title>Login</title>
+</head>
+<body>
+    <div class="login-container">
+        <div class="background-image">
+            <img src="{{ url_for('static', filename='images/login.jpg') }}" alt="Background Image">
+        </div>
+        <div class="content">
+            <div class="title-container">
+                <h2>Login</h2>
+            </div>
+
+            <div class="title-before"></div>
+            <div class="title-after"></div>
+            <div>
+                {% if mensagem %}
+                    <p class="error-message">{{ mensagem }}</p>
+                {% endif %}
+            </div>
+            <form action="/login" method="POST">
+                <div class="form-group">
+                    <label for="email_or_username"><i class="fas fa-user"></i> Usuario ou Email:</label>
+                    <input type="text" id="email_or_username" name="email_or_username" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="password"><i class="fas fa-lock"></i> Senha:</label>
+                    <input type="password" id="password" name="password" required>
+                </div>
+
+                <div class="form-group remember-link-group">
+                    <div class="remember-group">
+                        <input type="checkbox" id="remember" name="remember">
+                        <label for="Login">Lembrar email</label>
+                    </div>
+                    <div class="link">
+                        <a href="{{ url_for('recuperar') }}">Esqueceu sua senha?</a>
+                    </div>
+                </div>
+
+                <input type="submit" class="submit-btn" value="Login">
+            </form>
+            <div class="link-register">
+                Não possui conta? <a href="{{ url_for('register') }}">Registre-se</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

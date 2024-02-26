@@ -1,9 +1,9 @@
 import os
-#import pyotp
 import sqlite3
 from app import *
-from flask import Flask, request, render_template, redirect, session, url_for
-from werkzeug.security import generate_password_hash, check_password_hash
+from app.models import *
+from werkzeug.security import generate_password_hash
+from flask import Flask, request, render_template, redirect, url_for, session
 
 app = Flask(__name__)
 app.secret_key = 'sua_chave_secreta_aqui'
@@ -32,17 +32,48 @@ def criar_tabelas():
     conn.close()
 
 
-
 criar_tabelas()
 
-@app.route("/", methods=["GET", "POST"])
+@app.route("/")
+def home():
+    # Recuperar o usuário da sessão
+    user = session.get('user')
+    print(user)
+    return render_template('home.html', user=user)
+
+
+@app.route("/login", methods=["GET", "POST"])
 def login():
+    mensagem = None  # Inicialmente, nenhum erro
+
     if request.method == "POST":
-        # Processar os dados do formulário de login
-        return "Processando dados de login..."
+        email_or_username = request.form["email_or_username"]
+        password = request.form["password"]
 
-    return render_template('index.html')
+        try:
+            # Verificar se o login é um email ou um username
+            if "@" in email_or_username:
+                user = User.find_by_email(email_or_username)
+            else:
+                user = User.find_by_username(email_or_username)
 
+            if user:
+                if User.verify_password(user, password):
+                    # Autenticação bem-sucedida, armazenar o usuário na sessão
+                    session['user'] = user
+                    print(user)
+                    return redirect(url_for('home')) 
+                else:
+                    mensagem = "Senha incorreta!"
+            else:
+                mensagem = "Usuário não encontrado!"
+        except Exception as e:
+            mensagem = f"Ocorreu um erro ao processar o login: {str(e)}"
+
+    # Passar a mensagem para o template e renderizar o template
+    return render_template("login.html", mensagem=mensagem)
+
+#Rota para registrar novo usuario
 @app.route('/register', methods=['GET', 'POST'])
 def register():
     if request.method == 'POST':
@@ -77,11 +108,10 @@ def register():
 
 
         
-        return render_template('index.html', mensagem = "Usuário cadastrado com sucesso. Faça login para continuar.")
+        return render_template('login.html', mensagem = "Usuário cadastrado com sucesso. Faça login para continuar.")
 
 
     return render_template('register.html')
-
 
 # Rota para solicitar redefinição de senha
 @app.route('/recuperar', methods=['GET', 'POST'])

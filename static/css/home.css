@@ -1,0 +1,76 @@
+body {
+    margin: 0;
+    padding: 0;
+}
+
+.navbar {
+    background-color: #333; /* Cor de fundo da barra de navegação */
+    color: #fff; /* Cor do texto na barra de navegação */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px; /* Espaçamento interno da barra de navegação */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Sombra na parte inferior da barra */
+}
+
+.navbar-left {
+    display: flex;
+    align-items: center;
+}
+
+.navbar-right {
+    display: flex;
+    align-items: center;
+}
+
+.usuario {
+    margin-right: 10px; /* Espaçamento entre o nome do usuário e a imagem de perfil */
+}
+
+.profile-icon {
+    width: 40px; /* Largura da imagem de perfil */
+    height: 40px; /* Altura da imagem de perfil */
+    border-radius: 50%; /* Arredondar a imagem para que pareça um círculo */
+    margin-left: 10px; /* Espaçamento à esquerda da imagem de perfil */
+}
+
+
+/* Adicione o estilo do menu suspenso */
+.dropbtn {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+}
+
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+}
+
+.dropdown-content a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+}
+
+.dropdown-content a:hover {
+    background-color: #f1f1f1;
+}
+
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+.dropdown:hover .dropbtn {
+    background-color: #ddd;
+}

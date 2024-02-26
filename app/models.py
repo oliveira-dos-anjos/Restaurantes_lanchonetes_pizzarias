@@ -21,23 +21,40 @@ class User:
     def find_by_username(username):
         connection = sqlite3.connect('Data/Banco.db')
         cursor = connection.cursor()
-        cursor.execute('SELECT * FROM users WHERE username=?', (username,))
-        user_data = cursor.fetchone()
+        cursor.execute('SELECT username FROM users WHERE username=?', (username,))
+        user_id = cursor.fetchone()
         connection.close()
-        if user_data:
-            return User(*user_data)
-        return None
+        if user_id:
+            return user_id[0]  # Acessa o primeiro elemento da tupla
+        else:
+            return None
 
     @staticmethod
     def find_by_email(email):
         connection = sqlite3.connect('Data/Banco.db')
         cursor = connection.cursor()
-        cursor.execute('SELECT * FROM users WHERE email=?', (email,))
-        user_data = cursor.fetchone()
+        cursor.execute('SELECT email FROM users WHERE email=?', (email,))
+        user_id = cursor.fetchone()
         connection.close()
-        if user_data:
-            return User(*user_data)
-        return None
+        if user_id:
+            return user_id[0]  # Acessa o primeiro elemento da tupla
+        else:
+            return None
 
-    def verify_password(self, password):
-        return check_password_hash(self.password, password)
+
+
+    def verify_password(user, pwd):
+        connection = sqlite3.connect('Data/Banco.db')
+        cursor = connection.cursor()
+        cursor.execute('SELECT password FROM users WHERE username = ?', (user,))
+        stored_password_hash = cursor.fetchone()
+        connection.close()
+
+        if stored_password_hash:
+            stored_password_hash = stored_password_hash[0]
+            # Verificando se a senha fornecida corresponde ao hash da senha armazenada
+            return check_password_hash(stored_password_hash, pwd)
+        else:
+            return False
+
+
