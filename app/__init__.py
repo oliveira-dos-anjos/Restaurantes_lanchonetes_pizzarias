@@ -4,7 +4,7 @@ import smtplib
 import sqlite3
 import random
 from flask import Flask
-from flask_login import LoginManager
+from flask_login import login_user, logout_user
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 

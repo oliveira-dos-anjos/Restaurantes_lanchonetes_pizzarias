@@ -3,10 +3,15 @@ import sqlite3
 from app import *
 from app.models import *
 from werkzeug.security import generate_password_hash
+from flask_login import logout_user, LoginManager, login_required
 from flask import Flask, request, render_template, redirect, url_for, session
 
 app = Flask(__name__)
 app.secret_key = 'sua_chave_secreta_aqui'
+
+# Inicialize o LoginManager
+login_manager = LoginManager()
+login_manager.init_app(app)
 
 # Defina o caminho para o arquivo do banco de dados SQLite
 db_path = os.path.join(os.path.dirname(__file__), 'Data', 'Banco.db')
@@ -31,17 +36,28 @@ def criar_tabelas():
     conn.commit()
     conn.close()
 
-
 criar_tabelas()
 
+# Defina a função load_user
+@login_manager.user_loader
+def load_user(user_id):
+    pass
+
+#Rota para tela inicial
 @app.route("/")
 def home():
     # Recuperar o usuário da sessão
     user = session.get('user')
-    print(user)
     return render_template('home.html', user=user)
 
+#Rota para saida de usuario
+@app.route('/logout')
+@login_required
+def logout():
+    session.clear()
+    return redirect(url_for('home'))
 
+#Rota para area de login
 @app.route("/login", methods=["GET", "POST"])
 def login():
     mensagem = None  # Inicialmente, nenhum erro
@@ -59,9 +75,9 @@ def login():
 
             if user:
                 if User.verify_password(user, password):
+
                     # Autenticação bem-sucedida, armazenar o usuário na sessão
                     session['user'] = user
-                    print(user)
                     return redirect(url_for('home')) 
                 else:
                     mensagem = "Senha incorreta!"

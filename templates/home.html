@@ -19,13 +19,13 @@
                 {% endif %}
             </div>
             <div class="dropdown">
-                <button class="dropbtn"><img src="{{ url_for('static', filename='images/perfil1.png') }}" alt="Ícone de Perfil" class="profile-icon"></button>
-                <div class="dropdown-content">
-                    <a href="#">Sair</a>
-                </div>
+                <a href="/login"><img src="{{ url_for('static', filename='images/perfil1.png') }}" alt="Ícone de Perfil" class="profile-icon"></a>
+                <!--<div class="dropdown-content">
+                    <a href="{{ url_for('logout') }}">Sair</a>
+                </div>-->
             </div>
         </div>
     </div>
-
+    <script src="{{ url_for('static', filename='js/home.js') }}"></script>
 </body>
 </html>
