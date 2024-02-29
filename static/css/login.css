@@ -36,8 +36,6 @@ body {
 
 .background-image {
     position: absolute;
-    top: 0;
-    left: 0;
     width: 100%;
     height: 100%;
     z-index: -1; 
@@ -49,7 +47,7 @@ body {
     height: 100%;
     object-fit: cover;
     opacity: 0.95;
-    filter: blur(1.5px);
+    filter: brightness(50%);
 }
 
 .content {
@@ -60,7 +58,7 @@ body {
     padding: 50px;
     border: 3px solid #ccc;
     border-radius: 15px;
-    background-color: rgba(255, 255, 255, 0.4);
+    background-color: rgba(255, 255, 255, 0.2);
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
 }
 

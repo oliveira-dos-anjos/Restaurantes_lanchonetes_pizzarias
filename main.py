@@ -49,7 +49,7 @@ def home():
 #Rota para area de login
 @app.route("/login", methods=["GET", "POST"])
 def login():
-    mensagem = None  # Inicialmente, nenhum erro
+    mensagem = None 
 
     if request.method == "POST":
         email_or_username = request.form["email_or_username"]
