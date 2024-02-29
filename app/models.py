@@ -44,11 +44,19 @@ class User:
 
 
     def verify_password(user, pwd):
-        connection = sqlite3.connect('Data/Banco.db')
-        cursor = connection.cursor()
-        cursor.execute('SELECT password FROM users WHERE username = ?', (user,))
-        stored_password_hash = cursor.fetchone()
-        connection.close()
+        if "@" in user:
+            connection = sqlite3.connect('Data/Banco.db')
+            cursor = connection.cursor()
+            cursor.execute('SELECT password FROM users WHERE email=?', (user,))
+            stored_password_hash = cursor.fetchone()
+            connection.close()
+        else:
+            connection = sqlite3.connect('Data/Banco.db')
+            cursor = connection.cursor()
+            cursor.execute('SELECT password FROM users WHERE username=?', (user,))
+            stored_password_hash = cursor.fetchone()
+            connection.close()
+
 
         if stored_password_hash:
             stored_password_hash = stored_password_hash[0]

@@ -7,25 +7,33 @@
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/home.css') }}">
 </head>
 <body>
-
-    <div class="navbar">
-        <div class="navbar-left">
-            <h1>Meu Site</h1>
-        </div>
-        <div class="navbar-right">
-            <div class="usuario">
-                {% if user %}
-                    <p>{{ user }}</p>
-                {% endif %}
+    <section class="navbar-top">
+        <div class="navbar">
+            <div class="navbar-left">
+                <h1>Meu Site</h1>
             </div>
-            <div class="dropdown">
-                <a href="/login"><img src="{{ url_for('static', filename='images/perfil1.png') }}" alt="Ícone de Perfil" class="profile-icon"></a>
-                <!--<div class="dropdown-content">
-                    <a href="{{ url_for('logout') }}">Sair</a>
-                </div>-->
+            <div class="navbar-right">
+                <div class="usuario">
+                    {% if user %}
+                        <p>{{ user }}</p>
+                    {% endif %}
+                </div>
+                <div class="dropdown">
+                    <a href="/login" id="profile-link" data-logged-in="{% if user %}true{% else %}false{% endif %}">
+                        {% if user %}
+                            <img src="{{ url_for('static', filename='images/perfil2.png') }}" alt="Ícone de Perfil Conectado" class="profile-icon">
+                        {% else %}
+                            <img src="{{ url_for('static', filename='images/perfil1.png') }}" alt="Ícone de Perfil Desconectado" class="profile-icon">
+                        {% endif %}
+                    </a>
+                    <div class="dropdown-content">
+                        <a href="{{ url_for('logout') }}">Sair</a>
+                        <a>Editar</a>
+                    </div>
+                </div>
             </div>
-        </div>
-    </div>
-    <script src="{{ url_for('static', filename='js/home.js') }}"></script>
+        </div>   
+    </section>
+        <script src="{{ url_for('static', filename='js/home.js') }}"></script>
 </body>
 </html>
