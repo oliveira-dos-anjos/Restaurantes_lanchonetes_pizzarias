@@ -4,13 +4,13 @@ body {
 }
 
 .navbar {
-    background-color: #575252; /* Cor de fundo da barra de navegação */
-    color: #fff; /* Cor do texto na barra de navegação */
+    background-color: #575252; 
+    color: #fff; 
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: -1rem 25px; /* Espaçamento interno da barra de navegação */
-    box-shadow: 0 2px 5px rgba(34, 33, 33, 0.918); /* Sombra na parte inferior da barra */
+    padding: -1rem 25px; 
+    box-shadow: 0 2px 5px rgba(34, 33, 33, 0.918); 
 }
 
 .navbar-left {
@@ -25,14 +25,14 @@ body {
 }
 
 .usuario {
-    margin-right: 10px; /* Espaçamento entre o nome do usuário e a imagem de perfil */
+    margin-right: 10px; 
 }
 
 .profile-icon {
-    width: 40px; /* Largura da imagem de perfil */
-    height: 40px; /* Altura da imagem de perfil */
-    border-radius: 50%; /* Arredondar a imagem para que pareça um círculo */
-    margin-left: 10px; /* Espaçamento à esquerda da imagem de perfil */
+    width: 40px;
+    height: 40px; 
+    border-radius: 50%; 
+    margin-left: 10px; 
 }
 
 

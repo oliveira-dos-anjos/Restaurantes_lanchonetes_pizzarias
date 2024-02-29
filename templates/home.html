@@ -21,9 +21,9 @@
                 <div class="dropdown">
                     <a href="/login" id="profile-link" data-logged-in="{% if user %}true{% else %}false{% endif %}">
                         {% if user %}
-                            <img src="{{ url_for('static', filename='images/perfil2.png') }}" alt="Ícone de Perfil Conectado" class="profile-icon">
+                            <img src="{{ url_for('static', filename='images/Desconectado.png') }}" alt="Ícone de Perfil Conectado" class="profile-icon">
                         {% else %}
-                            <img src="{{ url_for('static', filename='images/perfil1.png') }}" alt="Ícone de Perfil Desconectado" class="profile-icon">
+                            <img src="{{ url_for('static', filename='images/Conectado.png') }}" alt="Ícone de Perfil Desconectado" class="profile-icon">
                         {% endif %}
                     </a>
                     <div class="dropdown-content">
