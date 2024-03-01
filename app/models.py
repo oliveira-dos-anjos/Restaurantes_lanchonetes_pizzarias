@@ -65,4 +65,27 @@ class User:
         else:
             return False
 
+    def new_password(email, nova_senha):
+        connection = None  # Definindo connection inicialmente como None
+        try:
+            connection = sqlite3.connect('Data/Banco.db')
+            cursor = connection.cursor()
 
+            # Verificar se o email existe na tabela
+            cursor.execute('SELECT email FROM users WHERE email=?', (email,))
+            user = cursor.fetchone()
+            if user:
+                # Se o email existir, atualizar a senha
+                cursor.execute('UPDATE users SET password=? WHERE email=?', (nova_senha ,email))
+                print(f"\033[31mEmail: {email}, Nova senha: {nova_senha}")
+                connection.commit()
+                print("Senha atualizada com sucesso.")
+            else:
+                print("Email não encontrado.")
+
+        except sqlite3.Error as error:
+            print("Erro ao atualizar a senha:", error)
+
+        finally:
+            if connection and not connection.closed:  # Verificar se a conexão não está fechada
+                connection.close()

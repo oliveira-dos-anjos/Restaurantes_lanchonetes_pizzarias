@@ -153,13 +153,21 @@ def redefinir():
     if request.method == 'POST':
         email = request.form['email']
         codigo_usuario = request.form['codigo']
+        nova_senha = request.form['nova_senha']
+        confirmar_senha = request.form['confirmar_senha']
         codigo_otp = session.get('codigo_otp')
 
-        if codigo_usuario == codigo_otp:
-            # Redirecionar para a página de redefinição de senha
-            return redirect(url_for('login', email=email))
+        if codigo_usuario == codigo_otp and nova_senha == confirmar_senha:
+            # Redefinir a senha do usuário
+            User.new_password(email, nova_senha)
+
+            # Limpar o código OTP da sessão após a redefinição da senha
+            session.pop('codigo_otp', None)
+
+            return redirect(url_for('login'))
+
         else:
-            return render_template('redefinir.html', email=email, mensagem='Código incorreto.')
+            return render_template('redefinir.html', email=email, mensagem='Código incorreto ou senhas não correspondem.')
 
     email = request.args.get('email', '')
     codigo = session.get('codigo_otp')  # Obtém o código OTP da sessão

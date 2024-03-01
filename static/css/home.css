@@ -4,6 +4,7 @@ body {
 }
 
 .navbar {
+    height: 4rem;
     background-color: #575252; 
     color: #fff; 
     display: flex;
@@ -13,13 +14,23 @@ body {
     box-shadow: 0 2px 5px rgba(34, 33, 33, 0.918); 
 }
 
+
+
+.navbar-center{
+    margin-top: 0rem;
+    display: flex;
+    height: 35vh;
+}
+
 .navbar-left {
+    margin-top: 0rem;
     margin-left: 1rem;
     display: flex;
     align-items: center;
 }
 
 .navbar-right {
+    margin-top: 0rem;
     display: flex;
     align-items: center;
 }
