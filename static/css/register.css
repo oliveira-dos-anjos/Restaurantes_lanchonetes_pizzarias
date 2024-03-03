@@ -19,8 +19,7 @@ body {
     height: 100%;
     object-fit: cover;
     opacity: 0.95;
-    filter: brightness(50%);
-    filter: blur(1.5px);
+    filter: brightness(70%) blur(1px);
 }
 
 .container {
@@ -36,11 +35,15 @@ body {
 }
 
 .content {
-    opacity: .8;
-    background-color: rgba(255, 255, 255, 0.4); /* Opacidade do quadrado do formulário */
+    opacity: 1;
+    background-color: rgba(255, 255, 255, 0.3); /* Opacidade do quadrado do formulário */
     padding: 20px;
     border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3); /* Sombra ao redor do quadrado do formulário */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5); /* Sombra ao redor do quadrado do formulário */
+}
+
+.error-message {
+    color: red;
 }
 
 .form-group {

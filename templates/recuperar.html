@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/recuperar.css') }}">
-    <title>Recuperação de Email</title>
+    <title>Confirmação de Email</title>
 </head>
 <body>
     <div class="container">
@@ -13,7 +13,7 @@
         </div>
         <div class="content">
             <form action="/recuperar" method="POST">
-                <h2>Recuperação de Email</h2>
+                <h2>Confirmação de Email</h2>
                 <div>             
                     {% if mensagem %}
                         <p>{{ mensagem }}</p>

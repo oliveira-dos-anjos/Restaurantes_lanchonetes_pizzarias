@@ -1,12 +1,57 @@
 body {
     font-family: Arial, sans-serif;
-    background-color: #f2f2f2;
+    background-color: #cabbbb;
     margin: 0rem;
+    overflow: hidden;
 }
 
+
+.pesquisar {
+    position: relative;
+    display: inline-block;
+    margin-left: 0rem;
+}
+
+input[type="search"] {
+    padding-right: 40px; /* Espaço para o ícone de pesquisa */
+    width: 250px; /* Largura do campo de pesquisa */
+    height: 2rem;
+    border-radius: 20px; /* Bordas arredondadas */
+    border: 1px solid #ccc; /* Cor da borda */
+}
+
+input[type="search"]::placeholder {
+    color: #999; /* Cor do texto de espaço reservado */
+}
+
+input[type="search"] + button {
+    position: absolute;
+    top: 50%;
+    right: 5px;
+    transform: translateY(-50%);
+    width: 30px;
+    height: 30px;
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+
+input[type="search"] + button::before {
+    content: "\1F50E"; /* Código Unicode para o ícone de pesquisa */
+    font-family: "Segoe UI Symbol", sans-serif; /* Fonte que contém o ícone de pesquisa */
+    font-size: 16px;
+    color: #666; /* Cor do ícone de pesquisa */
+    line-height: 30px;
+}
+
+
+
 .navbar {
-    height: 4rem;
-    background-color: #575252; 
+    position: fixed;
+    height: 3rem;
+    width: 100%;
+    left: 0rem;
+    background: linear-gradient(to right, #bdc3c7, #2c3e50); 
     color: #fff; 
     display: flex;
     justify-content: space-between;
@@ -15,19 +60,38 @@ body {
     box-shadow: 0 2px 5px rgba(34, 33, 33, 0.918); 
 }
 
-
-
-.navbar-center{
-    margin-top: 0rem;
+.navbar-top {
+    position: fixed; /* Torna a barra de navegação fixa */
+    top: 0; /* Alinha a barra de navegação ao topo */
+    left: 0; /* Alinha a barra de navegação à esquerda */
+    width: 100%; /* Define a largura da barra de navegação como 100% da largura da janela */
+    background: linear-gradient(to right, #bdc3c7, #2c3e50); 
+    color: #fff; 
+    height: 3rem;
     display: flex;
-    height: 35vh;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 25px; /* Ajusta o preenchimento horizontal */
+    box-shadow: 0 2px 5px rgba(34, 33, 33, 0.918); 
 }
 
-.navbar-left {
+.navbar-left{
+    margin-top: -.5rem;
+    display: flex;
+    width: 3rem;
+}
+
+.navbar-center {
     margin-top: 0rem;
-    margin-left: 1rem;
+    margin-left: 40rem;
     display: flex;
     align-items: center;
+}
+
+.barra-vertical {
+    border-left: 1px solid #e7e2e2;
+    height: 20px; /* Altura da barra vertical */
+    margin: 0 10px; /* Espaçamento entre a barra e as divs */
 }
 
 .navbar-right {
@@ -48,25 +112,26 @@ body {
 }
 
 
-
 .dropdown {
     position: relative;
     display: inline-block;
     margin-right: 1.5rem;
+    z-index: 2;
 }
 
 .dropdown-content {
-    font-family:monospace;
-    margin-left: -4rem;
+    font-family: monospace;
+    margin-left: -4.5rem;
     display: none;
     position: absolute;
     background-color: #8a8989;
-    width: 8rem;
+    width: 8.5rem;
     height: auto;
     box-shadow: 0px 8px 16px 0px rgba(43, 41, 41, 0.2);
     border-radius: 10px;
-    z-index: 1;
+    z-index: 3; /* Ajuste o z-index para garantir que o dropdown apareça acima do sidebar-right */
 }
+
 
 .dropdown-content a {
     color: rgb(2, 2, 2);
@@ -78,11 +143,57 @@ body {
 .dropdown-content a:hover {
     background-color: #f1f1f1;
     border-radius: 10px;
-    
 }
 
 
 .dropdown:hover .dropbtn {
-    background-color: #ddd;
+    background-color: #ddd;  
 
+}
+
+
+.main-content {
+    margin-top: 3rem; 
+    margin-left: 300px; 
+    margin-right: 300px;
+    padding: 20px;
+    overflow-y: auto; 
+}
+
+.sidebar-left {
+    position: fixed;
+    top: 3.4rem; 
+    left: 1rem;
+    width: 250px;
+    height: calc(100% - 3rem);
+    background-color:  #cabbbb;
+    overflow-y: auto; 
+    z-index: -1;
+}
+
+.sidebar-right {
+    position: fixed;
+    top: 3.4rem; 
+    right: 1rem;
+    width: 250px;
+    height: calc(100% - 3rem);
+    background-color:  #cabbbb;
+    overflow-y: auto;
+    z-index: -1; 
+}
+
+.separator-l {
+    border-left: 2px solid #070707;
+    height: 100%; /* Ajusta a altura para 100% da altura da seção */
+    position: fixed; /* Posição fixa para alinhar corretamente com as barras laterais */
+    top: 3.4rem; /* Alinhar com o topo das barras laterais */
+    left: 300px; /* Posiciona a linha vertical à direita da barra lateral esquerda */
+}
+
+.separator-r {
+    border-left: 2px solid #070707;
+    height: 100%; /* Ajusta a altura para 100% da altura da seção */
+    position: fixed; /* Posição fixa para alinhar corretamente com as barras laterais */
+    top: 3.4rem; /* Alinhar com o topo das barras laterais */
+    right: 300px; /* Posiciona a linha vertical à esquerda da barra lateral direita */
 }

@@ -10,11 +10,18 @@
     <section class="navbar-top">
         <div class="navbar">
             <div class="navbar-left">
-                <h1>Meu Site</h1>
-            </div>
-            <div class="navbar-center">
                 <img src="{{ url_for('static', filename='images/cidade1.png') }}" alt="" class="icon-city">
             </div>
+            <div class="pesquisar">
+                <form action="/search" method="GET">
+                    <input type="search" id="search" name="q" placeholder="Digite aqui para pesquisar">
+                    <button type="submit"></button>
+                </form>
+            </div>
+            <div class="navbar-center">
+               <a>Divulgar</a>
+            </div>
+            <div class="barra-vertical"></div>
             <div class="navbar-right">
                 <div class="usuario">
                     {% if user %}
@@ -38,6 +45,53 @@
             </div>
         </div>   
     </section>
+    
+    <section class="content">
+        <div class="sidebar-left">
+            <!-- Conteúdo da barra lateral esquerda -->
+            <h2>Sidebar Esquerda</h2>
+            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. 
+            Est earum neque quidem modi optio veniam ullam dolor magnam alias amet,
+            qui in sapiente tempora ducimus! Corrupti amet fuga molestiae deleniti.
+            Rerum voluptatum sed, eaque consequatur delectus quam nisi deserunt excepturi
+            ratione incidunt officiis veritatis consectetur iusto earum voluptate beatae odio,
+            ipsam assumenda eligendi ducimus sint velit quod! Autem, eligendi a.
+            Ut totam est suscipit assumenda repudiandae repellat corrupti neque quis minus
+            obcaecati enim vitae, non molestiae animi! Quos illo vel velit similique nulla
+            commodi repudiandae dolor repellat consectetur expedita? Officia!
+            Est eos voluptas qui eligendi, possimus ipsa assumenda laborum molestiae neque.
+            Accusamus quasi a doloribus itaque iste nesciunt alias doloremque amet cumque
+            soluta quam non suscipit, voluptas dolorum deserunt? Tenetur?.</p>
+        </div>
+        
+        <div class="separator-l"></div> <!-- Linha vertical de separação -->
+    
+        <div class="main-content">
+            <!-- Conteúdo principal com rolagem infinita -->
+            <h1>{{ content.title }}</h1>
+            <p>{{ content.content }}</p>
+        </div>
+        
+        <div class="separator-r"></div> <!-- Linha vertical de separação -->
+    
+        <div class="sidebar-right">
+            <!-- Conteúdo da barra lateral direita -->
+            <h2>Sidebar Direita</h2>
+            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. 
+            Est earum neque quidem modi optio veniam ullam dolor magnam alias amet,
+            qui in sapiente tempora ducimus! Corrupti amet fuga molestiae deleniti.
+            Rerum voluptatum sed, eaque consequatur delectus quam nisi deserunt excepturi
+            ratione incidunt officiis veritatis consectetur iusto earum voluptate beatae odio,
+            ipsam assumenda eligendi ducimus sint velit quod! Autem, eligendi a.
+            Ut totam est suscipit assumenda repudiandae repellat corrupti neque quis minus
+            obcaecati enim vitae, non molestiae animi! Quos illo vel velit similique nulla
+            commodi repudiandae dolor repellat consectetur expedita? Officia!
+            Est eos voluptas qui eligendi, possimus ipsa assumenda laborum molestiae neque.
+            Accusamus quasi a doloribus itaque iste nesciunt alias doloremque amet cumque
+            soluta quam non suscipit, voluptas dolorum deserunt? Tenetur?.</p>
+        </div>
+    </section>
+    
         <script src="{{ url_for('static', filename='js/home.js') }}"></script>
 </body>
 </html>

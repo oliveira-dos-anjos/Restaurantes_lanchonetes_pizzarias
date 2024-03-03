@@ -11,6 +11,12 @@ app.secret_key = 'sua_chave_secreta_aqui'
 # Defina o caminho para o arquivo do banco de dados SQLite
 db_path = os.path.join(os.path.dirname(__file__), 'Data', 'Banco.db')
 
+
+original_content = {
+    "title": "Main Content",
+    "content": "Conteúdo principal com rolagem infinita aqui..."
+}
+
 # Função para conectar ao banco de dados SQLite
 def conectar_banco():
     conn = sqlite3.connect(db_path)
@@ -44,7 +50,7 @@ def logout():
 def home():
     # Recuperar o usuário da sessão
     user = session.get('user')
-    return render_template('home.html', user=user)
+    return render_template("home.html", content=original_content, user=user)
 
 #Rota para area de login
 @app.route("/login", methods=["GET", "POST"])
@@ -110,10 +116,10 @@ def register():
         cursor.execute('INSERT INTO users (username, email, password) VALUES (?, ?, ?)', (username, email, hashed_password))
         conn.commit()
         conn.close()
-
+       
 
         
-        return render_template('login.html', mensagem = "Usuário cadastrado com sucesso. Faça login para continuar.")
+        return render_template('login.html',  msg= "Faça login para continuar.")
 
 
     return render_template('register.html')
@@ -170,9 +176,29 @@ def redefinir():
             return render_template('redefinir.html', email=email, mensagem='Código incorreto ou senhas não correspondem.')
 
     email = request.args.get('email', '')
-    codigo = session.get('codigo_otp')  # Obtém o código OTP da sessão
+    codigo = session.get('codigo_otp')
     print("Código OTP:", codigo)  # Aqui você imprime o código na tela
     return render_template('redefinir.html', email=email, codigo=codigo)
+
+@app.route("/search", methods=["GET"])
+def search():
+
+    resultados = ["resultado1", "resultado2", "resultado3"]
+
+    # Obter o termo de pesquisa da query string
+    termo_pesquisa = request.args.get("q", "")
+
+    # Realizar a lógica de pesquisa aqui (pode ser uma busca em um banco de dados, por exemplo)
+    # Neste exemplo, vamos apenas verificar se há um termo de pesquisa e retornar um resultado simulado
+    if termo_pesquisa:
+
+        # Se houver um termo de pesquisa, renderizar o template com os resultados
+        resultados = {"title": f"Resultados da Pesquisa para: {termo_pesquisa}", "content": "Aqui estão os resultados da pesquisa..."}
+        return render_template("home.html", content=resultados)
+    else:
+        # Se nenhum termo de pesquisa for fornecido, renderizar o template com o conteúdo original da página
+        return render_template("home.html", content=original_content)
+    
 
 if __name__ == "__main__":
     app.run(debug=True)

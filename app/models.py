@@ -79,8 +79,7 @@ class User:
                 hashed_password = generate_password_hash(nova_senha)
                 cursor.execute('UPDATE users SET password=? WHERE email=?', (hashed_password, email))
                 connection.commit()
-                print("Senha atualizada com sucesso.")
 
         except sqlite3.Error as error:
-            print("Erro ao atualizar a senha:", error)
+            return f"Erro ao atualizar a senha:", error
 

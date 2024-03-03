@@ -21,8 +21,11 @@
             <div class="msg">
                 {% if mensagem %}
                     <p class="error-message">{{ mensagem }}</p>
+                {% endif %}               
+                {% if msg %}
+                    <p class="success-message">{{ msg }}</p>
                 {% endif %}
-            </div>
+            </div>            
             <form action="/login" method="POST">
                 <div class="form-group">
                     <label for="email_or_username"><i class="fas fa-user"></i> Usuario ou Email:</label>
