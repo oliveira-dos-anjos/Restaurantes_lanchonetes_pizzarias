@@ -39,6 +39,10 @@ body {
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.3); /* Sombra ao redor do quadrado do formulário */
 }
 
+.error-message {
+    color: red;
+}
+
 .form-group {
     margin-bottom: 20px;
 }
