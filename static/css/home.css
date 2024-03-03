@@ -164,7 +164,7 @@ input[type="search"] + button::before {
     position: fixed;
     top: 3.4rem; 
     left: 1rem;
-    width: 250px;
+    width: 15rem;
     height: calc(100% - 3rem);
     background-color:  #cabbbb;
     overflow-y: auto; 
@@ -174,8 +174,8 @@ input[type="search"] + button::before {
 .sidebar-right {
     position: fixed;
     top: 3.4rem; 
-    right: 1rem;
-    width: 250px;
+    right: 2rem;
+    width: 15rem;
     height: calc(100% - 3rem);
     background-color:  #cabbbb;
     overflow-y: auto;
