@@ -5,7 +5,6 @@ body {
     overflow: hidden;
 }
 
-
 .pesquisar {
     position: relative;
     display: inline-block;
@@ -13,15 +12,19 @@ body {
 }
 
 input[type="search"] {
-    padding-right: 40px; /* Espaço para o ícone de pesquisa */
-    width: 250px; /* Largura do campo de pesquisa */
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-right: 40px; 
+    width: 230px; 
     height: 2rem;
-    border-radius: 20px; /* Bordas arredondadas */
-    border: 1px solid #ccc; /* Cor da borda */
+    border-radius: 50px; 
+    background: #ced0d3;
+    border: 1px solid #ccc; 
 }
 
 input[type="search"]::placeholder {
-    color: #999; /* Cor do texto de espaço reservado */
+    color: #999; 
 }
 
 input[type="search"] + button {
@@ -31,8 +34,9 @@ input[type="search"] + button {
     transform: translateY(-50%);
     width: 30px;
     height: 30px;
-    background: none;
+    background: #91cbf0;
     border: none;
+    border-radius: 50%;
     cursor: pointer;
 }
 
@@ -40,11 +44,14 @@ input[type="search"] + button::before {
     content: "\1F50E"; /* Código Unicode para o ícone de pesquisa */
     font-family: "Segoe UI Symbol", sans-serif; /* Fonte que contém o ícone de pesquisa */
     font-size: 16px;
-    color: #666; /* Cor do ícone de pesquisa */
+    color: #6b6868; /* Cor do ícone de pesquisa */
     line-height: 30px;
 }
 
-
+input[type="search"] + button:hover {
+    background-color: #4eb2da;
+    box-shadow: rgba(228, 184, 158, 0.5) 0 10px 20px;
+}
 
 .navbar {
     position: fixed;
@@ -83,7 +90,7 @@ input[type="search"] + button::before {
 
 .navbar-center {
     margin-top: 0rem;
-    margin-left: 40rem;
+    margin-left: 45%;
     display: flex;
     align-items: center;
 }
@@ -129,7 +136,7 @@ input[type="search"] + button::before {
     height: auto;
     box-shadow: 0px 8px 16px 0px rgba(43, 41, 41, 0.2);
     border-radius: 10px;
-    z-index: 3; /* Ajuste o z-index para garantir que o dropdown apareça acima do sidebar-right */
+    z-index: 3;
 }
 
 
@@ -184,16 +191,68 @@ input[type="search"] + button::before {
 
 .separator-l {
     border-left: 2px solid #070707;
-    height: 100%; /* Ajusta a altura para 100% da altura da seção */
-    position: fixed; /* Posição fixa para alinhar corretamente com as barras laterais */
-    top: 3.4rem; /* Alinhar com o topo das barras laterais */
-    left: 300px; /* Posiciona a linha vertical à direita da barra lateral esquerda */
+    height: 100%; 
+    position: fixed;
+    top: 3.4rem;
+    left: 300px; 
 }
 
 .separator-r {
     border-left: 2px solid #070707;
-    height: 100%; /* Ajusta a altura para 100% da altura da seção */
-    position: fixed; /* Posição fixa para alinhar corretamente com as barras laterais */
-    top: 3.4rem; /* Alinhar com o topo das barras laterais */
-    right: 300px; /* Posiciona a linha vertical à esquerda da barra lateral direita */
+    height: 100%; 
+    position: fixed;
+    top: 3.4rem;
+    right: 300px;
+}
+
+/* Define a regra de mídia para ocultar o sidebar quando a largura da tela for menor que 599px */
+@media only screen and (max-width: 599px) {
+    .sidebar-left,
+    .sidebar-right,
+    .separator-l,
+    .separator-r {
+        display: none;
+    }
+
+    .main-content{
+        margin-left: .5rem;
+        margin-right: .5rem;
+    }
+
+    .navbar-center{
+        margin-left: 10%;
+    }
+
+    .pesquisar{
+        margin-left: -1rem;
+    }
+}
+
+/* Define a regra de mídia para tablets em modo retrato */
+@media only screen and (min-width: 600px) and (max-width: 959px) and (orientation: portrait) {
+   .sidebar-left,
+   .sidebar-right{
+        width: 20%;
+   }
+   
+   .main-content{
+    margin-left: 25%;
+    margin-right: 25%;
+   }
+
+    .content h2{
+        font-size: 1.4rem;
+    }
+
+   .separator-l{
+    left: 25%;
+   }
+
+   .separator-r{
+    right: 25%;
+   }
+
+   .navbar-center{
+        margin-left: 30%;
+   }
 }
