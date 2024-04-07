@@ -226,6 +226,11 @@ input[type="search"] + button:hover {
     .pesquisar{
         margin-left: -1rem;
     }
+
+    input[type="search"] {
+        width: 170px;
+
+    }
 }
 
 /* Define a regra de mídia para tablets em modo retrato */
