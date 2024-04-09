@@ -2,6 +2,7 @@ import os
 import sqlite3
 from app import *
 from app.models import *
+from app.scrapping import search
 from werkzeug.security import generate_password_hash
 from flask import Flask, request, render_template, redirect, url_for, session
 
