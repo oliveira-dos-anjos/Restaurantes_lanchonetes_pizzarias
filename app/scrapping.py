@@ -3,6 +3,17 @@ import requests
 from bs4 import BeautifulSoup
 import sqlite3
 
+# Defina o caminho para a pasta que deve conter o arquivo do banco de dados SQLite
+db_folder = os.path.join(os.path.dirname(__file__), 'Data')
+
+# Verificar se a pasta existe, se não existir, crie-a
+if not os.path.exists(db_folder):
+    os.makedirs(db_folder)
+
+# Defina o caminho para o arquivo do banco de dados SQLite dentro da pasta
+db_path = os.path.join(db_folder, 'Banco.db')
+
+
 def create_new_table(conn):
     # Definindo o comando SQL para criar a nova tabela
     create_table_query = '''
@@ -35,7 +46,7 @@ def search_and_save(city):
     search_results = soup.find_all('div', class_='store-card')
     
     # Conectar ao banco de dados existente
-    db_path = os.path.join(os.path.dirname(__file__), 'Data', 'Banco.db')
+    db_path = os.path.join(db_folder, 'Banco.db')
     conn = sqlite3.connect(db_path)
     cursor = conn.cursor()
     
@@ -53,7 +64,16 @@ def search_and_save(city):
         # Salvar a imagem na pasta 'static/imagens_lojas'
         if image_link:
             image_name = f"{store_name.replace(' ', '_')}.png"
-            image_path = os.path.join('static/imagens_lojas', image_name)
+            import os
+
+            # Verificar se o diretório 'imagens_lojas' existe, e criar se não existir
+            imagens_lojas_dir = 'static/imagens_lojas'
+            if not os.path.exists(imagens_lojas_dir):
+                os.makedirs(imagens_lojas_dir)
+
+            # Definir o caminho completo do arquivo de imagem
+            image_path = os.path.join(imagens_lojas_dir, image_name)
+
             with open(image_path, 'wb') as f:
                 f.write(requests.get(image_link).content)
         else:

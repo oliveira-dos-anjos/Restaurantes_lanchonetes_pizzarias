@@ -9,9 +9,16 @@ from flask import Flask, request, render_template, redirect, url_for, session
 app = Flask(__name__)
 app.secret_key = 'sua_chave_secreta_aqui'
 
-# Defina o caminho para o arquivo do banco de dados SQLite
-db_path = os.path.join(os.path.dirname(__file__), 'Data', 'Banco.db')
 
+# Defina o caminho para a pasta que deve conter o arquivo do banco de dados SQLite
+db_folder = os.path.join(os.path.dirname(__file__), 'Data')
+
+# Verificar se a pasta existe, se não existir, crie-a
+if not os.path.exists(db_folder):
+    os.makedirs(db_folder)
+
+# Defina o caminho para o arquivo do banco de dados SQLite dentro da pasta
+db_path = os.path.join(db_folder, 'Banco.db')
 
 original_content = {
     "title": "Main Content",
