@@ -19,6 +19,10 @@ if not os.path.exists(db_folder):
 db_path = os.path.join(db_folder, 'Banco.db')
 
 
+original_content = {
+    "title": "Locais recentes",
+    "content": "Aqui estão os resultados da sua pesquisa:"
+}
 
 # Função para conectar ao banco de dados SQLite
 def conectar_banco():
