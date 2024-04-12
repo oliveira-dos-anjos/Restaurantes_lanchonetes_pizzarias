@@ -1,15 +1,12 @@
 import os
 import sqlite3
-from app import *
-import subprocess
+from app import app
 from app.models import *
 from werkzeug.security import generate_password_hash
 from flask import Flask, request, render_template, redirect, url_for, session
 
 app = Flask(__name__)
 app.secret_key = 'sua_chave_secreta_aqui'
-
-subprocess.Popen(['python3', 'scrapping.py'], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
 
 # Defina o caminho para a pasta que deve conter o arquivo do banco de dados SQLite
 db_folder = os.path.join(os.path.dirname(__file__), 'Data')
@@ -20,6 +17,7 @@ if not os.path.exists(db_folder):
 
 # Defina o caminho para o arquivo do banco de dados SQLite dentro da pasta
 db_path = os.path.join(db_folder, 'Banco.db')
+
 
 
 # Função para conectar ao banco de dados SQLite

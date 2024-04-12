@@ -1,12 +1,12 @@
 import os
-#import pyotp
+import random
+import pyotp
 import smtplib
 import sqlite3
-import random
 from flask import Flask
-from flask_login import login_user, logout_user
-from email.mime.text import MIMEText
-from email.mime.multipart import MIMEMultipart
+from celery import Celery
+from .scrapping import search_and_save
+
 
 app = Flask(__name__)
 
@@ -16,6 +16,29 @@ chave_mestra = "K4XO47QRE75L4KTTPM775SOY4ESGSMIN"
 
 # Defina o caminho para o arquivo do banco de dados SQLite
 db_path = os.path.join(os.path.dirname(__file__), 'Data', 'Banco.db')
+
+
+def create_app():
+    app = Flask(__name__)
+    app.config['CELERY_BROKER_URL'] = 'redis://localhost:6379/0'
+    celery = Celery(app.name, broker=app.config['CELERY_BROKER_URL'])
+
+    @celery.task
+    def async_scraping(city):
+        search_and_save(city)
+
+    @app.route('/start_scraping')
+    def start_scraping():
+        async_scraping.delay('sp/campinas')
+        return {'message': 'Scraping started in background.'}, 200
+
+    @app.route('/status')
+    def status():
+        # Implement logic to check the status of the scraping task
+        # and return status information.
+        return {'status': 'Checking status...'}, 200
+
+    return app
 
 # Função para conectar ao banco de dados SQLite
 def conectar_banco():
