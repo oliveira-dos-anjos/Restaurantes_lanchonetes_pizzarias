@@ -1,14 +1,15 @@
 import os
 import sqlite3
 from app import *
+import subprocess
 from app.models import *
-#from app.scrapping import search
 from werkzeug.security import generate_password_hash
 from flask import Flask, request, render_template, redirect, url_for, session
 
 app = Flask(__name__)
 app.secret_key = 'sua_chave_secreta_aqui'
 
+subprocess.Popen(['python3', 'scrapping.py'], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
 
 # Defina o caminho para a pasta que deve conter o arquivo do banco de dados SQLite
 db_folder = os.path.join(os.path.dirname(__file__), 'Data')
@@ -20,10 +21,6 @@ if not os.path.exists(db_folder):
 # Defina o caminho para o arquivo do banco de dados SQLite dentro da pasta
 db_path = os.path.join(db_folder, 'Banco.db')
 
-original_content = {
-    "title": "Main Content",
-    "content": "Conteúdo principal com rolagem infinita aqui..."
-}
 
 # Função para conectar ao banco de dados SQLite
 def conectar_banco():
@@ -58,7 +55,27 @@ def logout():
 def home():
     # Recuperar o usuário da sessão
     user = session.get('user')
-    return render_template("home.html", content=original_content, user=user)
+    
+    # Conectar ao banco de dados
+    conn = conectar_banco()
+    cursor = conn.cursor()
+
+    # Consultar os dados das lojas
+    cursor.execute("SELECT * FROM lojas")
+    lojas = cursor.fetchall()
+
+    # Fechar a conexão com o banco de dados
+    conn.close()
+
+    # Adicionar as lojas ao conteúdo principal
+    content_with_lojas = {
+        "title": "Locais recentes",
+        "content": "Aqui estão as lojas recentes:",
+        "lojas": lojas
+    }
+
+    return render_template("home.html", content=content_with_lojas, user=user)
+
 
 #Rota para area de login
 @app.route("/login", methods=["GET", "POST"])

@@ -205,6 +205,33 @@ input[type="search"] + button:hover {
     right: 300px;
 }
 
+.lojas-container {
+    display: grid;
+    grid-template-columns: auto 1fr; /* Uma coluna para a imagem, outra para as informações */
+    gap: 20px; /* Espaçamento entre os itens */
+    overflow-y: auto; /* Adiciona barra de rolagem vertical quando necessário */
+    max-height: 400px; /* Altura máxima da aba de lojas */
+}
+
+.loja-item {
+    display: grid;
+    grid-template-columns: auto 1fr; /* Uma coluna para a imagem, outra para as informações */
+    gap: 10px; /* Espaçamento entre a imagem e as informações */
+    margin-bottom: 10px; /* Adiciona espaço entre os itens */
+}
+
+.imagem-loja img {
+    max-width: 100px; /* Largura máxima da imagem */
+    height: auto; /* Altura ajustada automaticamente */
+}
+
+.info-loja {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+
 /* Define a regra de mídia para ocultar o sidebar quando a largura da tela for menor que 599px */
 @media only screen and (max-width: 599px) {
     .sidebar-left,

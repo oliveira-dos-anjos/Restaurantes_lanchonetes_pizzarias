@@ -3,16 +3,21 @@ import requests
 from bs4 import BeautifulSoup
 import sqlite3
 
-# Defina o caminho para a pasta que deve conter o arquivo do banco de dados SQLite
-db_folder = os.path.join(os.path.dirname(__file__), 'Data')
+# Função para conectar ao banco de dados
+def conectar_banco():
+    # Defina o caminho para a pasta que deve conter o arquivo do banco de dados SQLite
+    db_folder = os.path.join(os.path.dirname(__file__), '..','Data')
+    
 
-# Verificar se a pasta existe, se não existir, crie-a
-if not os.path.exists(db_folder):
-    os.makedirs(db_folder)
+    # Verificar se a pasta existe, se não existir, crie-a
+    if not os.path.exists(db_folder):
+        os.makedirs(db_folder)
 
-# Defina o caminho para o arquivo do banco de dados SQLite dentro da pasta
-db_path = os.path.join(db_folder, 'Banco.db')
+    # Defina o caminho para o arquivo do banco de dados SQLite dentro da pasta
+    db_path = os.path.join(db_folder, 'Banco.db')
 
+    # Conectar ao banco de dados e retornar o objeto de conexão
+    return sqlite3.connect(db_path)
 
 def create_new_table(conn):
     # Definindo o comando SQL para criar a nova tabela
@@ -46,8 +51,7 @@ def search_and_save(city):
     search_results = soup.find_all('div', class_='store-card')
     
     # Conectar ao banco de dados existente
-    db_path = os.path.join(db_folder, 'Banco.db')
-    conn = sqlite3.connect(db_path)
+    conn = conectar_banco()
     cursor = conn.cursor()
     
     # Criar a nova tabela se ainda não existir
