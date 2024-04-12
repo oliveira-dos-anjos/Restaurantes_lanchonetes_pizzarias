@@ -49,30 +49,38 @@ def logout():
     return redirect(url_for('home'))
 
 #Rota para tela inicial
+from flask import render_template
+
+# Rota para tela inicial
 @app.route("/")
 def home():
     # Recuperar o usuário da sessão
     user = session.get('user')
     
-    # Conectar ao banco de dados
-    conn = conectar_banco()
-    cursor = conn.cursor()
+    try:
+        # Conectar ao banco de dados
+        conn = conectar_banco()
+        cursor = conn.cursor()
 
-    # Consultar os dados das lojas
-    cursor.execute("SELECT * FROM lojas")
-    lojas = cursor.fetchall()
+        # Consultar os dados das lojas
+        cursor.execute("SELECT * FROM lojas")
+        lojas = cursor.fetchall()
 
-    # Fechar a conexão com o banco de dados
-    conn.close()
+        # Fechar a conexão com o banco de dados
+        conn.close()
 
-    # Adicionar as lojas ao conteúdo principal
-    content_with_lojas = {
-        "title": "Locais recentes",
-        "content": "Aqui estão as lojas recentes:",
-        "lojas": lojas
-    }
+        # Adicionar as lojas ao conteúdo principal
+        content_with_lojas = {
+            "title": "Locais recentes",
+            "content": "Aqui estão as lojas recentes:",
+            "lojas": lojas
+        }
 
-    return render_template("home.html", content=content_with_lojas, user=user)
+        return render_template("home.html", content=content_with_lojas, user=user)
+    except sqlite3.Error as e:
+        # Se ocorrer uma exceção ao executar a consulta SQL, renderize uma página em branco
+        return render_template("home.html")
+
 
 
 #Rota para area de login

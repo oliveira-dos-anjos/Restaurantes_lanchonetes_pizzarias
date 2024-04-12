@@ -72,6 +72,8 @@
         <div class="main-content">
             <h1>{{ content.title }}</h1>
             <p>{{ content.content }}</p>
+            
+            {% if content.lojas %}
             <div class="lojas-container">
                 {% for loja in content.lojas %}
                 <div class="loja-item">
@@ -84,7 +86,10 @@
                 </div>
                 {% endfor %}
             </div>
-        </div>        
+            {% else %}
+            <p>Não há lojas para mostrar no momento.</p>
+            {% endif %}
+        </div>                
         
         <div class="separator-r"></div> <!-- Linha vertical de separação -->
     
