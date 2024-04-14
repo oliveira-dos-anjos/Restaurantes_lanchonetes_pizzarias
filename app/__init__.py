@@ -18,6 +18,12 @@ db_path = os.path.join(os.path.dirname(__file__), 'Data', 'Banco.db')
 app.config['CELERY_BROKER_URL'] = 'redis://localhost:6379/0'
 celery = Celery(app.name, broker=app.config['CELERY_BROKER_URL'])
 
+url_render = "postgres://dados_clientes_user:ofRjWHwYqWFrFV4KpX8LcDz22nHuYlzo@dpg-cnaukp8l6cac73a3ra9g-a.oregon-postgres.render.com/dados_clientes"
+
+# Configuração do banco de dados do Render
+app.config['SQLALCHEMY_DATABASE_URI'] = url_render
+
+
 @celery.task
 def async_scraping(city):
     search_and_save(city)
@@ -32,6 +38,7 @@ def status():
     # Implement logic to check the status of the scraping task
     # and return status information.
     return {'status': 'Checking status...'}, 200
+
 
 # Função para conectar ao banco de dados SQLite
 def conectar_banco():

@@ -207,10 +207,9 @@ input[type="search"] + button:hover {
 
 .lojas-container {
     display: grid;
-    grid-template-columns: auto 1fr; /* Uma coluna para a imagem, outra para as informações */
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* Colunas flexíveis */
     gap: 20px; /* Espaçamento entre os itens */
-    overflow-y: auto; /* Adiciona barra de rolagem vertical quando necessário */
-    max-height: 400px; /* Altura máxima da aba de lojas */
+    max-height: 500px; /* Altura máxima da aba de lojas */
 }
 
 .loja-item {
@@ -218,7 +217,7 @@ input[type="search"] + button:hover {
     grid-template-columns: auto 1fr; /* Uma coluna para a imagem, outra para as informações */
     gap: 10px; /* Espaçamento entre a imagem e as informações */
     margin-bottom: 10px; /* Adiciona espaço entre os itens */
-}
+}  
 
 .imagem-loja img {
     max-width: 100px; /* Largura máxima da imagem */
@@ -258,7 +257,17 @@ input[type="search"] + button:hover {
         width: 170px;
 
     }
+
+    .lojas-container {
+        grid-template-columns: 1fr; /* Apenas uma coluna para celulares */
+    }
+
+    .loja-item {
+        grid-template-columns: 1fr; /* Apenas uma coluna para celulares */
+    }
 }
+
+
 
 /* Define a regra de mídia para tablets em modo retrato */
 @media only screen and (min-width: 600px) and (max-width: 959px) and (orientation: portrait) {

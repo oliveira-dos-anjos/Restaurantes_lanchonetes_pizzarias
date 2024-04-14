@@ -18,7 +18,6 @@ if not os.path.exists(db_folder):
 # Defina o caminho para o arquivo do banco de dados SQLite dentro da pasta
 db_path = os.path.join(db_folder, 'Banco.db')
 
-
 original_content = {
     "title": "Locais recentes",
     "content": "Aqui estão os resultados da sua pesquisa:"
@@ -75,8 +74,7 @@ def home():
 
         # Adicionar as lojas ao conteúdo principal
         content_with_lojas = {
-            "title": "Locais recentes",
-            "content": "Aqui estão as lojas recentes:",
+            "title": "Locais na região",
             "lojas": lojas
         }
 
