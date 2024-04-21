@@ -77,7 +77,12 @@
             <div class="lojas-container">
                 {% for loja in content.lojas %}
                 <div class="loja-item">
-                    <img src="{{ url_for('static', filename=loja['image_path']) }}" alt="{{ loja['store_name'] }}" width="100">
+                    <!-- <img src="{{ url_for('static', filename=loja['image_path']) }}" alt="{{ loja['store_name'] }}" width="100"> -->
+
+                        
+                    <img src="{{ url_for('static', filename='imagens_lojas/' + loja['image_path']) }}" alt="{{ loja['store_name'] }}">
+
+                        
                     <div>
                         <h3>{{ loja['store_name'] }}</h3>
                         <p>{{ loja['store_details'] }}</p>
