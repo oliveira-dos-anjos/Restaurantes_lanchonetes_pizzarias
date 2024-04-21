@@ -68,6 +68,10 @@ def home():
         # Consultar os dados das lojas
         cursor.execute("SELECT * FROM lojas")
         lojas = cursor.fetchall()
+        
+        lojas_dict = [dict(zip([column[0] for column in cursor.description], row)) for row in lojas]
+        content_with_lojas['lojas'] = lojas_dict
+
 
         # Fechar a conexão com o banco de dados
         conn.close()
