@@ -80,7 +80,7 @@ def home():
         for loja in lojas_dict:
             if 'image_path' in loja:
                 loja['image_path'] = loja['image_path'].replace('\\', '/')
-                loja['image_path'] = loja['image_path'].replace('static', '')
+
 
         # Adicionar as lojas ao conteúdo principal
         content_with_lojas = {
