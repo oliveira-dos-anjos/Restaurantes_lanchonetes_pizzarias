@@ -21,6 +21,8 @@ def conectar_banco():
 
 def create_new_table(conn):
     # Definindo o comando SQL para criar a nova tabela
+    conn = conectar_banco()
+    cursor = conn.cursor()
     create_table_query = '''
     CREATE TABLE IF NOT EXISTS lojas (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -32,7 +34,9 @@ def create_new_table(conn):
     '''
     # Executando o comando SQL para criar a nova tabela
     conn.execute(create_table_query)
-
+    conn.commit()
+    conn.close()
+    
 def insert_data(conn, store_name, store_details, opening_hours, image_path):
     # Definindo o comando SQL para inserir os dados na tabela
     insert_query = '''
@@ -68,20 +72,25 @@ def search_and_save(city):
         # Salvar a imagem na pasta 'static/imagens_lojas'
         if image_link:
             image_name = f"{store_name.replace(' ', '_')}.png"
-            import os
+            print(f"\033[31m{image_name}")
 
             # Verificar se o diretório 'imagens_lojas' existe, e criar se não existir
             imagens_lojas_dir = 'static/imagens_lojas'
             if not os.path.exists(imagens_lojas_dir):
                 os.makedirs(imagens_lojas_dir)
+                
 
             # Definir o caminho completo do arquivo de imagem
             image_path = os.path.join(imagens_lojas_dir, image_name)
+
+            # Normalizar o caminho
+            image_path = image_path.replace('\\', '/')
 
             with open(image_path, 'wb') as f:
                 f.write(requests.get(image_link).content)
         else:
             image_path = None
+
         
         # Inserir os dados na nova tabela
         insert_data(conn, store_name, store_details, opening_hours, image_path)

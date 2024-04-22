@@ -69,17 +69,22 @@ def home():
         cursor.execute("SELECT * FROM lojas")
         lojas = cursor.fetchall()
         
-        lojas_dict = [dict(zip([column[0] for column in cursor.description], row)) for row in lojas]
-        content_with_lojas['lojas'] = lojas_dict
-
-
         # Fechar a conexão com o banco de dados
         conn.close()
+
+        # Converter os resultados da consulta em um dicionário
+        lojas_dict = [dict(zip([column[0] for column in cursor.description], row)) for row in lojas]
+        print(f"\033[31m{lojas_dict}")
+
+        # Substituir as contra barras nos caminhos das imagens
+        for loja in lojas_dict:
+            if 'image_path' in loja:
+                loja['image_path'] = loja['image_path'].replace('\\', '/')
 
         # Adicionar as lojas ao conteúdo principal
         content_with_lojas = {
             "title": "Locais na região",
-            "lojas": lojas
+            "lojas": lojas_dict
         }
 
         return render_template("home.html", content=content_with_lojas, user=user)
