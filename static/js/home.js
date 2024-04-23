@@ -1,3 +1,11 @@
+// Código JavaScript para ocultar a barra de ferramentas e a barra de URL ao rolar a tabela
+function hideAddressBar() {
+    // Solicita ao navegador que role a página para o topo
+    window.scrollTo(0, 1);
+}
+
+
+
 document.addEventListener('DOMContentLoaded', function() {
     var profileLink = document.getElementById('profile-link');
     
@@ -18,3 +26,7 @@ document.addEventListener('DOMContentLoaded', function() {
         dropdownContent.style.display = 'block';
     });
 });
+
+
+
+
