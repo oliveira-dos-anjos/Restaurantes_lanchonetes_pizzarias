@@ -1,12 +1,15 @@
-// Código JavaScript para ocultar a barra de ferramentas e a barra de URL ao rolar a tabela
-function hideAddressBar() {
-    // Solicita ao navegador que role a página para o topo
-    window.scrollTo(0, 1);
-}
-
-
-
 document.addEventListener('DOMContentLoaded', function() {
+    // Ajustar a altura da tabela para ocupar toda a tela
+    var tableContainer = document.querySelector('.lojas-container');
+    var windowHeight = window.innerHeight;
+    tableContainer.style.height = windowHeight + 'px';
+
+    // Adicionar o evento de rolagem para ocultar a barra de endereço
+    tableContainer.addEventListener('scroll', function() {
+        window.scrollTo(0, 1);
+    });
+
+    // Adicionar o evento de clique no link de perfil
     var profileLink = document.getElementById('profile-link');
     
     profileLink.addEventListener('click', function(event) {
@@ -26,7 +29,3 @@ document.addEventListener('DOMContentLoaded', function() {
         dropdownContent.style.display = 'block';
     });
 });
-
-
-
-
