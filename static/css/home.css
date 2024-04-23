@@ -209,7 +209,7 @@ input[type="search"] + button:hover {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* Colunas flexíveis */
     gap: 20px; /* Espaçamento entre os itens */
-    max-height: 500px; /* Altura máxima da aba de lojas */
+    max-height: 510px; /* Altura máxima da aba de lojas */
 }
 
 .loja-item {
@@ -229,6 +229,18 @@ input[type="search"] + button:hover {
     flex-direction: column;
     justify-content: center;
 }
+
+
+ .loja-item h3{
+     font-size: 1.1rem;
+     margin-bottom: -.7rem;
+     margin-top: .5rem;
+ }
+
+ .loja-item p{
+     margin-bottom: -.7rem;
+ }
+
 
 
 /* Define a regra de mídia para ocultar o sidebar quando a largura da tela for menor que 599px */
@@ -260,12 +272,32 @@ input[type="search"] + button:hover {
 
     .lojas-container {
         grid-template-columns: 1fr; /* Apenas uma coluna para celulares */
+        max-height: auto;
     }
 
-    .loja-item {
-        grid-template-columns: 1fr; /* Apenas uma coluna para celulares */
+
+    .info-loja{
+       margin: -1rem; 
+    }
+    .loja-item h3{
+        font-size: 1.1rem;
+        margin-left: -1rem;
+        margin-bottom: -.7rem;
+        margin-top: .5rem;
+    }
+
+    .loja-item p{
+        margin-left: -1rem;
+        margin-bottom: -.7rem;
+    }
+
+    .loja-item img {
+        width: 100%;
+        max-width: 100px; /* Ajuste conforme necessário */
+        margin-left: -1rem;
     }
 }
+
 
 
 

@@ -72,10 +72,9 @@ def search_and_save(city):
         # Salvar a imagem na pasta 'static/imagens_lojas'
         if image_link:
             image_name = f"{store_name.replace(' ', '_')}.png"
-            print(f"\033[31m{image_name}")
 
             # Verificar se o diretório 'imagens_lojas' existe, e criar se não existir
-            imagens_lojas_dir = 'imagens_lojas'
+            imagens_lojas_dir = 'static/imagens_lojas'
             if not os.path.exists(imagens_lojas_dir):
                 os.makedirs(imagens_lojas_dir)
                 
