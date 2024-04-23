@@ -79,7 +79,7 @@ input[type="search"] + button:hover {
     justify-content: space-between;
     align-items: center;
     padding: 0 25px; /* Ajusta o preenchimento horizontal */
-    box-shadow: 0 2px 5px rgba(34, 33, 33, 0.918); 
+    box-shadow: 0 2px 5px rgba(34, 33, 33, 0.918);
 }
 
 .navbar-left{
@@ -272,7 +272,7 @@ input[type="search"] + button:hover {
 
     .lojas-container {
         grid-template-columns: 1fr; /* Apenas uma coluna para celulares */
-        max-height: auto;
+        max-height: 42rem;
     }
 
 
