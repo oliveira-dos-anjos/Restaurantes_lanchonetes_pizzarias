@@ -258,16 +258,24 @@ input[type="search"] + button:hover {
     }
 
     .navbar-center{
-        margin-left: 10%;
+        margin-left: 3%;
     }
 
     .pesquisar{
-        margin-left: -1rem;
+        margin-left: -2.5rem;
     }
 
     input[type="search"] {
-        width: 170px;
+        width: 150px;
 
+    }
+
+    .profile-icon {
+        margin-right: -1rem; 
+    }
+
+    .dropdown-content{
+        margin-left: -5rem;
     }
 
     .lojas-container {

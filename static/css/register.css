@@ -78,3 +78,9 @@ input[type="password"] {
 .btn-register:hover {
     background-color: #0056b3;
 }
+
+@media only screen and (max-width: 599px) {
+    .content{
+        width: 250px;
+    }
+}

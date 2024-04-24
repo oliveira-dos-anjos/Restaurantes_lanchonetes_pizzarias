@@ -42,7 +42,11 @@
                         {% endif %}
                     </a>
                     <div class="dropdown-content">
-                        <a>Editar Perfil</a>
+                        {% if user %}
+                            <a href="">{{ user }}</a>
+                        {% endif %}
+                        <a href="">Editar Perfil</a>
+                        <a href="">Divulgar</a>
                         <a href="{{ url_for('login') }}" >Trocar usuario</a>
                         <a href="{{ url_for('logout') }}">Sair</a>
                     </div>
@@ -88,7 +92,7 @@
                 {% endfor %}
             </div>
             {% else %}
-            <p>Não há lojas para mostrar no momento.</p>
+                <p>Não há lojas para mostrar no momento.</p>
             {% endif %}
         </div>                
         

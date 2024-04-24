@@ -139,3 +139,18 @@ body {
 .submit-btn:hover {
     background-color: #0056b3;
 }
+
+@media only screen and (max-width: 599px) {
+    .content{
+        width: 250px;
+    }
+
+    .remember-group input[type="checkbox"]{
+        margin-left: -5rem;
+        
+    }
+    .remember-group label[for="Login"]{
+        margin-left: 1.2rem;        
+    }
+
+}
