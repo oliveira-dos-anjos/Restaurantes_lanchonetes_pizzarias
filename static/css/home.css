@@ -139,6 +139,13 @@ input[type="search"] + button:hover {
     z-index: 3;
 }
 
+.Sidebar{
+        display: none;
+    }
+
+.Hamburger{
+    display: none;
+    }
 
 .dropdown-content a {
     color: rgb(2, 2, 2);
