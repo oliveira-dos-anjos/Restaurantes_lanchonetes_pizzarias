@@ -74,7 +74,6 @@ def home():
 
         # Converter os resultados da consulta em um dicionário
         lojas_dict = [dict(zip([column[0] for column in cursor.description], row)) for row in lojas]
-        print(f"\033[31m{lojas_dict}")
 
         # Substituir as contra barras nos caminhos das imagens
         for loja in lojas_dict:

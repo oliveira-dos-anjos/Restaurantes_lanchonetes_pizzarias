@@ -1,3 +1,24 @@
+var Hamburger = document.querySelector(".Hamburger");
+var menu = document.querySelector(".Hamburger");
+
+
+
+// Função para abrir o menu hamburguer
+
+Hamburger.addEventListener("click", function(){
+    document.querySelector(".container").classList.toggle("show-menu")
+});
+
+// Função para fechar o menu ao clicar fora
+
+
+ document.addEventListener("click", function(event) {
+    const isMenuClicado = menu.contains(event.target);
+     if (!isMenuClicado && menu.classList.contains("show-menu")) {
+         menu.classList.remove("show-menu");
+    }
+});
+
 document.addEventListener('DOMContentLoaded', function() {
     var tableContainer = document.getElementById('lojas-container');
     var windowHeight = window.innerHeight;

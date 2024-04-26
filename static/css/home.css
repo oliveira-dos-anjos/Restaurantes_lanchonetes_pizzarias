@@ -252,6 +252,104 @@ input[type="search"] + button:hover {
         display: none;
     }
 
+    
+    .show-menu .Hamburger:hover span{
+        opacity: 1;
+    }
+    
+    .Hamburger{
+        /*background-color: #680909;/*/
+        width: 2rem;
+        height: 2rem;
+        position: fixed;
+        z-index:100;
+        left: .5rem;
+        top: .5rem;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-evenly;
+        cursor: pointer;
+        transition: all 1s;
+    }
+    
+    .Hamburger:hover{
+        color: #3c1053;
+    }
+    
+      
+    
+    .Hamburger #line2{
+    transition: all 1.3s;
+    }
+    .show-menu .Hamburger{
+        left: 12rem;
+        transition: all 1s;
+    }
+    
+    .line{
+        width: 100;
+        background-color: #ffffff;
+        height: .2rem;
+        box-shadow: .2rem .2rem 2px #000;
+        transition: transform 1s;
+    }
+    
+    .show-menu #line1{
+        transform: rotate(45deg) translate(.3rem, .3rem);
+        z-index: 100;
+        transition: all 1s;
+    }
+    
+    .show-menu #line2{
+        opacity: 0;
+        visibility: hidden;
+        transition: all .8s;
+    }
+    .show-menu #line3{
+        transform: rotate(-45deg) translate(.3rem, -.5rem);
+        z-index: 100;
+        transition: all 1s;
+    }
+
+    .Sidebar{
+        width: 15rem;
+        height: 100vh;
+        background-color: rgba(83, 83, 83, 0.9);
+        position: fixed;
+        top: 0;
+        left: -20rem;
+        transition: all 1s;
+        z-index: 10;
+        opacity: 1;
+    }
+    
+    .show-menu .Sidebar{
+        left: 0;
+    }
+
+    .menu{
+        position: absolute;
+        margin-top: 1%;
+        left: -8rem;
+        transform: translate(50%, 50%);
+    }
+    
+    .menu-item{
+        text-align: center;
+        margin-bottom: .5rem;
+        transition: color 1s;
+    }
+
+    .menu-link{
+        font-family: var(--font-primary);
+        font-size: 2rem;
+        color: #0a0a0a;
+    }
+    
+    .menu-link:hover{
+        color: #360a4e;
+    }
+
     .main-content{
         margin-left: .5rem;
         margin-right: .5rem;
@@ -262,7 +360,8 @@ input[type="search"] + button:hover {
     }
 
     .pesquisar{
-        margin-left: -2.5rem;
+        margin-top: .5rem;
+        margin-left: 1rem;
     }
 
     input[type="search"] {
