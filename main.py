@@ -225,6 +225,9 @@ def redefinir():
 
 @app.route("/search", methods=["GET"])
 def search():
+    
+    # Recuperar o usuário da sessão
+    user = session.get('user')
 
     resultados = ["resultado1", "resultado2", "resultado3"]
 
@@ -237,10 +240,10 @@ def search():
 
         # Se houver um termo de pesquisa, renderizar o template com os resultados
         resultados = {"title": f"Resultados da Pesquisa para: {termo_pesquisa}", "content": "Aqui estão os resultados da pesquisa..."}
-        return render_template("home.html", content=resultados)
+        return render_template("home.html", content=resultados, user=user)
     else:
         # Se nenhum termo de pesquisa for fornecido, renderizar o template com o conteúdo original da página
-        return render_template("home.html", content=original_content)
+        return render_template("home.html", content=original_content, user=user)
     
 
 if __name__ == "__main__":
