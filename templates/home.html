@@ -9,8 +9,11 @@
     <meta name="msapplication-TileImage" content="path/to/tile-image.png">
     <meta name="msapplication-TileColor" content="#ffffff">
     <meta name="theme-color" content="#4285f4">
-    <link rel="icon" tipe="image/png" sizes="32x32" href="imagens/favicon-32x32.png">
-    <link rel="icon" tipe="image/png" sizes="16x16" href="imagens/favicon-16x16.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/static/icon/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/static/icon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/static/icons/favicon-16x16.png">
+    <link rel="manifest" href="static/site.webmanifest">
+    
        <!--<link rel="manifest" href="site.webmanifest">-->
     <title>Hora de comer</title>
 </head>
@@ -24,7 +27,7 @@
         <section class="navbar-top">
             <div class="navbar">
                 <div class="navbar-left">
-                    <img src="{{ url_for('static', filename='images/cidade1.png') }}" alt="" class="icon-city">
+                    <img src="{{ url_for('static', filename='icons/cidade1.png') }}" alt="" class="icon-city">
                 </div>
                 <aside class="Sidebar">
                     <div class="pesquisar">
@@ -43,23 +46,32 @@
                     </nav>
                 </aside>
 
+                <div class="search">
+                    <form action="/search" method="GET">
+                        <input class="searchBox" type="search" id="search" name="q" placeholder="Digite aqui para pesquisar">
+                        <button class="searchButton" type="submit"></button>
+                    </form>
+                </div>
+
                 <div class="navbar-right">
                     <div class="usuario">
                         {% if user %}
-                            <p>{{ user }}</p>
+                            <p>{{ user[:10] }}</p>
+                        {% else %}
+                            <span class="placeholder_user">          </span> <!-- Espaço reservado de 10 caracteres -->
                         {% endif %}
                     </div>
                     <div class="dropdown">
                         <a href="/login" id="profile-link" data-logged-in="{% if user %}true{% else %}false{% endif %}">
                             {% if user %}
-                                <img src="{{ url_for('static', filename='images/Desconectado.png') }}" alt="Ícone de Perfil Conectado" class="profile-icon">
+                                <img src="{{ url_for('static', filename='icons/Desconectado.png') }}" alt="Ícone de Perfil Conectado" class="profile-icon">
                             {% else %}
-                                <img src="{{ url_for('static', filename='images/Conectado.png') }}" alt="Ícone de Perfil Desconectado" class="profile-icon">
+                                <img src="{{ url_for('static', filename='icons/Conectado.png') }}" alt="Ícone de Perfil Desconectado" class="profile-icon">
                             {% endif %}
                         </a>
                         <div class="dropdown-content">
                             {% if user %}
-                                <a href="">{{ user }}</a>
+                                <a href="">{{ user[:15] }}</a>
                             {% endif %}
                             <a href="">Editar Perfil</a>
                             <a href="">Divulgar</a>

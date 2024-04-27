@@ -5,14 +5,7 @@ body {
     overflow: hidden;
 }
 
-.pesquisar {
-    position: relative;
-    display: inline-block;
-    margin-left: 0rem;
-    visibility: 1;
-    z-index: 100;
-    display: flex;
-}
+
 
 .Hamburger,
 .Sidebar{
@@ -103,21 +96,23 @@ input[type="search"] + button:hover {
     align-items: center;
 }
 
-.barra-vertical {
-    border-left: 1px solid #e7e2e2;
-    height: 20px; /* Altura da barra vertical */
-    margin: 0 10px; /* Espaçamento entre a barra e as divs */
-}
 
 .navbar-right {
     margin-top: 0rem;
     display: flex;
     align-items: center;
+    
 }
 
 .usuario {
     margin-right: 10px; 
 }
+
+.placeholder_user {
+    display: inline-block;
+    width: 100px;
+}
+
 
 .profile-icon {
     width: 40px;
@@ -130,8 +125,15 @@ input[type="search"] + button:hover {
 .dropdown {
     position: relative;
     display: inline-block;
-    margin-right: 1.5rem;
+    margin-right: 2rem;
     z-index: 2;
+}
+
+.search {
+    position: relative;
+    display: inline-block;
+    right: 30%;
+    
 }
 
 .dropdown-content {
@@ -250,26 +252,14 @@ input[type="search"] + button:hover {
      margin-bottom: -.7rem;
  }
 
-/* Oculta o menu hamburguer em telas maiores que 600px */
-@media (min-width: 600px) {
-    .Hamburger {
-        display: none;
-    }
-}
-
-/* Exibe o campo de pesquisa em telas maiores que 600px */
-@media (min-width: 600px) {
-    .pesquisar {
-        display: block;
-    }
-}
 
 /* Define a regra de mídia para ocultar o sidebar quando a largura da tela for menor que 599px */
 @media only screen and (max-width: 599px) {
     .sidebar-left,
     .sidebar-right,
     .separator-l,
-    .separator-r {
+    .separator-r,
+    .search {
         display: none;
     }
 
@@ -432,37 +422,41 @@ input[type="search"] + button:hover {
 
 
 /* Define a regra de mídia para tablets em modo retrato */
-@media only screen and (min-width: 600px) and (max-width: 959px) and (orientation: portrait) {
-   .sidebar-left,
+@media only screen and (min-width: 600px) and (max-width: 959px) {
    .sidebar-right{
+        display: none;
+   }
+   .sidebar-left{
         width: 20%;
    }
 
-   .pesquisar{
+   .search{
         z-index: 100;
         display: block;
+        right: 15rem;
    }
 
   
 
    .main-content{
-        margin-left: 25%;
-        margin-right: 25%;
+        margin-left: 35%;
+        margin-right: 3%;
    }
 
     .content h2{
         font-size: 1.4rem;
     }
 
-   .separator-l{
-        left: 25%;
+   .separator-r{
+        display: none;
    }
 
    .separator-r{
         right: 25%;
    }
 
-   .navbar-center{
-        margin-left: 30%;
+   .lojas-container{
+    max-height: 46rem;
    }
+
 }
