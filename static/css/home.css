@@ -427,17 +427,12 @@ input[type="search"] + button:hover {
         display: none;
    }
    .sidebar-left{
-<<<<<<< Updated upstream
-        width: 27%;
-=======
         width: 23%;
->>>>>>> Stashed changes
    }
 
    .search{
         z-index: 100;
         display: block;
-<<<<<<< Updated upstream
         right: 8rem;
    }
 
@@ -445,16 +440,6 @@ input[type="search"] + button:hover {
    .main-content{
         margin-left: 32%;
         margin-right: 2%;
-=======
-        right: 15rem;
-   }
-
-  
-
-   .main-content{
-        margin-left: 35%;
-        margin-right: 3%;
->>>>>>> Stashed changes
    }
 
     .content h2{
@@ -466,11 +451,7 @@ input[type="search"] + button:hover {
    }
 
    .separator-l{
-<<<<<<< Updated upstream
         left: 30%;
-=======
-        left: 26%;
->>>>>>> Stashed changes
    }
 
    .lojas-container{
