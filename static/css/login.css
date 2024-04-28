@@ -86,16 +86,17 @@ body {
 }
 
 .remember-group{
-    width: 15rem;
+    width: 10rem;
+    
 }
 
 .remember-group input[type="checkbox"]{
-    margin-left: -7rem;
+    margin-left: 1rem;
 }
 
 .remember-group label[for="Login"]{
-    margin-left: 1.4em;
-    margin-top: -1.1rem;
+    margin-left: 1rem;
+    
 }
 
 
@@ -113,8 +114,7 @@ body {
 
 .link {
     width: 10rem;
-    margin-top: 10px;
-    margin-left: -3rem;
+    margin-right: 0rem;
 }
 
 .link a {
@@ -126,6 +126,7 @@ body {
 }
 
 .submit-btn {
+    margin-top: 1rem;
     width: 100%;
     padding: 10px;
     background-color: #007bff;
@@ -147,18 +148,15 @@ body {
 
     .remember-group input[type="checkbox"]{
         font-size: .9rem;
-        margin-left: -5rem;
+        margin-left: 0rem;
         
     }
     .remember-group label[for="Login"]{
         font-size: .9rem;
-        margin-left: 1.8rem;        
+        margin-left: .3rem;        
     }
 
     .link {
         font-size: .9rem;
-        width: 10rem;
-        margin-top: 0rem;
-        margin-right: 0rem;
     }
 }
