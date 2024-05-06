@@ -11,6 +11,8 @@ app.secret_key = 'sua_chave_secreta_aqui'
 # Defina o caminho para a pasta que deve conter o arquivo do banco de dados SQLite
 db_folder = os.path.join(os.path.dirname(__file__), 'Data')
 
+
+
 # Verificar se a pasta existe, se não existir, crie-a
 if not os.path.exists(db_folder):
     os.makedirs(db_folder)
