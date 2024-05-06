@@ -19,6 +19,7 @@ if not os.path.exists(db_folder):
 
 # Defina o caminho para o arquivo do banco de dados SQLite dentro da pasta
 db_path = os.path.join(db_folder, 'Banco.db')
+print(f"\033[31n{db_folder}")
 
 original_content = {
     "title": "Locais recentes",
