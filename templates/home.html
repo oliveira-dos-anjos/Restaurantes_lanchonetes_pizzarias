@@ -85,20 +85,18 @@
         
         <section class="content">
             <div class="sidebar-left">
-                <!-- Conteúdo da barra lateral esquerda -->
                 <h2>Sidebar Esquerda</h2>
-                <p>Seu conteúdo da barra lateral esquerda aqui.</p>
+                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
             </div>
-    
+            
             <div class="separator-l"></div> <!-- Linha vertical de separação -->
-    
+        
             <div class="main-content">
                 <h1>{{ content.title }}</h1>
                 <p>{{ content.content }}</p>
-            </div>
-    
-            <div class="lojas-container">
+                
                 {% if content.lojas %}
+                <div class="lojas-container">
                     {% for loja in content.lojas %}
                     <div class="loja-item">
                         <img src="{{ url_for('static', filename=loja['image_path']) }}" alt="{{ loja['store_name'] }}" width="100"> 
@@ -110,20 +108,21 @@
                         </div>
                     </div>
                     {% endfor %}
+                </div>
                 {% else %}
                     <p>Não há lojas para mostrar no momento.</p>
                 {% endif %}
-            </div>
-    
+            </div>  
+                           
+            
             <div class="separator-r"></div> <!-- Linha vertical de separação -->
-    
+        
             <div class="sidebar-right">
                 <!-- Conteúdo da barra lateral direita -->
                 <h2>Sidebar Direita</h2>
-                <p>Seu conteúdo da barra lateral direita aqui.</p>
+                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
             </div>
         </section>
-    
     </div>  
     <script src="{{ url_for('static', filename='js/home.js') }}"></script>
 
