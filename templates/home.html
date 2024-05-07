@@ -87,26 +87,18 @@
             <div class="sidebar-left">
                 <!-- Conteúdo da barra lateral esquerda -->
                 <h2>Sidebar Esquerda</h2>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. 
-                Est earum neque quidem modi optio veniam ullam dolor magnam alias amet,
-                qui in sapiente tempora ducimus! Corrupti amet fuga molestiae deleniti.
-                Rerum voluptatum sed, eaque consequatur delectus quam nisi deserunt excepturi
-                ratione incidunt officiis veritatis consectetur iusto earum voluptate beatae odio,
-                ipsam assumenda eligendi ducimus sint velit quod! Autem, eligendi a.
-                Ut totam est suscipit assumenda repudiandae repellat corrupti neque quis minus
-                obcaecati enim vitae, non molestiae animi! Quos illo vel velit similique nulla
-                commodi repudiandae dolor repellat consectetur expedita? Officia!
-                </p>
+                <p>Seu conteúdo da barra lateral esquerda aqui.</p>
             </div>
-            
+    
             <div class="separator-l"></div> <!-- Linha vertical de separação -->
-        
+    
             <div class="main-content">
                 <h1>{{ content.title }}</h1>
                 <p>{{ content.content }}</p>
-                
+            </div>
+    
+            <div class="lojas-container">
                 {% if content.lojas %}
-                <div class="lojas-container">
                     {% for loja in content.lojas %}
                     <div class="loja-item">
                         <img src="{{ url_for('static', filename=loja['image_path']) }}" alt="{{ loja['store_name'] }}" width="100"> 
@@ -118,30 +110,20 @@
                         </div>
                     </div>
                     {% endfor %}
-                </div>
                 {% else %}
                     <p>Não há lojas para mostrar no momento.</p>
                 {% endif %}
-            </div>  
-                           
-            
+            </div>
+    
             <div class="separator-r"></div> <!-- Linha vertical de separação -->
-        
+    
             <div class="sidebar-right">
                 <!-- Conteúdo da barra lateral direita -->
                 <h2>Sidebar Direita</h2>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. 
-                Est earum neque quidem modi optio veniam ullam dolor magnam alias amet,
-                qui in sapiente tempora ducimus! Corrupti amet fuga molestiae deleniti.
-                Rerum voluptatum sed, eaque consequatur delectus quam nisi deserunt excepturi
-                ratione incidunt officiis veritatis consectetur iusto earum voluptate beatae odio,
-                ipsam assumenda eligendi ducimus sint velit quod! Autem, eligendi a.
-                Ut totam est suscipit assumenda repudiandae repellat corrupti neque quis minus
-                obcaecati enim vitae, non molestiae animi! Quos illo vel velit similique nulla
-                commodi repudiandae dolor repellat consectetur expedita? Officia!
-                </p>
+                <p>Seu conteúdo da barra lateral direita aqui.</p>
             </div>
         </section>
+    
     </div>  
     <script src="{{ url_for('static', filename='js/home.js') }}"></script>
 
