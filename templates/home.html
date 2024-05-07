@@ -102,43 +102,27 @@
             <div class="separator-l"></div> <!-- Linha vertical de separação -->
         
             <div class="main-content">
-                <table>
-                    <tr>
-                        <th>Título</th>
-                        <th>Conteúdo</th>
-                    </tr>
-                    <tr>
-                        <td>{{ content.title }}</td>
-                        <td>{{ content.content }}</td>
-                    </tr>
-                </table>
+                <h1>{{ content.title }}</h1>
+                <p>{{ content.content }}</p>
                 
                 {% if content.lojas %}
-                <table class="lojas-container">
-                    <tr>
-                        <th>Imagem</th>
-                        <th>Nome da Loja</th>
-                        <th>Detalhes</th>
-                        <th>Horário de Funcionamento</th>
-                    </tr>
+                <div class="lojas-container">
                     {% for loja in content.lojas %}
-                    <tr>
-                        <td><img src="{{ url_for('static', filename=loja['image_path']) }}" alt="{{ loja['store_name'] }}" width="100"></td>
-                        <td>{{ loja['store_name'] }}</td>
-                        <td>{{ loja['store_details'] }}</td>
-                        <td>{{ loja['opening_hours'] }}</td>
-                    </tr>
+                    <div class="loja-item">
+                        <img src="{{ url_for('static', filename=loja['image_path']) }}" alt="{{ loja['store_name'] }}" width="100"> 
+                            
+                        <div class="info_lojas">
+                            <h3>{{ loja['store_name'] }}</h3>
+                            <p>{{ loja['store_details'] }}</p>
+                            <p>Horário de funcionamento: {{ loja['opening_hours'] }}</p>
+                        </div>
+                    </div>
                     {% endfor %}
-                </table>
+                </div>
                 {% else %}
-                <p>Não há lojas para mostrar no momento.</p>
+                    <p>Não há lojas para mostrar no momento.</p>
                 {% endif %}
-            </div>
-
-
-
-
-            
+            </div>  
                            
             
             <div class="separator-r"></div> <!-- Linha vertical de separação -->
