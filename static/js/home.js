@@ -1,75 +1,20 @@
-var Hamburger = document.querySelector(".Hamburger");
-var menu = document.querySelector(".Hamburger");
-
-
+var hamburger = document.querySelector(".Hamburger");
+var container = document.querySelector(".container");
 
 // Função para abrir o menu hamburguer
-
-Hamburger.addEventListener("click", function(){
-    document.querySelector(".container").classList.toggle("show-menu")
+hamburger.addEventListener("click", function(){
+    container.classList.toggle("show-menu");
 });
 
 // Função para fechar o menu ao clicar fora
-
-
- document.addEventListener("click", function(event) {
-    const isMenuClicado = menu.contains(event.target);
-     if (!isMenuClicado && menu.classList.contains("show-menu")) {
-         menu.classList.remove("show-menu");
+document.addEventListener("click", function(event) {
+    const isMenuClicado = container.contains(event.target);
+    if (!isMenuClicado && container.classList.contains("show-menu")) {
+        container.classList.remove("show-menu");
     }
 });
 
-document.addEventListener('DOMContentLoaded', function() {
-    var tableContainer = document.getElementById('lojas-container');
-    var windowHeight = window.innerHeight;
-    tableContainer.style.height = windowHeight + 'px';
 
-    var lastScrollTop = 0;
-    tableContainer.addEventListener('scroll', function() {
-        var st = tableContainer.scrollTop;
-
-        if (st > lastScrollTop) {
-            // Rolar para baixo
-            exitFullscreen();
-        } else {
-            // Rolar para cima
-            enterFullscreen();
-        }
-
-        lastScrollTop = st <= 0 ? 0 : st;
-    });
-
-    function enterFullscreen() {
-        if (!document.fullscreenElement) {
-            try {
-                tableContainer.requestFullscreen();
-            } catch (error) {
-                console.error('Erro ao tentar entrar em tela cheia:', error);
-            }
-        }
-    }
-
-    function exitFullscreen() {
-        if (document.fullscreenElement) {
-            try {
-                document.exitFullscreen();
-            } catch (error) {
-                console.error('Erro ao tentar sair da tela cheia:', error);
-            }
-        }
-    }
-
-    var profileLink = document.getElementById('profile-link');
-    profileLink.addEventListener('click', function(event) {
-        var isLoggedIn = profileLink.getAttribute('data-logged-in') === 'true';
-        if (!isLoggedIn) {
-            return;
-        }
-        event.preventDefault();
-        var dropdownContent = document.querySelector('.dropdown-content');
-        dropdownContent.style.display = 'block';
-    });
-});
 
 document.addEventListener('DOMContentLoaded', function() {
     var profileLink = document.getElementById('profile-link');
@@ -104,3 +49,4 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 });
         
+

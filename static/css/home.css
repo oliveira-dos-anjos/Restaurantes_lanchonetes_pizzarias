@@ -42,11 +42,11 @@ input[type="search"] + button {
 }
 
 input[type="search"] + button::before {
-    content: "\1F50E"; /* Código Unicode para o ícone de pesquisa */
-    font-family: "Segoe UI Symbol", sans-serif; /* Fonte que contém o ícone de pesquisa */
+    content: "\1F50E"; 
+    font-family: "Segoe UI Symbol", sans-serif; 
     font-size: 16px;
-    color: #6b6868; /* Cor do ícone de pesquisa */
-    line-height: 30px;
+    color: #6b6868;
+    line-height: 30px
 }
 
 input[type="search"] + button:hover {
@@ -69,17 +69,17 @@ input[type="search"] + button:hover {
 }
 
 .navbar-top {
-    position: fixed; /* Torna a barra de navegação fixa */
-    top: 0; /* Alinha a barra de navegação ao topo */
-    left: 0; /* Alinha a barra de navegação à esquerda */
-    width: 100%; /* Define a largura da barra de navegação como 100% da largura da janela */
+    position: fixed; 
+    top: 0; 
+    left: 0; 
+    width: 100%;
 
     color: #fff; 
     height: 3rem;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 0 25px; /* Ajusta o preenchimento horizontal */
+    padding: 0 25px; 
     box-shadow: 0 2px 5px rgba(34, 33, 33, 0.918);
 }
 
@@ -218,21 +218,21 @@ input[type="search"] + button:hover {
 
 .lojas-container {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* Colunas flexíveis */
-    gap: 20px; /* Espaçamento entre os itens */
-    max-height: 510px; /* Altura máxima da aba de lojas */
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px; 
+    max-height: 510px; 
 }
 
 .loja-item {
     display: grid;
-    grid-template-columns: auto 1fr; /* Uma coluna para a imagem, outra para as informações */
-    gap: 10px; /* Espaçamento entre a imagem e as informações */
-    margin-bottom: 10px; /* Adiciona espaço entre os itens */
+    grid-template-columns: auto 1fr; 
+    gap: 10px; 
+    margin-bottom: 10px; 
 }  
 
 .imagem-loja img {
-    max-width: 100px; /* Largura máxima da imagem */
-    height: auto; /* Altura ajustada automaticamente */
+    max-width: 100px; 
+    height: auto; 
 }
 
 .info-loja {
@@ -269,7 +269,6 @@ input[type="search"] + button:hover {
     }
     
     .Hamburger{
-        /*background-color: #680909;/*/
         width: 2rem;
         height: 2rem;
         position: fixed;
@@ -342,7 +341,7 @@ input[type="search"] + button:hover {
     .menu{
         position: absolute;
         margin-top: 1%;
-        left: -8rem;
+        margin-left: -8rem;
         transform: translate(50%, 50%);
     }
     
@@ -350,6 +349,7 @@ input[type="search"] + button:hover {
         text-align: center;
         margin-bottom: 3rem;
         transition: color 1s;
+        list-style-type: none;
     }
 
     .menu-link{
@@ -414,7 +414,7 @@ input[type="search"] + button:hover {
 
     .loja-item img {
         width: 100%;
-        max-width: 100px; /* Ajuste conforme necessário */
+        max-width: 100px; 
         margin-left: -1rem;
     }
 }
