@@ -99,6 +99,12 @@ body {
     
 }
 
+.form-group i{
+    position: absolute;
+    right: 4rem;
+    margin-top: .6rem;
+}
+
 
 .remember-link-group {
     display: flex;

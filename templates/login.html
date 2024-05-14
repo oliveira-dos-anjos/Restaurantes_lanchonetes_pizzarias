@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/login.css') }}">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
     <title>Login</title>
 </head>
 <body>
@@ -32,11 +33,13 @@
                 <div class="form-group">
                     <label for="email_or_username"><i class="fas fa-user"></i> Usuario ou Email:</label>
                     <input type="text" id="email_or_username" name="email_or_username" required>
+                    <i class='bx bx-user'></i>
                 </div>
                 
                 <div class="form-group">
                     <label for="password"><i class="fas fa-lock"></i> Senha:</label>
                     <input type="password" id="password" name="password" required>
+                    <i class='bx bx-lock-alt'></i>
                 </div>
 
                 <div class="remember-link-group">
