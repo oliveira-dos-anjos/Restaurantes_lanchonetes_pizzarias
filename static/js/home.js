@@ -8,14 +8,16 @@ hamburger.addEventListener("click", function(){
 
 // Função para fechar o menu ao clicar fora
 document.addEventListener("click", function(event) {
-    const isMenuClicado = container.contains(event.target);
-    if (!isMenuClicado && container.classList.contains("show-menu")) {
+    var clickX = event.clientX;
+    var screenWidth = window.innerWidth; 
+
+    // Verificar se o clique ocorreu na parte esquerda da tela
+    if (clickX > screenWidth / 2) {
         container.classList.remove("show-menu");
     }
 });
 
-
-
+//Função para abrir o menu suspensso para o perfil
 document.addEventListener('DOMContentLoaded', function() {
     var profileLink = document.getElementById('profile-link');
     var dropdownContent = document.querySelector('.dropdown-content');
