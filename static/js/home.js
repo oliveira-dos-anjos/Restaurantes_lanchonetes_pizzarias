@@ -1,21 +1,23 @@
 var hamburger = document.querySelector(".Hamburger");
 var container = document.querySelector(".container");
+var sidebar = document.querySelector(".Sidebar");
 
 // Função para abrir o menu hamburguer
 hamburger.addEventListener("click", function(){
     container.classList.toggle("show-menu");
 });
 
+
+
 // Função para fechar o menu ao clicar fora
 document.addEventListener("click", function(event) {
-    var clickX = event.clientX;
-    var screenWidth = window.innerWidth; 
-
-    // Verificar se o clique ocorreu na parte esquerda da tela
-    if (clickX > screenWidth / 2) {
-        container.classList.remove("show-menu");
+    if (container.classList.contains("show-menu")) {
+        if (!hamburger.contains(event.target) && !sidebar.contains(event.target)) {
+            console.log("Clique fora do Sidebar");
+            container.classList.remove("show-menu");                  
+        }
     }
-});
+  });
 
 //Função para abrir o menu suspensso para o perfil
 document.addEventListener('DOMContentLoaded', function() {

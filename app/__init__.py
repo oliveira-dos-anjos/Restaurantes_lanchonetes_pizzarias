@@ -4,6 +4,7 @@ import smtplib
 import sqlite3
 from flask import Flask
 from celery import Celery
+from email.mime.text import MIMEText
 from .scrapping import search_and_save
 
 app = Flask(__name__)
@@ -52,13 +53,16 @@ def gerar_codigo_otp():
 # Função para enviar email com o código OTP
 def enviar_email_otp(destinatario, codigo):
     # Configuração do servidor SMTP
-    email_enviador = 'seu_email@gmail.com'
-    senha = 'sua_senha'
+    email_enviador = 'raffasadol@gmail.com'
+    senha = 'szhumutctbvxdjux'
     servidor_smtp = 'smtp.gmail.com'
     porta = 587
 
     # Mensagem de email
-    mensagem = f'Seu código de autenticação é: {codigo}'
+    mensagem = MIMEText(f'Seu código de autenticação é: {codigo}')
+    mensagem['From'] = email_enviador
+    mensagem['To'] = destinatario
+    mensagem['Subject'] = 'Seu código de autenticação'
 
     try:
         # Iniciar conexão SMTP
@@ -67,7 +71,35 @@ def enviar_email_otp(destinatario, codigo):
         server.login(email_enviador, senha)
 
         # Enviar email
-        server.sendmail(email_enviador, destinatario, mensagem)
+        server.sendmail(email_enviador, destinatario, mensagem.as_string())
+
+        # Encerrar conexão SMTP
+        server.quit()
+        return codigo
+    except Exception as e:
+        print("Erro ao enviar email:", e)
+        return None# Função para enviar email com o código OTP
+def enviar_email_otp(destinatario, codigo):
+    # Configuração do servidor SMTP
+    email_enviador = 'raffasadol@gmail.com'
+    senha = 'szhumutctbvxdjux'
+    servidor_smtp = 'smtp.gmail.com'
+    porta = 587
+
+    # Mensagem de email
+    mensagem = MIMEText(f'Seu código de autenticação é: {codigo}')
+    mensagem['From'] = email_enviador
+    mensagem['To'] = destinatario
+    mensagem['Subject'] = 'Seu código de autenticação'
+
+    try:
+        # Iniciar conexão SMTP
+        server = smtplib.SMTP(servidor_smtp, porta)
+        server.starttls()
+        server.login(email_enviador, senha)
+
+        # Enviar email
+        server.sendmail(email_enviador, destinatario, mensagem.as_string())
 
         # Encerrar conexão SMTP
         server.quit()

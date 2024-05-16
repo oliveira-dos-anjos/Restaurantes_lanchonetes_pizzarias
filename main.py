@@ -187,6 +187,7 @@ def recuperar():
                 # Gerar e armazenar código OTP na sessão
                 codigo_otp = gerar_codigo_otp()
                 session['codigo_otp'] = codigo_otp
+                enviar_email_otp(email, codigo_otp)
 
                 # Carregar página de redefinição com o email
                 return redirect(url_for('redefinir', email=email))
