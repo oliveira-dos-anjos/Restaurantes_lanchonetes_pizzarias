@@ -81,6 +81,7 @@ def home():
         # Substituir as contra barras nos caminhos das imagens
         for loja in lojas_dict:
             if 'image_path' in loja:
+                print(loja['opening_hours'])
                 loja['image_path'] = loja['image_path'].replace('\\', '/')
                 loja['image_path'] = loja['image_path'].replace('static', '')
 

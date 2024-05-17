@@ -14,8 +14,8 @@
     <link rel="icon" type="image/png" sizes="16x16" href="/static/icons/favicon-16x16.png">
     <link rel="manifest" href="/static/site.webmanifest">
     
-       <!--<link rel="manifest" href="site.webmanifest">-->
-    <title>Hora de comer</title>
+
+<title>Hora de comer</title>
 </head>
 <body>
     <div class="container">
@@ -38,7 +38,7 @@
                     </div>
                     <nav>
                         <ul class="menu">
-                            <li class="menu-item"><a href="" class="menu-link">Home</a></li>
+                            <li class="menu-item"><a href="{{url_for('home')}}" class="menu-link">Home</a></li>
                             <li class="menu-item"><a href="" class="menu-link">Pizzarias</a></li>
                             <li class="menu-item"><a href="" class="menu-link">Bares</a></li>
                             <li class="menu-item"><a href="" class="menu-link">Restaurantes</a></li>
@@ -99,17 +99,20 @@
                 {% if content.lojas %}
                 <div class="lojas-container">
                     {% for loja in content.lojas %}
-                    <div class="loja-item">
-                        <img src="{{ url_for('static', filename=loja['image_path']) }}" alt="{{ loja['store_name'] }}" width="100"> 
-                            
-                        <div class="info_lojas">
-                            <h3>{{ loja['store_name'] }}</h3>
-                            <p>{{ loja['store_details'] }}</p>
-                            <p>Horário de funcionamento: {{ loja['opening_hours'] }}</p>
+                    <a href="{{ loja['store_url'] }}" class="loja-item-link">
+                        <div class="loja-item">
+                            <img src="{{ url_for('static', filename=loja['image_path']) }}" alt="{{ loja['store_name'] }}" width="100"> 
+                                
+                            <div class="info_lojas">
+                                <h3>{{ loja['store_name'] }}</h3>
+                                <p>{{ loja['store_details'] }}</p>
+                                <p>Funcionamento: {{ loja['opening_hours'] }}</p>
+
+                            </div>
                         </div>
-                    </div>
+                    </a>
                     {% endfor %}
-                </div>
+                </div>                
                 {% else %}
                     <p>Não há lojas para mostrar no momento.</p>
                 {% endif %}

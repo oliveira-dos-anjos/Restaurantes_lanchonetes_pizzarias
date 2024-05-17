@@ -65,8 +65,8 @@ def search_and_save(city):
     for result in search_results:
         store_name = result.find('div', class_='store-card-name').text.strip()
         store_details_span = result.find('div', class_='store-card-details').find('span')
-        store_details = store_details_span.text.strip() if store_details_span else None
-        opening_hours = result.find('div', class_='open').text.strip() if result.find('div', class_='open') else None
+        store_details = store_details_span.text.strip() if store_details_span else 'Não disponível'
+        opening_hours = result.find('div', class_='open').text.strip() if result.find('div', class_='open') else 'Não disponível'
         image_link = result.find('img')['src'] if result.find('img') else None
         
         # Salvar a imagem na pasta 'static/imagens_lojas'

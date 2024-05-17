@@ -221,6 +221,7 @@ input[type="search"] + button:hover {
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     gap: 20px; 
     max-height: 510px; 
+    flex-wrap: wrap;
 }
 
 .loja-item {
@@ -228,7 +229,12 @@ input[type="search"] + button:hover {
     grid-template-columns: auto 1fr; 
     gap: 10px; 
     margin-bottom: 10px; 
+    transition: box-shadow 0.3s;
 }  
+
+.loja-item:hover {
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
 
 .imagem-loja img {
     max-width: 100px; 
@@ -252,6 +258,12 @@ input[type="search"] + button:hover {
      margin-bottom: -.7rem;
  }
 
+ .loja-item-link {
+    display: block;
+    width: 100%;
+    text-decoration: none;
+    color: inherit;
+}
 
 /* Define a regra de mídia para ocultar o sidebar quando a largura da tela for menor que 599px */
 @media only screen and (max-width: 599px) {
@@ -351,8 +363,9 @@ input[type="search"] + button:hover {
         transition: color 1s;
         list-style-type: none;
     }
-
+    
     .menu-link{
+        text-decoration: none;
         font-family: var(--font-primary);
         font-size: 2rem;
         color: #0a0a0a;
@@ -416,6 +429,12 @@ input[type="search"] + button:hover {
         width: 100%;
         max-width: 100px; 
         margin-left: -1rem;
+    }
+
+    .loja-item-link {
+        margin-left: .1rem;
+        width: 100%;
+
     }
 }
 
