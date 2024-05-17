@@ -84,7 +84,7 @@ input[type="search"] + button:hover {
 }
 
 .navbar-left{
-    margin-top: -.5rem;
+    margin-top: -2.18rem;
     display: flex;
     width: 3rem;
 }
@@ -402,6 +402,10 @@ input[type="search"] + button:hover {
 
     .dropdown-content{
         margin-left: -5rem;
+    }
+    .navbar-left{
+        height: 4rem;
+        margin-top: 0rem;
     }
 
     .lojas-container {
