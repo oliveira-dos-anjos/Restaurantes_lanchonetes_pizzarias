@@ -53,4 +53,18 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 });
         
+document.addEventListener("scroll", function() {
+  var deslocamentoY = window.scrollY;
+  var alturaJanela = window.innerHeight;
+  var alturaDocumento = document.documentElement.scrollHeight;
+
+  // Esconde a barra de navegação se a posição de rolagem for maior que a altura da janela
+  if (deslocamentoY > alturaJanela) {
+    // Esconde a barra de navegação
+    navigator.standalone || (window.scrollTo(0, 1), document.body.style.height = window.innerHeight + 'px');
+  } else {
+    // Mostra a barra de navegação
+    navigator.standalone || (document.body.style.height = 'auto');
+  }
+});
 
