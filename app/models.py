@@ -1,7 +1,51 @@
-from app import *
+import os
 import sqlite3
 from werkzeug.security import generate_password_hash, check_password_hash
 
+# Função para conectar ao banco de dados SQLite
+def conectar_banco():
+    db_folder = os.path.join(os.path.dirname(os.path.dirname(__file__)), 'Data')
+
+    if not os.path.exists(db_folder):
+        os.makedirs(db_folder)
+
+    db_path = os.path.join(db_folder, 'Banco.db')
+
+    conn = sqlite3.connect(db_path)
+    return conn
+
+# Função para criar as tabelas no banco de dados
+def criar_tabelas():
+    conn = conectar_banco()
+    cursor = conn.cursor()
+    cursor.execute('''
+        CREATE TABLE IF NOT EXISTS users (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            username TEXT UNIQUE NOT NULL,
+            email TEXT UNIQUE NOT NULL,
+            password TEXT NOT NULL
+        )
+    ''')
+    conn.commit()
+    conn.close()
+
+def create_new_table():
+    # Definindo o comando SQL para criar a nova tabela
+    conn = conectar_banco()
+    cursor = conn.cursor()
+    create_table_query = '''
+    CREATE TABLE IF NOT EXISTS lojas (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        store_name TEXT,
+        store_details TEXT,
+        opening_hours TEXT,
+        image_path TEXT
+    )
+    '''
+    # Executando o comando SQL para criar a nova tabela
+    conn.execute(create_table_query)
+    conn.commit()
+    conn.close()
 
 class User:
     def __init__(self, username, email, password):
@@ -83,3 +127,5 @@ class User:
         except sqlite3.Error as error:
             return f"Erro ao atualizar a senha:", error
 
+create_new_table()
+criar_tabelas()

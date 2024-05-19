@@ -1,50 +1,19 @@
 import os
 import sqlite3
-from app import app
 from app.models import *
+from app import *
 from werkzeug.security import generate_password_hash
 from flask import Flask, request, render_template, redirect, url_for, session
 
 app = Flask(__name__)
 app.secret_key = 'sua_chave_secreta_aqui'
 
-# Defina o caminho para a pasta que deve conter o arquivo do banco de dados SQLite
-db_folder = os.path.join(os.path.dirname(__file__), 'Data')
-
-
-
-# Verificar se a pasta existe, se não existir, crie-a
-if not os.path.exists(db_folder):
-    os.makedirs(db_folder)
-
-# Defina o caminho para o arquivo do banco de dados SQLite dentro da pasta
-db_path = os.path.join(db_folder, 'Banco.db')
-print(f"\033[31n{db_folder}")
 
 original_content = {
     "title": "Locais recentes",
     "content": "Aqui estão os resultados da sua pesquisa:"
 }
 
-# Função para conectar ao banco de dados SQLite
-def conectar_banco():
-    conn = sqlite3.connect(db_path)
-    return conn
-
-# Função para criar as tabelas no banco de dados
-def criar_tabelas():
-    conn = conectar_banco()
-    cursor = conn.cursor()
-    cursor.execute('''
-        CREATE TABLE IF NOT EXISTS users (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
-            username TEXT UNIQUE NOT NULL,
-            email TEXT UNIQUE NOT NULL,
-            password TEXT NOT NULL
-        )
-    ''')
-    conn.commit()
-    conn.close()
 
 criar_tabelas()
 
@@ -54,8 +23,6 @@ def logout():
     session.clear()
     return redirect(url_for('home'))
 
-#Rota para tela inicial
-from flask import render_template
 
 # Rota para tela inicial
 @app.route("/")
@@ -81,7 +48,6 @@ def home():
         # Substituir as contra barras nos caminhos das imagens
         for loja in lojas_dict:
             if 'image_path' in loja:
-                print(loja['opening_hours'])
                 loja['image_path'] = loja['image_path'].replace('\\', '/')
                 loja['image_path'] = loja['image_path'].replace('static', '')
 
@@ -95,9 +61,7 @@ def home():
         return render_template("home.html", content=content_with_lojas, user=user)
     except sqlite3.Error as e:
         # Se ocorrer uma exceção ao executar a consulta SQL, renderize uma página em branco
-        return render_template("home.html")
-
-
+        return render_template("home.html", content=original_content, user=user)
 
 #Rota para area de login
 @app.route("/login", methods=["GET", "POST"])
@@ -178,7 +142,7 @@ def recuperar():
         try:
             # Verificar se o email está cadastrado no banco de dados
             email = request.form['email']
-            conn = sqlite3.connect(db_path)
+            conn = conectar_banco()
             cursor = conn.cursor()
             cursor.execute('SELECT * FROM users WHERE email = ?', (email,))
             usuario = cursor.fetchone()

@@ -1,56 +1,44 @@
-import os
-import random
+import pyotp
 import smtplib
-import sqlite3
-from flask import Flask
-from celery import Celery
+from flask import Flask, jsonify
+from .celery_config import make_celery
 from email.mime.text import MIMEText
-from .scrapping import search_and_save
+from .scrapping import *
 
 app = Flask(__name__)
 
-# Chave mestra para geração de códigos TOTP
-chave_mestra = "K4XO47QRE75L4KTTPM775SOY4ESGSMIN"
-
-# Defina o caminho para o arquivo do banco de dados SQLite
-db_path = os.path.join(os.path.dirname(__file__), 'Data', 'Banco.db')
-
-# Configuração do Celery
-app.config['CELERY_BROKER_URL'] = 'redis://localhost:6379/0'
-celery = Celery(app.name, broker=app.config['CELERY_BROKER_URL'])
-
-url_render = "postgres://dados_clientes_user:ofRjWHwYqWFrFV4KpX8LcDz22nHuYlzo@dpg-cnaukp8l6cac73a3ra9g-a.oregon-postgres.render.com/dados_clientes"
+app.config.update(
+    CELERY_BROKER_URL='redis://localhost:6379/0',  # URL do broker do Celery (por exemplo, Redis)
+    CELERY_RESULT_BACKEND='redis://localhost:6379/0'  # URL do backend de resultados do Celery (por exemplo, Redis)
+)
 
 # Configuração do banco de dados do Render
+url_render = "postgres://dados_clientes_user:ofRjWHwYqWFrFV4KpX8LcDz22nHuYlzo@dpg-cnaukp8l6cac73a3ra9g-a.oregon-postgres.render.com/dados_clientes"
 app.config['SQLALCHEMY_DATABASE_URI'] = url_render
 
+celery = make_celery(app)
 
 @celery.task
-def async_scraping(city):
-    search_and_save(city)
+def async_scraping(location):
+    # Implementação da tarefa de scraping
+    # Exemplo: scraping(location)
+    pass
 
 @app.route('/start_scraping')
 def start_scraping():
     async_scraping.delay('sp/campinas')
-    return {'message': 'Scraping started in background.'}, 200
-
-@app.route('/status')
-def status():
-    # Implement logic to check the status of the scraping task
-    # and return status information.
-    return {'status': 'Checking status...'}, 200
-
-
-# Função para conectar ao banco de dados SQLite
-def conectar_banco():
-    conn = sqlite3.connect(db_path)
-    return conn
+    return jsonify({'message': 'Scraping started in background.'}), 200
 
 # Função para gerar o código OTP
 def gerar_codigo_otp():
-    return ''.join([str(random.randint(0, 9)) for _ in range(6)])
 
-# Função para enviar email com o código OTP
+    chave_mestra = "K4XO47QRE75L4KTTPM775SOY4ESGSMIN"
+    
+    totp = pyotp.TOTP(chave_mestra)
+    codigo = totp.now()
+    return codigo
+
+#Funçao para enviar o codigo otp para o email cadastrado
 def enviar_email_otp(destinatario, codigo):
     # Configuração do servidor SMTP
     email_enviador = 'raffasadol@gmail.com'
@@ -62,35 +50,7 @@ def enviar_email_otp(destinatario, codigo):
     mensagem = MIMEText(f'Seu código de autenticação é: {codigo}')
     mensagem['From'] = email_enviador
     mensagem['To'] = destinatario
-    mensagem['Subject'] = 'Seu código de autenticação'
-
-    try:
-        # Iniciar conexão SMTP
-        server = smtplib.SMTP(servidor_smtp, porta)
-        server.starttls()
-        server.login(email_enviador, senha)
-
-        # Enviar email
-        server.sendmail(email_enviador, destinatario, mensagem.as_string())
-
-        # Encerrar conexão SMTP
-        server.quit()
-        return codigo
-    except Exception as e:
-        print("Erro ao enviar email:", e)
-        return None# Função para enviar email com o código OTP
-def enviar_email_otp(destinatario, codigo):
-    # Configuração do servidor SMTP
-    email_enviador = 'raffasadol@gmail.com'
-    senha = 'szhumutctbvxdjux'
-    servidor_smtp = 'smtp.gmail.com'
-    porta = 587
-
-    # Mensagem de email
-    mensagem = MIMEText(f'Seu código de autenticação é: {codigo}')
-    mensagem['From'] = email_enviador
-    mensagem['To'] = destinatario
-    mensagem['Subject'] = 'Seu código de autenticação'
+    mensagem['Subject'] = 'Use o código de autenticação para redefinir sua senha'
 
     try:
         # Iniciar conexão SMTP

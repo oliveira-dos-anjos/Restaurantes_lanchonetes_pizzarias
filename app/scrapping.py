@@ -1,41 +1,9 @@
 import os
 import requests
+from app import *
+from app.models import *
 from bs4 import BeautifulSoup
-import sqlite3
 
-# Função para conectar ao banco de dados
-def conectar_banco():
-    # Defina o caminho para a pasta que deve conter o arquivo do banco de dados SQLite
-    db_folder = os.path.join(os.path.dirname(__file__), '..','Data')
-    
-
-    # Verificar se a pasta existe, se não existir, crie-a
-    if not os.path.exists(db_folder):
-        os.makedirs(db_folder)
-
-    # Defina o caminho para o arquivo do banco de dados SQLite dentro da pasta
-    db_path = os.path.join(db_folder, 'Banco.db')
-
-    # Conectar ao banco de dados e retornar o objeto de conexão
-    return sqlite3.connect(db_path)
-
-def create_new_table(conn):
-    # Definindo o comando SQL para criar a nova tabela
-    conn = conectar_banco()
-    cursor = conn.cursor()
-    create_table_query = '''
-    CREATE TABLE IF NOT EXISTS lojas (
-        id INTEGER PRIMARY KEY AUTOINCREMENT,
-        store_name TEXT,
-        store_details TEXT,
-        opening_hours TEXT,
-        image_path TEXT
-    )
-    '''
-    # Executando o comando SQL para criar a nova tabela
-    conn.execute(create_table_query)
-    conn.commit()
-    conn.close()
     
 def insert_data(conn, store_name, store_details, opening_hours, image_path):
     # Definindo o comando SQL para inserir os dados na tabela
@@ -58,8 +26,6 @@ def search_and_save(city):
     conn = conectar_banco()
     cursor = conn.cursor()
     
-    # Criar a nova tabela se ainda não existir
-    create_new_table(conn)
     
     # Extrair informações desejadas e salvar na nova tabela
     for result in search_results:
