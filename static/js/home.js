@@ -53,35 +53,4 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 });
         
-// Seleciona o container que possui a classe 'lojas-container'
-var container = document.querySelector('.lojas-container');
 
-// Função para esconder/mostrar a barra de navegação
-function toggleNavigationBar(shouldHide) {
-  if (shouldHide) {
-    // Esconde a barra de navegação
-    navigator.standalone || (window.scrollTo(0, 1), document.body.style.height = window.innerHeight + 'px');
-  } else {
-    // Mostra a barra de navegação
-    navigator.standalone || (document.body.style.height = 'auto');
-  }
-}
-
-// Adiciona o ouvinte de evento de rolagem ao container
-container.addEventListener('scroll', function() {
-  var deslocamentoY = container.scrollTop;
-  var alturaContainer = container.clientHeight;
-  var alturaDocumento = document.documentElement.scrollHeight;
-
-  // Verifica se o container foi rolado o suficiente para esconder a barra de navegação
-  toggleNavigationBar(deslocamentoY > alturaContainer);
-});
-
-// Adiciona o ouvinte de evento de rolagem à página inteira
-document.addEventListener("scroll", function() {
-  var deslocamentoY = window.scrollY;
-  var alturaJanela = window.innerHeight;
-
-  // Verifica se a página foi rolada o suficiente para esconder a barra de navegação
-  toggleNavigationBar(deslocamentoY > alturaJanela);
-});
