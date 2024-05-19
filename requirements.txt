@@ -21,6 +21,7 @@ login==0.0.6
 MarkupSafe==2.1.5
 prompt-toolkit==3.0.43
 python-dateutil==2.9.0.post0
+pyotp==2.9.0
 requests==2.31.0
 six==1.16.0
 soupsieve==2.5
