@@ -54,3 +54,23 @@ document.addEventListener('DOMContentLoaded', function() {
 });
         
 
+
+
+// Adiciona o ouvinte de evento de rolagem ao container
+container.addEventListener('scroll', function() {
+  var deslocamentoY = container.scrollTop;
+  var alturaContainer = container.clientHeight;
+  var alturaDocumento = document.documentElement.scrollHeight;
+
+  // Verifica se o container foi rolado o suficiente para esconder a barra de navegação
+  toggleNavigationBar(deslocamentoY > alturaContainer);
+});
+
+// Adiciona o ouvinte de evento de rolagem à página inteira
+document.addEventListener("scroll", function() {
+  var deslocamentoY = window.scrollY;
+  var alturaJanela = window.innerHeight;
+
+  // Verifica se a página foi rolada o suficiente para esconder a barra de navegação
+  toggleNavigationBar(deslocamentoY > alturaJanela);
+});
