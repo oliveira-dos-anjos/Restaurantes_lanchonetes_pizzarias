@@ -37,6 +37,7 @@ body {
     margin-bottom: 10px;
     background-size: cover;
     background-position: center;
+    opacity: 1;
 }
 
 .store-name {
