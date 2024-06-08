@@ -63,6 +63,23 @@ def home():
         # Se ocorrer uma exceção ao executar a consulta SQL, renderize uma página em branco
         return render_template("home.html", content=original_content, user=user)
 
+
+#rota para acessar o perfil da loja
+@app.route('/profile', methods=['POST'])
+def profile():
+    # recupera a sessão do usuario
+    user = session.get('user')
+
+    store_name = request.form.get('store_name')
+    store_details = request.form.get('store_details')
+    opening_hours = request.form.get('opening_hours')
+    image_path = request.form.get('image_path')
+    print(f"\033[31m{image_path}")
+
+    # Agora você pode usar esses dados no seu template ou processamento adicional
+    return render_template('profile.html', store_name=store_name, store_details=store_details, opening_hours=opening_hours, image_path=image_path, user=user)
+
+
 #Rota para area de login
 @app.route("/login", methods=["GET", "POST"])
 def login():

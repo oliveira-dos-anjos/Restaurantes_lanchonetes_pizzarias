@@ -74,3 +74,50 @@ document.addEventListener("scroll", function() {
   // Verifica se a página foi rolada o suficiente para esconder a barra de navegação
   toggleNavigationBar(deslocamentoY > alturaJanela);
 });
+
+
+function selectStore(event, storeName, storeDetails, openingHours, imagePath) {
+    event.preventDefault();
+
+    // Crie um formulário para enviar os dados para o servidor
+    let form = document.createElement('form');
+    form.method = 'POST';
+    form.action = '/profile';
+
+    // Adicione campos ocultos ao formulário com os dados da loja
+    let nameField = document.createElement('input');
+    nameField.type = 'hidden';
+    nameField.name = 'store_name';
+    nameField.value = storeName;
+
+    let detailsField = document.createElement('input');
+    detailsField.type = 'hidden';
+    detailsField.name = 'store_details';
+    detailsField.value = storeDetails;
+
+    let hoursField = document.createElement('input');
+    hoursField.type = 'hidden';
+    hoursField.name = 'opening_hours';
+    hoursField.value = openingHours;
+
+    let imageField = document.createElement('input');
+    imageField.type = 'hidden';
+    imageField.name = 'image_path';
+    imageField.value = imagePath;
+
+    
+    form.appendChild(nameField);
+    form.appendChild(detailsField);
+    form.appendChild(hoursField);
+    form.appendChild(imageField);
+    
+    // Verifique se o campo de imagem foi criado corretamente
+     console.log('Image Field:', imageField);
+
+    // Verifique se o formulário foi criado e os campos foram adicionados corretamente
+    console.log('Form:', form);
+
+    // Adicione o formulário ao corpo do documento e envie-o
+    document.body.appendChild(form);
+    form.submit();
+}

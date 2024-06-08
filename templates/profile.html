@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/profile.css') }}">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="msapplication-TileImage" content="path/to/tile-image.png">
+    <meta name="msapplication-TileColor" content="#ffffff">
+    <meta name="theme-color" content="#4285f4">
+    <link rel="apple-touch-icon" sizes="180x180" href="/static/icon/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/static/icon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/static/icons/favicon-16x16.png">
+    <link rel="manifest" href="/static/site.webmanifest">
+    <title>Perfil da Loja</title>
+</head>
+<body>
+    <div class="store-container">
+        <div class="store-image" style="background-image: url('{{ image_path }}');"></div>
+        <div class="store-name">
+            <h1>{{ store_name }}</h1>
+        </div>
+        <div class="store-details">
+            <p>{{ store_details }}</p>
+            <p>Funcionamento: {{ opening_hours }}</p>
+        </div>
+        <button class="contact-button">Contato</button>
+        <button class="address-button">Endereço</button>
+    </div>
+</body>
+</html>
