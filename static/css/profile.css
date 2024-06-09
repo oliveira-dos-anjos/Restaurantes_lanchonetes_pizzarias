@@ -2,13 +2,12 @@ body {
     margin: 0;
     padding: 0;
     font-family: Arial, sans-serif;
-    background-color: #949191;
+    background-color: #949191; /* Cor de fundo padrão */
     position: relative;
     min-height: 100vh;
     background: url('../images/background.jpg') no-repeat center center;
     background-size: cover;
     background-attachment: fixed; /* Faz a imagem de fundo ficar fixa */
-    opacity: 0.7;
     color: #ffffff; /* Define a cor do texto como branco para todo o corpo */
 }
 
@@ -18,17 +17,18 @@ body {
     align-items: center;
     justify-content: center;
     height: auto;
-    background-color: rgba(0, 0, 0, 1);
+    background-color: rgba(0, 0, 0, 0.8); /* Fundo preto com 80% de transparência */
     border-bottom: 1px solid #ddd;
     position: relative;
-    margin: 2rem auto 0 auto;
+    margin: 10rem auto 0 auto;
     padding: 20px;
     max-width: 500px;
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    color: #ffffff;
-    overflow-y: none;
+    color: #ffffff; /* Cor do texto */
+    z-index: -1;
 }
+
 
 .store-image {
     width: 150px;

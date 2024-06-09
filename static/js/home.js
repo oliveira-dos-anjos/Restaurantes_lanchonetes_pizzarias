@@ -5,6 +5,8 @@ var sidebar = document.querySelector(".Sidebar");
 // Função para abrir o menu hamburguer
 hamburger.addEventListener("click", function(){
     container.classList.toggle("show-menu");
+    const lojasContainer = document.querySelector('.lojas-container');
+    lojasContainer.classList.add('disabled-click');
 });
 
 
@@ -14,10 +16,14 @@ document.addEventListener("click", function(event) {
     if (container.classList.contains("show-menu")) {
         if (!hamburger.contains(event.target) && !sidebar.contains(event.target)) {
             console.log("Clique fora do Sidebar");
-            container.classList.remove("show-menu");                  
+            container.classList.remove("show-menu");
+            const lojasContainer = document.querySelector('.lojas-container');
+            lojasContainer.classList.remove('disabled-click');                 
         }
     }
   });
+
+
 
 //Função para abrir o menu suspensso para o perfil
 document.addEventListener('DOMContentLoaded', function() {
@@ -121,3 +127,6 @@ function selectStore(event, storeName, storeDetails, openingHours, imagePath) {
     document.body.appendChild(form);
     form.submit();
 }
+
+
+

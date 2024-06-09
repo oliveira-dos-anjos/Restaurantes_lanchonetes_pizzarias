@@ -1,132 +1,41 @@
-<!DOCTYPE html>
-<html lang="pt-br">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/home.css') }}">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black">
-    <meta name="msapplication-TileImage" content="path/to/tile-image.png">
-    <meta name="msapplication-TileColor" content="#ffffff">
-    <meta name="theme-color" content="#4285f4">
-    <link rel="apple-touch-icon" sizes="180x180" href="/static/icon/apple-touch-icon.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="/static/icon/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="/static/icons/favicon-16x16.png">
-    <link rel="manifest" href="/static/site.webmanifest">
+{% extends "base.html" %}
+
+{% block content %}
+    <div class="sidebar-left">
+        <h2>Sidebar Esquerda</h2>
+        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
+    </div>
     
+    <div class="separator-l"></div> 
 
-<title>Hora de comer</title>
-</head>
-<body>
-    <div class="container">
-        <div class="Hamburger">
-            <div class="line" id="line1"></div>
-            <div class="line" id="line2"></div>
-            <div class="line" id="line3"></div>
-        </div>
-        <section class="navbar-top">
-            <div class="navbar">
-                <div class="navbar-left">
-                    <img src="{{ url_for('static', filename='icons/cidade.png') }}" alt="" class="icon-city">
-                </div>
-                <aside class="Sidebar">
-                    <div class="pesquisar">
-                        <form action="/search" method="GET">
-                            <input class="searchBox" type="search" id="search" name="q" placeholder="Digite aqui para pesquisar">
-                            <button class="searchButton" type="submit"></button>
-                        </form>
-                    </div>
-                    <nav>
-                        <ul class="menu">
-                            <li class="menu-item"><a href="{{url_for('home')}}" class="menu-link">Home</a></li>
-                            <li class="menu-item"><a href="" class="menu-link">Pizzarias</a></li>
-                            <li class="menu-item"><a href="" class="menu-link">Bares</a></li>
-                            <li class="menu-item"><a href="" class="menu-link">Restaurantes</a></li>
-                            <li class="menu-item"><a href="" class="menu-link">lanchonetes</a></li>
-                        </ul>
-                    </nav>
-                </aside>
-
-                <div class="search">
-                    <form action="/search" method="GET">
-                        <input class="searchBox" type="search" id="search" name="q" placeholder="Digite aqui para pesquisar">
-                        <button class="searchButton" type="submit"></button>
-                    </form>
-                </div>
-
-                <div class="navbar-right">
-                    <div class="usuario">
-                        {% if user %}
-                            <p>{{ user[:10] }}</p>
-                        {% else %}
-                            <span class="placeholder_user">          </span> <!-- Espaço reservado de 10 caracteres -->
-                        {% endif %}
-                    </div>
-                    <div class="dropdown">
-                        <a href="/login" id="profile-link" data-logged-in="{% if user %}true{% else %}false{% endif %}">
-                            {% if user %}
-                                <img src="{{ url_for('static', filename='icons/Desconectado.png') }}" alt="Ícone de Perfil Conectado" class="profile-icon">
-                            {% else %}
-                                <img src="{{ url_for('static', filename='icons/Conectado.png') }}" alt="Ícone de Perfil Desconectado" class="profile-icon">
-                            {% endif %}
-                        </a>
-                        <div class="dropdown-content">
-                            {% if user %}
-                                <a href="">{{ user[:15] }}</a>
-                            {% endif %}
-                            <a href="">Editar Perfil</a>
-                            <a href="">Divulgar</a>
-                            <a href="{{ url_for('login') }}" >Trocar usuario</a>
-                            <a href="{{ url_for('logout') }}">Sair</a>
-                        </div>
+    <div class="main-content">
+        <h1>{{ content.title }}</h1>
+        <p>{{ content.content }}</p>
+        
+        {% if content.lojas %}
+        <div class="lojas-container">
+            {% for loja in content.lojas %}
+            <a href="#" class="loja-item-link" onclick="selectStore(event, '{{ loja['store_name'] }}', '{{ loja['store_details'] }}', '{{ loja['opening_hours'] }}', '{{ url_for('static', filename=loja['image_path']) }}')">
+                <div class="loja-item">
+                    <img src="{{ url_for('static', filename=loja['image_path']) }}" alt="{{ loja['store_name'] }}" width="100">
+                    <div class="info_lojas">
+                        <h3>{{ loja['store_name'] }}</h3>
+                        <p>{{ loja['store_details'] }}</p>
+                        <p>Funcionamento: {{ loja['opening_hours'] }}</p>
                     </div>
                 </div>
-            </div>   
-        </section>
-        
-        <section class="content">
-            <div class="sidebar-left">
-                <h2>Sidebar Esquerda</h2>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
-            </div>
-            
-            <div class="separator-l"></div> <!-- Linha vertical de separação -->
-        
-            <div class="main-content">
-                <h1>{{ content.title }}</h1>
-                <p>{{ content.content }}</p>
-                
-                {% if content.lojas %}
-                <div class="lojas-container">
-                    {% for loja in content.lojas %}
-                    <a href="#" class="loja-item-link" onclick="selectStore(event, '{{ loja['store_name'] }}', '{{ loja['store_details'] }}', '{{ loja['opening_hours'] }}', '{{ url_for('static', filename=loja['image_path']) }}')">
-                        <div class="loja-item">
-                            <img src="{{ url_for('static', filename=loja['image_path']) }}" alt="{{ loja['store_name'] }}" width="100">
-                            <div class="info_lojas">
-                                <h3>{{ loja['store_name'] }}</h3>
-                                <p>{{ loja['store_details'] }}</p>
-                                <p>Funcionamento: {{ loja['opening_hours'] }}</p>
-                            </div>
-                        </div>
-                    </a>                                       
-                    {% endfor %}
-                </div>                
-                {% else %}
-                    <p>Não há lojas para mostrar no momento.</p>
-                {% endif %}
-            </div>  
-                           
-            
-            <div class="separator-r"></div> <!-- Linha vertical de separação -->
-        
-            <div class="sidebar-right">
-                <h2>Sidebar Direita</h2>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
-            </div>
-        </section>
+            </a>                                       
+            {% endfor %}
+        </div>                
+        {% else %}
+            <p>Não há lojas para mostrar no momento.</p>
+        {% endif %}
     </div>  
-    <script src="{{ url_for('static', filename='js/home.js') }}"></script>
+                       
+    <div class="separator-r"></div> 
 
-
-</body>
-</html>
+    <div class="sidebar-right">
+        <h2>Sidebar Direita</h2>
+        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
+    </div>
+{% endblock %}
