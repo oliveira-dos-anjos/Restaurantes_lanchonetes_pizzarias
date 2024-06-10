@@ -74,7 +74,6 @@ def profile():
     store_details = request.form.get('store_details')
     opening_hours = request.form.get('opening_hours')
     image_path = request.form.get('image_path')
-    print(f"\033[31m{image_path}")
 
     # Agora você pode usar esses dados no seu template ou processamento adicional
     return render_template('profile.html', store_name=store_name, store_details=store_details, opening_hours=opening_hours, image_path=image_path, user=user)

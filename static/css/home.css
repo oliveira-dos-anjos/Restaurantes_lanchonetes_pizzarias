@@ -266,6 +266,11 @@ input[type="search"] + button:hover {
     color: inherit;
 }
 
+
+.lojas-container.disabled-click {
+    pointer-events: none;
+}
+
 /* Define a regra de mídia para ocultar o sidebar quando a largura da tela for menor que 599px */
 @media only screen and (max-width: 599px) {
     .sidebar-left,
@@ -276,9 +281,6 @@ input[type="search"] + button:hover {
         display: none;
     }
 
-    .lojas-container.disabled-click {
-        pointer-events: none; /* Desabilita todos os eventos do mouse */
-    }
     
     
     .show-menu .Hamburger:hover span{
@@ -342,7 +344,7 @@ input[type="search"] + button:hover {
         width: 15rem;
         display: block;
         height: 100vh;
-        background-color: rgba(83, 83, 83, 0.9);
+        background-color: rgba(83, 83, 83, 1);
         position: fixed;
         top: 0;
         left: -20rem;

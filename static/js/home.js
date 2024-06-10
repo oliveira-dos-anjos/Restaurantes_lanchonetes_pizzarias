@@ -44,6 +44,10 @@ document.addEventListener('DOMContentLoaded', function() {
         
         // Exibir o menu suspenso
         dropdownContent.style.display = 'block';
+        console.log("clicado")
+        const lojasContainer = document.querySelector('.lojas-container');
+        lojasContainer.classList.add('disabled-click');
+
     });
     
     // Adicionar um ouvinte de eventos de clique ao documento inteiro
@@ -55,6 +59,8 @@ document.addEventListener('DOMContentLoaded', function() {
         // Se o clique ocorreu fora do menu suspenso e do link de perfil, feche o menu
         if (!isClickInsideDropdownContent && !isClickInsideProfileLink) {
             dropdownContent.style.display = 'none';
+            const lojasContainer = document.querySelector('.lojas-container');
+            lojasContainer.classList.remove("disabled-click")
         }
     });
 });
@@ -70,18 +76,21 @@ container.addEventListener('scroll', function() {
 
   // Verifica se o container foi rolado o suficiente para esconder a barra de navegação
   toggleNavigationBar(deslocamentoY > alturaContainer);
+  console.log("rolando")
 });
 
 // Adiciona o ouvinte de evento de rolagem à página inteira
 document.addEventListener("scroll", function() {
   var deslocamentoY = window.scrollY;
+  console.log("rolando")
   var alturaJanela = window.innerHeight;
 
   // Verifica se a página foi rolada o suficiente para esconder a barra de navegação
   toggleNavigationBar(deslocamentoY > alturaJanela);
+  console.log("rolando")
 });
 
-
+//Função para guardar as informacoes da loja para abrir o perfil da mesma
 function selectStore(event, storeName, storeDetails, openingHours, imagePath) {
     event.preventDefault();
 
@@ -111,18 +120,11 @@ function selectStore(event, storeName, storeDetails, openingHours, imagePath) {
     imageField.name = 'image_path';
     imageField.value = imagePath;
 
-    
     form.appendChild(nameField);
     form.appendChild(detailsField);
     form.appendChild(hoursField);
     form.appendChild(imageField);
     
-    // Verifique se o campo de imagem foi criado corretamente
-     console.log('Image Field:', imageField);
-
-    // Verifique se o formulário foi criado e os campos foram adicionados corretamente
-    console.log('Form:', form);
-
     // Adicione o formulário ao corpo do documento e envie-o
     document.body.appendChild(form);
     form.submit();

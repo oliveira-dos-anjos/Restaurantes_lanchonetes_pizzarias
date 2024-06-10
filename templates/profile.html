@@ -4,17 +4,21 @@
 {% block content %}
 <link rel="stylesheet" href="{{ url_for('static', filename='css/profile.css') }}">
 <div class="store-container">
-        <div class="store-image" style="background-image: url('{{ image_path }}');"></div>
+        <div class="store-image" style="background-image: url('{{ image_path }}');">
+        </div>
+        
         <div class="store-name">
             <h1>{{ store_name }}</h1>
+        
+            <div class="store-details">
+                <p>{{ store_details }}</p>
+                <p>Funcionamento: {{ opening_hours }}</p>
+        
+                <button class="contact-button">Contato</button>
+                <button class="address-button">Endereço</button>
+            </div>
         </div>
-        <div class="store-details">
-            <p>{{ store_details }}</p>
-            <p>Funcionamento: {{ opening_hours }}</p>
-        </div>
-        <button class="contact-button">Contato</button>
-        <button class="address-button">Endereço</button>
-    </div>
+</div>
 {% endblock %}
 
 

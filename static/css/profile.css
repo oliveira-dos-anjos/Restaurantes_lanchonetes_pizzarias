@@ -17,15 +17,16 @@ body {
     align-items: center;
     justify-content: center;
     height: auto;
-    background-color: rgba(0, 0, 0, 0.8); /* Fundo preto com 80% de transparência */
-    border-bottom: 1px solid #ddd;
+    background-color: rgba(0, 0, 0, 0.7); /* Fundo preto com 80% de transparência */
+    border-bottom: 1px solid #e70d0d;
+    border-top: 1px solid #e70d0d;
     position: relative;
-    margin: 10rem auto 0 auto;
+    margin: 7rem auto 0 auto;
     padding: 20px;
     max-width: 500px;
     border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    color: #ffffff; /* Cor do texto */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 1);
+    color: #ffffff;
     z-index: -1;
 }
 
@@ -38,6 +39,7 @@ body {
     background-size: cover;
     background-position: center;
     opacity: 1;
+    border: 2px solid #949191;
 }
 
 .store-name {
@@ -55,6 +57,7 @@ body {
     color: #ffffff;
 }
 
+
 .contact-button,
 .address-button {
     padding: 10px 20px;
@@ -63,10 +66,14 @@ body {
     border: none;
     border-radius: 5px;
     cursor: pointer;
-    margin-bottom: 10px;
+    margin: 10px;
     font-size: 16px;
 }
 
 .address-button {
     background-color: #28a745;
+}
+
+.lojas-container.disabled-click {
+    pointer-events: none;
 }
