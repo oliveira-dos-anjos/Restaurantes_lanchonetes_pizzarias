@@ -271,6 +271,10 @@ input[type="search"] + button:hover {
     pointer-events: none;
 }
 
+.lojas-container.disable-click {
+    pointer-events: none;
+}
+
 /* Define a regra de mídia para ocultar o sidebar quando a largura da tela for menor que 599px */
 @media only screen and (max-width: 599px) {
     .sidebar-left,

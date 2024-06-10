@@ -77,3 +77,7 @@ body {
 .lojas-container.disabled-click {
     pointer-events: none;
 }
+
+.lojas-container.disable-click {
+    pointer-events: none;
+}

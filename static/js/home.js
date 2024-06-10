@@ -9,21 +9,16 @@ hamburger.addEventListener("click", function(){
     lojasContainer.classList.add('disabled-click');
 });
 
-
-
 // Função para fechar o menu ao clicar fora
 document.addEventListener("click", function(event) {
     if (container.classList.contains("show-menu")) {
         if (!hamburger.contains(event.target) && !sidebar.contains(event.target)) {
-            console.log("Clique fora do Sidebar");
             container.classList.remove("show-menu");
             const lojasContainer = document.querySelector('.lojas-container');
             lojasContainer.classList.remove('disabled-click');                 
         }
     }
   });
-
-
 
 //Função para abrir o menu suspensso para o perfil
 document.addEventListener('DOMContentLoaded', function() {
@@ -44,9 +39,8 @@ document.addEventListener('DOMContentLoaded', function() {
         
         // Exibir o menu suspenso
         dropdownContent.style.display = 'block';
-        console.log("clicado")
         const lojasContainer = document.querySelector('.lojas-container');
-        lojasContainer.classList.add('disabled-click');
+        lojasContainer.classList.add('disable-click');
 
     });
     
@@ -60,14 +54,11 @@ document.addEventListener('DOMContentLoaded', function() {
         if (!isClickInsideDropdownContent && !isClickInsideProfileLink) {
             dropdownContent.style.display = 'none';
             const lojasContainer = document.querySelector('.lojas-container');
-            lojasContainer.classList.remove("disabled-click")
+            lojasContainer.classList.remove("disable-click")
         }
     });
 });
         
-
-
-
 // Adiciona o ouvinte de evento de rolagem ao container
 container.addEventListener('scroll', function() {
   var deslocamentoY = container.scrollTop;
