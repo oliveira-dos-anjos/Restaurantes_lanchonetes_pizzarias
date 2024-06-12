@@ -60,7 +60,6 @@ document.addEventListener('DOMContentLoaded', function() {
 });
     
 
-
 //Função para guardar as informacoes da loja para abrir o perfil da mesma
 function selectStore(event, storeName, storeDetails, openingHours, imagePath) {
     event.preventDefault();
