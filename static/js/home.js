@@ -1,4 +1,5 @@
-const lojasContainer = document.querySelector('.lojas-container');
+// Adiciona o ouvinte de evento de rolagem ao lojasContainer
+const target = document.querySelector('lojas-Container');
 
 function animeNavBar() {
     console.log("rolando");
@@ -34,12 +35,10 @@ function animeNavBar() {
     }
 }
 
-window.addEventListener('scroll', function() {
-    var deslocamentoY = window.scrollY;
-    var alturaContainer = window.innerHeight;
+window.addEventListener('scroll', function(){
+    animeNavBar();
+})
 
-    // Verifica se o deslocamentoY é maior que a alturaContainer
-    if (deslocamentoY > alturaContainer) {
-        animeNavBar();
-    }
-});
+
+  
+
