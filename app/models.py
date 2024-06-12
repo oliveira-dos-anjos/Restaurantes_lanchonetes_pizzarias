@@ -36,7 +36,7 @@ def create_new_table():
     create_table_query = '''
     CREATE TABLE IF NOT EXISTS lojas (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
-        store_name TEXT,
+    store_name TEXT,
         store_details TEXT,
         opening_hours TEXT,
         image_path TEXT
