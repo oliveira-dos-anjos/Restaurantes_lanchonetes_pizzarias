@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+
+{% block content %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/divulgar.css') }}">
+
+
+<section class="">
+ 
+    <div class="container-divulgar">
+        <div class="image-upload">
+            <label for="upload">
+                <img src="placeholder.jpg" alt="Upload Image">
+            </label>
+            <input type="file" id="upload" accept="image/*">
+        </div>
+        <div class="info-fields">
+            <form>
+                <label for="store-name">Nome da Loja:</label>
+                <input type="text" id="store-name" name="store-name">
+
+                <label for="store-hours">Horário de Funcionamento:</label>
+                <input type="text" id="store-hours" name="store-hours">
+
+                <label for="delivery-time">Tempo de Entrega:</label>
+                <input type="text" id="delivery-time" name="delivery-time">
+
+                <label for="address">Endereço:</label>
+                <input type="text" id="address" name="address">
+
+                <label for="phone">Telefone:</label>
+                <input type="text" id="phone" name="phone">
+
+                <button class="btn" type="submit">Cadastrar Loja</button>
+            </form>
+        </div>
+    </div>
+
+</section>
+
+
+{% endblock %}

@@ -60,6 +60,14 @@ def home():
         # Se ocorrer uma exceção ao executar a consulta SQL, renderize uma página em branco
         return render_template("home.html", content=original_content, user=user)
 
+#Rota para pagina de divulgação
+@app.route("/divulgar", methods=["GET", "POST"])
+def divulgar():
+    # Recuperar usuário da sessao
+    user = session.get('user')
+
+    return render_template("divulgar.html", user=user)
+
 #rota para acessar o perfil da loja
 @app.route('/profile', methods=['POST'])
 def profile():

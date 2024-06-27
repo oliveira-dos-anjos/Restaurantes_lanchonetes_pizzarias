@@ -87,7 +87,10 @@ input[type="search"] + button:hover {
 .navbar-left{
     margin-top: -2.18rem;
     display: flex;
-    width: 3rem;
+    width: 1rem;
+    margin-left: -30rem;
+    z-index: -2;
+    
 }
 
 .navbar-center {
@@ -134,7 +137,14 @@ input[type="search"] + button:hover {
     position: relative;
     display: inline-block;
     right: 30%;
-    
+    z-index: 2;
+}
+
+.home-icon{
+    width: 40px;
+    height: 40px; 
+    border-radius: 50%; 
+    z-index: 2;
 }
 
 .dropdown-content {
@@ -302,7 +312,7 @@ input[type="search"] + button:hover {
         flex-direction: column;
         justify-content: space-evenly;
         cursor: pointer;
-        transition: all 1s;
+        transition: all .5s;
     }
     
     .Hamburger:hover{
@@ -312,11 +322,11 @@ input[type="search"] + button:hover {
       
     
     .Hamburger #line2{
-    transition: all 1.3s;
+        transition: all 1s;
     }
     .show-menu .Hamburger{
         left: 12rem;
-        transition: all 1s;
+        transition: all .5s;
     }
     
     .line{
@@ -324,24 +334,24 @@ input[type="search"] + button:hover {
         background-color: #ffffff;
         height: .2rem;
         box-shadow: .2rem .2rem 2px #000;
-        transition: transform 1s;
+        transition: transform .5s;
     }
     
     .show-menu #line1{
         transform: rotate(45deg) translate(.3rem, .3rem);
         z-index: 100;
-        transition: all 1s;
+        transition: all .5s;
     }
     
     .show-menu #line2{
         opacity: 0;
         visibility: hidden;
-        transition: all .8s;
+        transition: all .2s;
     }
     .show-menu #line3{
         transform: rotate(-45deg) translate(.3rem, -.5rem);
         z-index: 100;
-        transition: all 1s;
+        transition: all .5s;
     }
 
     .Sidebar{
@@ -352,7 +362,7 @@ input[type="search"] + button:hover {
         position: fixed;
         top: 0;
         left: -20rem;
-        transition: all 1s;
+        transition: all .5s;
         z-index: 10;
         opacity: 1;
     }
@@ -392,6 +402,10 @@ input[type="search"] + button:hover {
         overflow-y: scrool;
     }
 
+    .home-icon{
+        display: none;
+    }
+
     .navbar-center{
         margin-left: 3%;
     }
@@ -417,6 +431,7 @@ input[type="search"] + button:hover {
     .navbar-left{
         height: 4rem;
         margin-top: 0rem;
+        margin-right: -10rem;
     }
 
     .lojas-container {
@@ -463,12 +478,17 @@ input[type="search"] + button:hover {
    }
    .sidebar-left{
         width: 23%;
+        
    }
 
+   .navbar-left{
+    margin-top: -2.18rem;
+    margin-left: -10rem;    
+}
    .search{
         z-index: 100;
         display: block;
-        right: 8rem;
+        right: auto;
    }
 
 

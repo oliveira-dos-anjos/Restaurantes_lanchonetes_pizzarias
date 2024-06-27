@@ -24,6 +24,9 @@
         </div>
         <section class="navbar-top">
             <div class="navbar">
+                <a href="{{ url_for('home') }}">
+                    <img src="{{url_for('static', filename='icons/home.png')}}" alt="" class="home-icon">
+                </a>
                 <div class="navbar-left">
                     <img src="{{ url_for('static', filename='icons/cidade.png') }}" alt="" class="icon-city">
                 </div>
@@ -73,7 +76,7 @@
                                 <a href="">{{ user[:15] }}</a>
                             {% endif %}
                             <a href="">Editar Perfil</a>
-                            <a href="">Divulgar</a>
+                            <a href="{{ url_for('divulgar') }}">Divulgar</a>
                             <a href="{{ url_for('login') }}">Trocar usuario</a>
                             <a href="{{ url_for('logout') }}">Sair</a>
                         </div>
