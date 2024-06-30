@@ -1,21 +1,31 @@
 var hamburger = document.querySelector(".Hamburger");
 var container = document.querySelector(".container");
 var sidebar = document.querySelector(".Sidebar");
+const lojasContainer = document.querySelector('.lojas-container');
+let cont = 0
 
-// Função para abrir o menu hamburguer
-hamburger.addEventListener("click", function(){
+// Função para abrir o menu hambúrguer
+hamburger.addEventListener("click", function() {
     container.classList.toggle("show-menu");
-    const lojasContainer = document.querySelector('.lojas-container');
-    lojasContainer.classList.add('disabled-click');
+    if (cont % 2 !== 0) {
+        console.log("O número é par");
+        lojasContainer.classList.remove('disabled-click');
+    } else {
+        lojasContainer.classList.add('disabled-click');
+    }
+    console.log(cont);
+    cont += 1;
 });
+
+
 
 // Função para fechar o menu ao clicar fora
 document.addEventListener("click", function(event) {
     if (container.classList.contains("show-menu")) {
         if (!hamburger.contains(event.target) && !sidebar.contains(event.target)) {
             container.classList.remove("show-menu");
-            const lojasContainer = document.querySelector('.lojas-container');
-            lojasContainer.classList.remove('disabled-click');                 
+            lojasContainer.classList.remove('disabled-click');
+            cont = cont += 1                
         }
     }
   });
@@ -39,7 +49,7 @@ document.addEventListener('DOMContentLoaded', function() {
         
         // Exibir o menu suspenso
         dropdownContent.style.display = 'block';
-        const lojasContainer = document.querySelector('.lojas-container');
+        
         lojasContainer.classList.add('disable-click');
 
     });
@@ -52,8 +62,7 @@ document.addEventListener('DOMContentLoaded', function() {
         
         // Se o clique ocorreu fora do menu suspenso e do link de perfil, feche o menu
         if (!isClickInsideDropdownContent && !isClickInsideProfileLink) {
-            dropdownContent.style.display = 'none';
-            const lojasContainer = document.querySelector('.lojas-container');
+            dropdownContent.style.display = 'none';  
             lojasContainer.classList.remove("disable-click")
         }
     });

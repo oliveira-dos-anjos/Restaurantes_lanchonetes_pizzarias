@@ -4,12 +4,12 @@
 <link rel="stylesheet" href="{{ url_for('static', filename='css/divulgar.css') }}">
 
 
-<section class="">
+<section class="lojas-container">
  
     <div class="container-divulgar">
         <div class="image-upload">
             <label for="upload">
-                <img src="placeholder.jpg" alt="Upload Image">
+                <img id="preview-image" src="{{ url_for('static', filename='icons/img_loja.png')}}" alt="Upload Image">
             </label>
             <input type="file" id="upload" accept="image/*">
         </div>
@@ -19,10 +19,23 @@
                 <input type="text" id="store-name" name="store-name">
 
                 <label for="store-hours">Horário de Funcionamento:</label>
-                <input type="text" id="store-hours" name="store-hours">
-
+                <div class="time-picker">
+                    <input type="time" id="opening-time" name="opening-time" step="1800"> <!-- step em segundos para intervalos de 30 minutos -->
+                    <input type="time" id="closing-time" name="closing-time" step="1800"> <!-- step em segundos para intervalos de 30 minutos -->
+                </div>
+                
                 <label for="delivery-time">Tempo de Entrega:</label>
-                <input type="text" id="delivery-time" name="delivery-time">
+                <div class="time-picker">
+                    <label for="min-delivery-time">Mínimo:</label>
+                    <input type="time" id="min-delivery-time" name="min-delivery-time" step="1800"> <!-- step em segundos para intervalos de 30 minutos -->
+                    <span id="min-delivery-value">00:00</span>
+                
+                    <label for="max-delivery-time">Máximo:</label>
+                    <input type="time" id="max-delivery-time" name="max-delivery-time" step="1800"> <!-- step em segundos para intervalos de 30 minutos -->
+                    <span id="max-delivery-value">00:00</span>
+                </div>
+                
+                
 
                 <label for="address">Endereço:</label>
                 <input type="text" id="address" name="address">
@@ -36,6 +49,5 @@
     </div>
 
 </section>
-
-
+<script src="{{ url_for('static', filename='js/divulgar.js') }}"></script>
 {% endblock %}

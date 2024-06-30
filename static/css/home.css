@@ -338,7 +338,7 @@ input[type="search"] + button:hover {
     }
     
     .show-menu #line1{
-        transform: rotate(45deg) translate(.3rem, .3rem);
+        transform: rotate(45deg) translate(.4rem, .3rem);
         z-index: 100;
         transition: all .5s;
     }
@@ -363,7 +363,7 @@ input[type="search"] + button:hover {
         top: 0;
         left: -20rem;
         transition: all .5s;
-        z-index: 10;
+        z-index: 100;
         opacity: 1;
     }
 

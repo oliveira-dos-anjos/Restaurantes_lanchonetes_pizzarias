@@ -19,6 +19,7 @@ body {
     border-bottom: 1px solid #e70d0d;
     border-top: 1px solid #e70d0d;
     border-radius: 10px;
+    z-index: 20;
 }
 
 
@@ -28,7 +29,7 @@ body {
     justify-content: center;
     align-items: center;
     background-color: #1a3c5e;
-    position: relative;
+    position: static;
 }
 
 .image-upload img {
@@ -77,4 +78,15 @@ input[type="text"] {
 
 .btn:hover {
     background-color: #218838;
+}
+
+
+@media  only screen and (max-width: 599px){
+
+
+    .container-divulgar{
+        align-items: center;
+        max-width: 340px;
+    }
+
 }
