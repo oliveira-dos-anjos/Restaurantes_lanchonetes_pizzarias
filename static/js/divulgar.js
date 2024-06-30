@@ -16,7 +16,6 @@ function previewImage(event) {
 const uploadInput = document.getElementById('upload');
 uploadInput.addEventListener('change', previewImage);
 
-
 // Atualiza o valor exibido para o tempo mínimo de entrega
 const minDeliveryTime = document.getElementById('min-delivery-time');
 const minDeliveryValue = document.getElementById('min-delivery-value');
