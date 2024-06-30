@@ -7,6 +7,7 @@ body {
     background-color: #d4792e;
     margin: 0;
     padding: 0;
+    z-index: -1;
 }
 
 .container-divulgar{
@@ -15,20 +16,18 @@ body {
     align-items: center;
     justify-content: center;
     display: flex;
-    background-color: rgba(102, 100, 100, 0.7); /* Fundo preto com 80% de transparência */
+    background-color: rgba(102, 100, 100, 0.7);
     border-bottom: 1px solid #e70d0d;
     border-top: 1px solid #e70d0d;
     border-radius: 10px;
-    z-index: 20;
 }
 
 
 .image-upload {
-    flex: 1;
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: #1a3c5e;
+    background-color: rgba(102, 100, 100, 0.7);
     position: static;
 }
 

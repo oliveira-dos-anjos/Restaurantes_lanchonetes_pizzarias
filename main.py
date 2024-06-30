@@ -1,4 +1,3 @@
-import os
 import sqlite3
 from app.models import *
 from app import *
@@ -13,7 +12,7 @@ original_content = {
     "content": ""
 }
 
-criar_tabelas()
+create_table()
 
 # Rota para saída de usuário
 @app.route('/logout')

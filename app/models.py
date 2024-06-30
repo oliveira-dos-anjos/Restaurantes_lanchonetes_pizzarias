@@ -15,7 +15,7 @@ def conectar_banco():
     return conn
 
 # Função para criar as tabelas no banco de dados
-def criar_tabelas():
+def create_table():
     conn = conectar_banco()
     cursor = conn.cursor()
     cursor.execute('''
@@ -30,20 +30,19 @@ def criar_tabelas():
     conn.close()
 
 def create_new_table():
-    # Definindo o comando SQL para criar a nova tabela
     conn = conectar_banco()
     cursor = conn.cursor()
-    create_table_query = '''
+    cursor.execute('''
     CREATE TABLE IF NOT EXISTS lojas (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
-    store_name TEXT,
+        store_name TEXT,
         store_details TEXT,
         opening_hours TEXT,
+        contact NUMBER,
+        address TEXT,
         image_path TEXT
     )
-    '''
-    # Executando o comando SQL para criar a nova tabela
-    conn.execute(create_table_query)
+    ''')
     conn.commit()
     conn.close()
 
@@ -128,4 +127,4 @@ class User:
             return f"Erro ao atualizar a senha:", error
 
 create_new_table()
-criar_tabelas()
+create_table()
