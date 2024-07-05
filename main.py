@@ -60,11 +60,38 @@ def home():
         return render_template("home.html", content=original_content, user=user)
 
 #Rota para pagina de divulgação
-@app.route("/divulgar", methods=["GET", "POST"])
+@app.route('/divulgar', methods=['GET', 'POST'])
 def divulgar():
-    # Recuperar usuário da sessao
+    # Recuperar usuário da sessão (se necessário)
     user = session.get('user')
+    
+    if request.method == 'POST':
+        # Recuperar a imagem enviada
+        image = request.files.get('image-src')
+        store_name = request.form.get('store-name')
+        opening_time = request.form.get('opening-time')
+        closing_time = request.form.get('closing-time')
+        min_delivery_time = request.form.get('min-delivery-time')
+        max_delivery_time = request.form.get('max-delivery-time')
+        address = request.form.get('address')
+        phone = request.form.get('phone')
 
+        # Verifica e cria o diretório para salvar a imagem
+        save_dir = 'static/imagens_lojas'  # Defina seu diretório de salvamento aqui
+
+        if not os.path.exists(save_dir):
+            os.makedirs(save_dir)
+
+        # Salva a imagem se ela for enviada
+        if image:
+            image_path = os.path.join(save_dir, image.filename)
+            image.save(image_path)
+            print(f"Imagem salva em: {image_path}")
+
+
+        # Exibe os dados no terminal para depuração
+        print(f"\033[31mImagem da Loja: {image}\nLoja: {store_name}\nHorário de Abertura: {opening_time}\nHorário de Fechamento: {closing_time}\nTempo Mínimo de Entrega: {min_delivery_time}\nTempo Máximo de Entrega: {max_delivery_time}\nEndereço: {address}\nTelefone: {phone}\033[0m")
+    
     return render_template("divulgar.html", user=user)
 
 #rota para acessar o perfil da loja
@@ -112,6 +139,7 @@ def login():
 
     # Passar a mensagem para o template e renderizar o template
     return render_template("login.html", mensagem=mensagem)
+
 
 #Rota para registrar novo usuario
 @app.route('/register', methods=['GET', 'POST'])
@@ -259,7 +287,6 @@ def search():
     except sqlite3.Error as e:
         # Se ocorrer uma exceção ao executar a consulta SQL, renderize uma página com mensagem de erro
         return render_template("home.html", content=original_content, user=user)
-
-    
+ 
 if __name__ == "__main__":
     app.run(debug=True)

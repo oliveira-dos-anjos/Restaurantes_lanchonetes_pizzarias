@@ -31,3 +31,23 @@ const maxDeliveryValue = document.getElementById('max-delivery-value');
 maxDeliveryTime.addEventListener('input', function() {
     maxDeliveryValue.textContent = this.value;
 });
+
+
+document.addEventListener("DOMContentLoaded", function() {
+    var imageUpload = document.querySelector('.image-upload');
+    var previewImage = imageUpload.querySelector('img');
+    var imageSrcInput = document.getElementById('image-src'); 
+
+    imageUpload.addEventListener('change', function(event) {
+        var file = event.target.files[0];
+        var reader = new FileReader();
+
+        reader.onload = function(e) {
+            previewImage.src = e.target.result;
+            imageSrcInput.value = e.target.result;
+        };
+
+        reader.readAsDataURL(file);
+        console.log(file)
+    });
+});

@@ -3,9 +3,7 @@
 {% block content %}
 <link rel="stylesheet" href="{{ url_for('static', filename='css/divulgar.css') }}">
 
-
 <section class="lojas-container">
- 
     <div class="container-divulgar">
         <div class="image-upload">
             <label for="upload">
@@ -14,7 +12,7 @@
             <input type="file" id="upload" accept="image/*">
         </div>
         <div class="info-fields">
-            <form>
+            <form id="divulgar-form" action="/divulgar" method="POST" enctype="multipart/form-data">
                 <label for="store-name">Nome da Loja:</label>
                 <input type="text" id="store-name" name="store-name">
 
@@ -34,7 +32,6 @@
                     <input type="time" id="max-delivery-time" name="max-delivery-time" step="1800">
                     <span id="max-delivery-value">00:00</span>
                 </div>
-                
 
                 <label for="address">Endereço:</label>
                 <input type="text" id="address" name="address">
@@ -42,11 +39,14 @@
                 <label for="phone">Telefone:</label>
                 <input type="text" id="phone" name="phone">
 
+                <!-- Campo oculto para enviar o caminho da imagem -->
+                <input type="hidden" id="image-src" name="image-src">
+
                 <button class="btn" type="submit">Cadastrar Loja</button>
             </form>
         </div>
     </div>
-
 </section>
+
 <script src="{{ url_for('static', filename='js/divulgar.js') }}"></script>
 {% endblock %}

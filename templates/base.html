@@ -39,7 +39,8 @@
                     </div>
                     <nav>
                         <ul class="menu">
-                            <li class="menu-item"><a href="{{ url_for('home') }}" class="menu-link">Home</a></li>
+                            <li class="menu-item"><a href="{{ url_for('home')}}" class="menu-link">Home</a></li>
+                            <li class="menu-item"><a href="{{ url_for('divulgar') }}" class="menu-link">Divulgar</a></li>
                             <li class="menu-item"><a href="/search?q=Pizzaria" class="menu-link">Pizzarias</a></li>
                             <li class="menu-item"><a href="/search?q=Bare" class="menu-link">Bares</a></li>
                             <li class="menu-item"><a href="/search?q=Restaurante" class="menu-link">Restaurantes</a></li>
@@ -54,7 +55,10 @@
                         <button class="searchButton" type="submit"></button>
                     </form>
                 </div>
-
+                <div class="navbar-center">
+                    <a href="{{ url_for('divulgar') }}" class="menu-link">Divulgar</a>
+                 </div>
+                 <div class="barra-vertical"></div>
                 <div class="navbar-right">
                     <div class="usuario">
                         {% if user %}

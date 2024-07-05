@@ -53,6 +53,8 @@ document.addEventListener("DOMContentLoaded", function() {
 function selectStore(event, storeName, storeDetails, openingHours, imagePath) {
     event.preventDefault();
 
+    console.log("aqui veio")
+
     // Crie um formulário para enviar os dados para o servidor
     let form = document.createElement('form');
     form.method = 'POST';
@@ -83,6 +85,7 @@ function selectStore(event, storeName, storeDetails, openingHours, imagePath) {
     form.appendChild(detailsField);
     form.appendChild(hoursField);
     form.appendChild(imageField);
+
     
     // Adicione o formulário ao corpo do documento e envie-o
     document.body.appendChild(form);

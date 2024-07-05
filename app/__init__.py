@@ -1,3 +1,4 @@
+import os
 import pyotp
 import smtplib
 from flask import Flask, jsonify
@@ -67,3 +68,13 @@ def enviar_email_otp(destinatario, codigo):
     except Exception as e:
         print("Erro ao enviar email:", e)
         return None
+    
+def img_path():
+    
+    # Verificar se o diretório 'imagens_lojas' existe, e criar se não existir
+    imagens_lojas_dir = 'static/imagens_lojas'
+    if not os.path.exists(imagens_lojas_dir):
+        os.makedirs(imagens_lojas_dir)
+    
+    return imagens_lojas_dir
+
