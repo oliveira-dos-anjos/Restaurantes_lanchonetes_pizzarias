@@ -1,6 +1,8 @@
+import base64
 import sqlite3
-from app.models import *
 from app import *
+from app.models import *
+from werkzeug.utils import secure_filename
 from werkzeug.security import generate_password_hash
 from flask import Flask, request, render_template, redirect, url_for, session
 
@@ -12,6 +14,10 @@ original_content = {
     "content": ""
 }
 
+# Configurar a pasta de upload
+configure_upload_folder(app)
+
+# Criando tabela para usuarios
 create_table()
 
 # Rota para saída de usuário
@@ -66,8 +72,7 @@ def divulgar():
     user = session.get('user')
     
     if request.method == 'POST':
-        # Recuperar a imagem enviada
-        image = request.files.get('image-src')
+        # Recuperar os dados do formulário
         store_name = request.form.get('store-name')
         opening_time = request.form.get('opening-time')
         closing_time = request.form.get('closing-time')
@@ -75,23 +80,31 @@ def divulgar():
         max_delivery_time = request.form.get('max-delivery-time')
         address = request.form.get('address')
         phone = request.form.get('phone')
+        image_data = request.files.get('preview-image')
 
-        # Verifica e cria o diretório para salvar a imagem
-        save_dir = 'static/imagens_lojas'  # Defina seu diretório de salvamento aqui
+        # Verificar se o arquivo foi enviado
+        if image_data and image_data.filename:
 
-        if not os.path.exists(save_dir):
-            os.makedirs(save_dir)
+            # Obter a extensão do arquivo
+            _, file_extension = os.path.splitext(image_data.filename)
 
-        # Salva a imagem se ela for enviada
-        if image:
-            image_path = os.path.join(save_dir, image.filename)
-            image.save(image_path)
-            print(f"Imagem salva em: {image_path}")
+            # Criar um nome de arquivo seguro com o nome da loja e a extensão original
+            filename = secure_filename(f"{store_name}{file_extension}")
 
+            # Construir o caminho para salvar o arquivo
+            save_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
 
-        # Exibe os dados no terminal para depuração
-        print(f"\033[31mImagem da Loja: {image}\nLoja: {store_name}\nHorário de Abertura: {opening_time}\nHorário de Fechamento: {closing_time}\nTempo Mínimo de Entrega: {min_delivery_time}\nTempo Máximo de Entrega: {max_delivery_time}\nEndereço: {address}\nTelefone: {phone}\033[0m")
-    
+            # Salvar o arquivo no caminho especificado
+            image_data.save(save_path)
+            
+            # Exibe os dados no terminal para depuração
+            print(f"\033[31mImagem da Loja: {filename if filename else 'Nenhuma imagem enviada'}\nLoja: {store_name}\nHorário de Abertura: {opening_time}\nHorário de Fechamento: {closing_time}\nTempo Mínimo de Entrega: {min_delivery_time}\nTempo Máximo de Entrega: {max_delivery_time}\nEndereço: {address}\nTelefone: {phone}\033[0m")
+
+            return redirect(url_for('divulgar'))
+        else:
+            # Tratar o caso em que nenhum arquivo foi enviado
+            return "Nenhum arquivo enviado ou o arquivo é inválido", 400
+
     return render_template("divulgar.html", user=user)
 
 #rota para acessar o perfil da loja

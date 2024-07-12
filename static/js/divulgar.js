@@ -12,9 +12,6 @@ function previewImage(event) {
     }
 }
 
-// Adiciona um evento de escuta para o input de arquivo
-const uploadInput = document.getElementById('upload');
-uploadInput.addEventListener('change', previewImage);
 
 // Atualiza o valor exibido para o tempo mínimo de entrega
 const minDeliveryTime = document.getElementById('min-delivery-time');
@@ -34,20 +31,24 @@ maxDeliveryTime.addEventListener('input', function() {
 
 
 document.addEventListener("DOMContentLoaded", function() {
-    var imageUpload = document.querySelector('.image-upload');
-    var previewImage = imageUpload.querySelector('img');
-    var imageSrcInput = document.getElementById('image-src'); 
+    var imageDiv = document.querySelector('.image-upload');  // Seleciona a div que contém a imagem
+    var previewImage = imageDiv.querySelector('img');        // Seleciona a tag <img> dentro da div
+    var imageSrcInput = document.getElementById('image-src'); // Campo oculto para armazenar os dados da imagem
+    var storeNameInput = document.getElementById('store-name'); // Campo para o nome da loja
 
-    imageUpload.addEventListener('change', function(event) {
+    // Evento quando a imagem é alterada
+    imageDiv.addEventListener('change', function(event) {
         var file = event.target.files[0];
         var reader = new FileReader();
 
         reader.onload = function(e) {
             previewImage.src = e.target.result;
-            imageSrcInput.value = e.target.result;
+            imageSrcInput.value = e.target.result; // Define o valor do campo oculto como base64 da imagem
         };
 
-        reader.readAsDataURL(file);
-        console.log(file)
+        if (file) {
+            reader.readAsDataURL(file); // Lê o arquivo como base64
+        }
     });
 });
+''

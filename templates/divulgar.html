@@ -5,17 +5,17 @@
 
 <section class="lojas-container">
     <div class="container-divulgar">
-        <div class="image-upload">
-            <label for="upload">
-                <img id="preview-image" src="{{ url_for('static', filename='icons/img_loja.png')}}" alt="Upload Image">
-            </label>
-            <input type="file" id="upload" accept="image/*">
-        </div>
-        <div class="info-fields">
-            <form id="divulgar-form" action="/divulgar" method="POST" enctype="multipart/form-data">
+        <form id="divulgar-form" action="/divulgar" method="POST" enctype="multipart/form-data">
+            <div class="image-upload">
+                <label for="upload">
+                    <img id="preview-image" src="{{ url_for('static', filename='icons/img_loja.png')}}" alt="Upload Image">
+                </label>
+                <input type="file" id="upload" name="preview-image" accept="image/*">
+            </div>
+            <div class="info-fields">
                 <label for="store-name">Nome da Loja:</label>
-                <input type="text" id="store-name" name="store-name">
-
+                <input type="text" id="store-name" name="store-name" required>
+    
                 <label for="store-hours">Horário de Funcionamento:</label>
                 <div class="time-picker">
                     <input type="time" id="opening-time" name="opening-time" step="1800"> 
@@ -32,20 +32,21 @@
                     <input type="time" id="max-delivery-time" name="max-delivery-time" step="1800">
                     <span id="max-delivery-value">00:00</span>
                 </div>
-
+    
                 <label for="address">Endereço:</label>
                 <input type="text" id="address" name="address">
-
+    
                 <label for="phone">Telefone:</label>
                 <input type="text" id="phone" name="phone">
-
+    
                 <!-- Campo oculto para enviar o caminho da imagem -->
                 <input type="hidden" id="image-src" name="image-src">
-
+    
                 <button class="btn" type="submit">Cadastrar Loja</button>
-            </form>
-        </div>
+            </div>
+        </form>
     </div>
+    
 </section>
 
 <script src="{{ url_for('static', filename='js/divulgar.js') }}"></script>

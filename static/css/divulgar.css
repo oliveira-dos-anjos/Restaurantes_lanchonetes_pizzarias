@@ -10,9 +10,9 @@ body {
     z-index: -1;
 }
 
-.container-divulgar{
-    max-width: 600px;
-    width: 200%;
+.container-divulgar {
+    max-width: 1000px;
+    width: 100%;
     align-items: center;
     justify-content: center;
     display: flex;
@@ -20,21 +20,26 @@ body {
     border-bottom: 1px solid #e70d0d;
     border-top: 1px solid #e70d0d;
     border-radius: 10px;
+    padding: 20px;
 }
 
+#divulgar-form {
+    display: flex;
+    flex-direction: row; /* Alinha os filhos em uma linha */
+    width: 100%;
+}
 
 .image-upload {
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: rgba(102, 100, 100, 0.7);
-    position: static;
+    background-color:  none;
+    margin-right: 20px; /* Espaço entre a imagem e os campos de informações */
 }
 
 .image-upload img {
-    width: 100%;
-    height: auto;
     max-width: 100px;
+    height: auto;
     cursor: pointer;
 }
 
@@ -43,25 +48,28 @@ body {
 }
 
 .info-fields {
-    flex: 2;
+    flex-grow: 1;
     padding: 20px;
-
+    background-color: rgba(255, 255, 255, 0.8);
+    border-radius: 10px;
 }
 
 form {
-    display: flex;
-    flex-direction: column;
+    width: 100%;
 }
 
 label {
     margin-top: 10px;
 }
 
-input[type="text"] {
+input[type="text"],
+input[type="time"] {
     margin-top: 5px;
     padding: 10px;
     border: 1px solid #ccc;
     border-radius: 3px;
+    width: 100%;
+    box-sizing: border-box;
 }
 
 .btn {
@@ -77,6 +85,23 @@ input[type="text"] {
 
 .btn:hover {
     background-color: #218838;
+}
+
+.time-picker {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.time-picker label,
+.time-picker input,
+.time-picker span {
+    flex: 1;
+    margin: 5px;
+}
+
+.time-picker input {
+    flex: 2;
 }
 
 

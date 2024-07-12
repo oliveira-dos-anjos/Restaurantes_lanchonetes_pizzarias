@@ -69,12 +69,10 @@ def enviar_email_otp(destinatario, codigo):
         print("Erro ao enviar email:", e)
         return None
     
-def img_path():
     
-    # Verificar se o diretório 'imagens_lojas' existe, e criar se não existir
-    imagens_lojas_dir = 'static/imagens_lojas'
-    if not os.path.exists(imagens_lojas_dir):
-        os.makedirs(imagens_lojas_dir)
-    
-    return imagens_lojas_dir
-
+# Função de configuração da pasta de upload
+def configure_upload_folder(app):
+    UPLOAD_FOLDER = os.path.join(app.root_path, 'static/imagens_lojas')
+    if not os.path.exists(UPLOAD_FOLDER):
+        os.makedirs(UPLOAD_FOLDER)  # Criar o diretório se não existir
+    app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
