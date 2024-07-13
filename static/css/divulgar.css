@@ -34,7 +34,7 @@ body {
     justify-content: center;
     align-items: center;
     background-color:  none;
-    margin-right: 20px; /* Espaço entre a imagem e os campos de informações */
+    margin-right: 20px;
 }
 
 .image-upload img {
@@ -64,7 +64,7 @@ label {
 
 input[type="text"],
 input[type="time"] {
-    margin-top: 5px;
+    margin-top: 10px;
     padding: 10px;
     border: 1px solid #ccc;
     border-radius: 3px;
@@ -93,6 +93,13 @@ input[type="time"] {
     align-items: center;
 }
 
+.time-picker-time {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 25%;
+}
+
 .time-picker label,
 .time-picker input,
 .time-picker span {
@@ -101,7 +108,7 @@ input[type="time"] {
 }
 
 .time-picker input {
-    flex: 2;
+    flex: 1;
 }
 
 
@@ -110,7 +117,65 @@ input[type="time"] {
 
     .container-divulgar{
         align-items: center;
-        max-width: 340px;
+        max-width: 360px;
+    }
+    
+    .image-upload {
+        margin-left: -1.2rem;
+        margin-right: 0px;
     }
 
-}
+    .image-upload img {
+        width: 80px;
+        height: 80px;
+    }
+
+    .info-fields {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        max-width: 270px;
+    }
+
+    .info-fields label,
+    .time-picker label {
+        width: 100%;
+        text-align: left;
+        margin-top: 10px;
+    }
+
+    .time-picker {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        margin-bottom: 1rem;
+        max-width: 35%;
+        margin-right: 10rem;
+    }
+
+    .time-picker-time {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        margin-bottom: 1rem;
+        max-width: 35%;
+        margin-right: 10rem;;
+        
+    }
+
+    .time-picker span {
+        margin-left: 8rem;
+        margin-top: -2rem;
+    }
+
+    .time-picker-time span{
+        margin-left: 8rem;
+        margin-top: -2rem;
+    }
+
+    .btn {
+        margin-top: 20px;
+        width: 100%;
+    }
+    
+    }

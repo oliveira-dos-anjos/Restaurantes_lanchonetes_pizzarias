@@ -5,14 +5,14 @@ from app.models import *
 from bs4 import BeautifulSoup
 
     
-def insert_data(conn, store_name, store_details, opening_hours, image_path):
+def insert_data(conn, store_name, store_details, opening_hours, address, contact,image_path):
     # Definindo o comando SQL para inserir os dados na tabela
     insert_query = '''
-    INSERT INTO lojas (store_name, store_details, opening_hours, image_path)
-    VALUES (?, ?, ?, ?)
+    INSERT INTO lojas (store_name, store_details, opening_hours, address, contact,image_path)
+    VALUES (?, ?, ?, ?, ?, ?)
     '''
     # Executando o comando SQL para inserir os dados na tabela
-    conn.execute(insert_query, (store_name, store_details, opening_hours, image_path))
+    conn.execute(insert_query, (store_name, store_details, opening_hours, address, contact,image_path))
     # Comitando as mudanças
     conn.commit()
 
@@ -41,6 +41,9 @@ def search_and_save(city):
         opening_hours = result.find('div', class_='open').text.strip() if result.find('div', class_='open') else 'Não disponível'
         image_link = result.find('img')['src'] if result.find('img') else None
         
+        address = None
+        contact = None
+        
         # Verificar se a loja já existe no banco de dados
         if not loja_existe(conn, store_name):
 
@@ -67,7 +70,7 @@ def search_and_save(city):
 
             
             # Inserir os dados na nova tabela
-            insert_data(conn, store_name, store_details, opening_hours, image_path)
+            insert_data(conn, store_name, store_details, opening_hours, address, contact,image_path)
         
     # Fechar a conexão com o banco de dados
     conn.close()

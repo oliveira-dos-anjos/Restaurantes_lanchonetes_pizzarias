@@ -10,16 +10,16 @@
                 <label for="upload">
                     <img id="preview-image" src="{{ url_for('static', filename='icons/img_loja.png')}}" alt="Upload Image">
                 </label>
-                <input type="file" id="upload" name="preview-image" accept="image/*">
+                <input type="file" id="upload" name="preview-image" accept="image/*" required>
             </div>
             <div class="info-fields">
                 <label for="store-name">Nome da Loja:</label>
                 <input type="text" id="store-name" name="store-name" required>
     
-                <label for="store-hours">Horário de Funcionamento:</label>
-                <div class="time-picker">
-                    <input type="time" id="opening-time" name="opening-time" step="1800"> 
+                <label for="store-hours">Aberto até: </label>
+                <div class="time-picker-time">
                     <input type="time" id="closing-time" name="closing-time" step="1800"> 
+                    <span id="closing-time-value">00:00</span>
                 </div>
                 
                 <label for="delivery-time">Tempo de Entrega:</label>

@@ -70,21 +70,27 @@ def home():
 def divulgar():
     # Recuperar usuário da sessão (se necessário)
     user = session.get('user')
+
+    #Conectando ao banco de dados
+    conn = conectar_banco()
+    cursor = conn.cursor()
     
     if request.method == 'POST':
         # Recuperar os dados do formulário
         store_name = request.form.get('store-name')
-        opening_time = request.form.get('opening-time')
         closing_time = request.form.get('closing-time')
         min_delivery_time = request.form.get('min-delivery-time')
         max_delivery_time = request.form.get('max-delivery-time')
         address = request.form.get('address')
-        phone = request.form.get('phone')
+        contact = request.form.get('phone')
         image_data = request.files.get('preview-image')
 
         # Verificar se o arquivo foi enviado
         if image_data and image_data.filename:
 
+            opening_hours = f"Fecha as: {closing_time}"
+            store_details = f"Entrega {min_delivery_time} min - {max_delivery_time} min"
+            
             # Obter a extensão do arquivo
             _, file_extension = os.path.splitext(image_data.filename)
 
@@ -96,11 +102,15 @@ def divulgar():
 
             # Salvar o arquivo no caminho especificado
             image_data.save(save_path)
-            
-            # Exibe os dados no terminal para depuração
-            print(f"\033[31mImagem da Loja: {filename if filename else 'Nenhuma imagem enviada'}\nLoja: {store_name}\nHorário de Abertura: {opening_time}\nHorário de Fechamento: {closing_time}\nTempo Mínimo de Entrega: {min_delivery_time}\nTempo Máximo de Entrega: {max_delivery_time}\nEndereço: {address}\nTelefone: {phone}\033[0m")
 
-            return redirect(url_for('divulgar'))
+            image_path = f"static/imagens_lojas/{filename}"
+
+            # Inserir os dados na nova tabela
+            insert_data(conn, store_name, store_details, opening_hours, address, contact,image_path)
+
+
+
+            return redirect(url_for('divulgar', user=user))
         else:
             # Tratar o caso em que nenhum arquivo foi enviado
             return "Nenhum arquivo enviado ou o arquivo é inválido", 400

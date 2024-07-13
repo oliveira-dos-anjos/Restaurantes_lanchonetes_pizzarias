@@ -14,6 +14,14 @@ function previewImage(event) {
 
 
 // Atualiza o valor exibido para o tempo mínimo de entrega
+const closingTime = document.getElementById('closing-time');
+const closingTimeValue= document.getElementById('closing-time-value');
+
+closingTime.addEventListener('input', function() {
+    closingTimeValue.textContent = this.value;
+});
+
+// Atualiza o valor exibido para o tempo mínimo de entrega
 const minDeliveryTime = document.getElementById('min-delivery-time');
 const minDeliveryValue = document.getElementById('min-delivery-value');
 
