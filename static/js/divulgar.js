@@ -13,13 +13,33 @@ function previewImage(event) {
 }
 
 
-// Atualiza o valor exibido para o tempo mínimo de entrega
+// Atualiza o valor exibido para o horário de encerramento
 const closingTime = document.getElementById('closing-time');
 const closingTimeValue= document.getElementById('closing-time-value');
 
 closingTime.addEventListener('input', function() {
     closingTimeValue.textContent = this.value;
 });
+
+document.addEventListener('DOMContentLoaded', () => {
+    const minDeliveryTimeInput = document.getElementById('min-delivery-time');
+    const minDeliveryValueSpan = document.getElementById('min-delivery-value');
+    const maxDeliveryTimeInput = document.getElementById('max-delivery-time');
+    const maxDeliveryValueSpan = document.getElementById('max-delivery-value');
+
+    minDeliveryTimeInput.addEventListener('input', () => {
+        minDeliveryValueSpan.textContent = minDeliveryTimeInput.value;
+    });
+
+    maxDeliveryTimeInput.addEventListener('input', () => {
+        maxDeliveryValueSpan.textContent = maxDeliveryTimeInput.value;
+    });
+
+    // Inicializa os valores com 00:00
+    minDeliveryValueSpan.textContent = minDeliveryTimeInput.value;
+    maxDeliveryValueSpan.textContent = maxDeliveryTimeInput.value;
+});
+
 
 // Atualiza o valor exibido para o tempo mínimo de entrega
 const minDeliveryTime = document.getElementById('min-delivery-time');

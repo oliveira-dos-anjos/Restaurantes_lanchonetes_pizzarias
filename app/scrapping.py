@@ -4,25 +4,13 @@ from app import *
 from app.models import *
 from bs4 import BeautifulSoup
 
-    
-def insert_data(conn, store_name, store_details, opening_hours, address, contact,image_path):
-    # Definindo o comando SQL para inserir os dados na tabela
-    insert_query = '''
-    INSERT INTO lojas (store_name, store_details, opening_hours, address, contact,image_path)
-    VALUES (?, ?, ?, ?, ?, ?)
-    '''
-    # Executando o comando SQL para inserir os dados na tabela
-    conn.execute(insert_query, (store_name, store_details, opening_hours, address, contact,image_path))
-    # Comitando as mudanças
-    conn.commit()
-
 #Função para verificar se a loja existe no banco
 def loja_existe(conn, store_name):
     cursor = conn.cursor()
     cursor.execute('SELECT 1 FROM lojas WHERE store_name = ?', (store_name,))
     return cursor.fetchone() is not None
 
-
+#Função para fazer uma busca por lojas na região
 def search_and_save(city):
     search_url = f"https://kekanto.com.br/{city}"
     response = requests.get(search_url)

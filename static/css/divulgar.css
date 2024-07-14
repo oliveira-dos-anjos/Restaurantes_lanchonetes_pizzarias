@@ -111,6 +111,13 @@ input[type="time"] {
     flex: 1;
 }
 
+.error-message {
+    color: red;
+}
+
+.success-message {
+    color: rgb(3, 247, 3); 
+}
 
 @media  only screen and (max-width: 599px){
 

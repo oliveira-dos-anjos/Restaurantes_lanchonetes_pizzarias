@@ -73,7 +73,6 @@ def divulgar():
 
     #Conectando ao banco de dados
     conn = conectar_banco()
-    cursor = conn.cursor()
     
     if request.method == 'POST':
         # Recuperar os dados do formulário
@@ -85,35 +84,53 @@ def divulgar():
         contact = request.form.get('phone')
         image_data = request.files.get('preview-image')
 
-        # Verificar se o arquivo foi enviado
-        if image_data and image_data.filename:
+        # Verificar se a loja já existe no banco de dados
+        if not loja_existe(conn, store_name):
 
-            opening_hours = f"Fecha as: {closing_time}"
-            store_details = f"Entrega {min_delivery_time} min - {max_delivery_time} min"
+            # Verificar se o arquivo foi enviado
+            if image_data and image_data.filename:
+
+                opening_hours = f"Fecha as: {closing_time}"
+                if closing_time == "":
+                    opening_hours = "Não encontrado"
+
+                print(min_delivery_time, max_delivery_time)
+
+                if min_delivery_time != "00:00" or max_delivery_time != "00:00":
+                    store_details = f"Entrega {min_delivery_time[-2:]} min - {max_delivery_time} min"
+                else:
+                    store_details = "Não informado"
+
+                # Obter a extensão do arquivo
+                _, file_extension = os.path.splitext(image_data.filename)
+
+                # Criar um nome de arquivo seguro com o nome da loja e a extensão original
+                filename = secure_filename(f"{store_name}{file_extension}")
+
+                # Construir o caminho para salvar o arquivo
+                save_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
+
+                # Salvar o arquivo no caminho especificado
+                image_data.save(save_path)
+
+                image_path = f"static/imagens_lojas/{filename}"
+
+                # Inserir os dados na nova tabela
+                insert_store(conn, store_name, store_details, opening_hours, address, contact,image_path)
+
+                conn.close()
+
+                msg = "Loja cadastrada com sucesso"
+
+                return render_template('divulgar.html', user=user, msg=msg)
+            else:
+                # Tratar o caso em que nenhum arquivo foi enviado
+                return "Nenhum arquivo enviado ou o arquivo é inválido", 400
             
-            # Obter a extensão do arquivo
-            _, file_extension = os.path.splitext(image_data.filename)
-
-            # Criar um nome de arquivo seguro com o nome da loja e a extensão original
-            filename = secure_filename(f"{store_name}{file_extension}")
-
-            # Construir o caminho para salvar o arquivo
-            save_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
-
-            # Salvar o arquivo no caminho especificado
-            image_data.save(save_path)
-
-            image_path = f"static/imagens_lojas/{filename}"
-
-            # Inserir os dados na nova tabela
-            insert_data(conn, store_name, store_details, opening_hours, address, contact,image_path)
-
-
-
-            return redirect(url_for('divulgar', user=user))
         else:
-            # Tratar o caso em que nenhum arquivo foi enviado
-            return "Nenhum arquivo enviado ou o arquivo é inválido", 400
+            mensagem = "Nome de loja existente, altere o nome ou numero da loja"
+            return render_template("divulgar.html", user=user, mensagem=mensagem)
+        
 
     return render_template("divulgar.html", user=user)
 

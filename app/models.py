@@ -14,7 +14,17 @@ def conectar_banco():
     conn = sqlite3.connect(db_path)
     return conn
 
-# Função para criar as tabelas no banco de dados
+#Função para liberar o primeiro id do banco movendo todas as lojas para o proximo id
+def shift_ids(conn):
+    cursor = conn.cursor()
+    # Move todos os IDs para o próximo número, começando do maior para o menor
+    cursor.execute("SELECT id FROM lojas ORDER BY id DESC")
+    ids = cursor.fetchall()
+    for id_tuple in ids:
+        cursor.execute("UPDATE lojas SET id = id + 1 WHERE id = ?", (id_tuple[0],))
+    conn.commit()
+
+# Função para criar tabela usuários banco de dados
 def create_table():
     conn = conectar_banco()
     cursor = conn.cursor()
@@ -29,6 +39,7 @@ def create_table():
     conn.commit()
     conn.close()
 
+#Função para criar tabela para lojas
 def create_new_table():
     conn = conectar_banco()
     cursor = conn.cursor()
@@ -43,6 +54,34 @@ def create_new_table():
         image_path TEXT
     )
     ''')
+    conn.commit()
+    conn.close()
+
+#Função para inserir novos dados manualmente atraves da pagina divulgar
+def insert_store(conn, store_name, store_details, opening_hours, address, contact, image_path):
+    cursor = conn.cursor()
+    # Primeiro, movemos todos os IDs existentes para cima
+    shift_ids(conn)
+
+    # Então, inserimos a nova loja no ID 1
+    insert_query = '''
+    INSERT INTO lojas (id, store_name, store_details, opening_hours, address, contact, image_path)
+    VALUES (?, ?, ?, ?, ?, ?, ?)
+    '''
+    cursor.execute(insert_query, (1, store_name, store_details, opening_hours, address, contact, image_path))
+    conn.commit()
+    conn.close()
+
+#Função para inserir dados de scrapping ao banco
+def insert_data(conn, store_name, store_details, opening_hours, address, contact,image_path):
+    # Definindo o comando SQL para inserir os dados na tabela
+    insert_query = '''
+    INSERT INTO lojas (store_name, store_details, opening_hours, address, contact,image_path)
+    VALUES (?, ?, ?, ?, ?, ?)
+    '''
+    # Executando o comando SQL para inserir os dados na tabela
+    conn.execute(insert_query, (store_name, store_details, opening_hours, address, contact,image_path))
+    # Comitando as mudanças
     conn.commit()
     conn.close()
 

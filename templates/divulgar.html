@@ -6,6 +6,8 @@
 <section class="lojas-container">
     <div class="container-divulgar">
         <form id="divulgar-form" action="/divulgar" method="POST" enctype="multipart/form-data">
+        
+            
             <div class="image-upload">
                 <label for="upload">
                     <img id="preview-image" src="{{ url_for('static', filename='icons/img_loja.png')}}" alt="Upload Image">
@@ -13,23 +15,33 @@
                 <input type="file" id="upload" name="preview-image" accept="image/*" required>
             </div>
             <div class="info-fields">
+                
+                <div class="msg">
+                    {% if mensagem %}
+                        <p class="error-message">{{ mensagem }}</p>
+                    {% endif %}               
+                    {% if msg %}
+                        <p class="success-message">{{ msg }}</p>
+                    {% endif %}
+                </div>
+
                 <label for="store-name">Nome da Loja:</label>
                 <input type="text" id="store-name" name="store-name" required>
     
                 <label for="store-hours">Aberto até: </label>
                 <div class="time-picker-time">
-                    <input type="time" id="closing-time" name="closing-time" step="1800"> 
+                    <input type="time" id="closing-time" name="closing-time" step="300"> 
                     <span id="closing-time-value">00:00</span>
                 </div>
                 
                 <label for="delivery-time">Tempo de Entrega:</label>
                 <div class="time-picker">
                     <label for="min-delivery-time">Mínimo:</label>
-                    <input type="time" id="min-delivery-time" name="min-delivery-time" step="1800">
+                    <input type="time" id="min-delivery-time" name="min-delivery-time" step="300" value="00:00">
                     <span id="min-delivery-value">00:00</span>
                 
                     <label for="max-delivery-time">Máximo:</label>
-                    <input type="time" id="max-delivery-time" name="max-delivery-time" step="1800">
+                    <input type="time" id="max-delivery-time" name="max-delivery-time" step="300" value="00:00">
                     <span id="max-delivery-value">00:00</span>
                 </div>
     
