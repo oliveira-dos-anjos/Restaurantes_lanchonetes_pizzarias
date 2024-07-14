@@ -6,17 +6,17 @@ from .celery_config import make_celery
 from email.mime.text import MIMEText
 from .scrapping import *
 
+
 app = Flask(__name__)
 
-app.config.update(
-    CELERY_BROKER_URL='redis://localhost:6379/0',  # URL do broker do Celery (por exemplo, Redis)
-    CELERY_RESULT_BACKEND='redis://localhost:6379/0'  # URL do backend de resultados do Celery (por exemplo, Redis)
-)
 
 # Configuração do banco de dados do Render
-url_render = "postgres://dados_clientes_user:ofRjWHwYqWFrFV4KpX8LcDz22nHuYlzo@dpg-cnaukp8l6cac73a3ra9g-a.oregon-postgres.render.com/dados_clientes"
+url_render = "postgresql://locais_na_regiao_user:Kt7jO2Gp0AItHphEktRs4Xs16cXB8W9F@dpg-cq09p8aju9rs73aqcqvg-a.oregon-postgres.render.com/locais_na_regiao"
 app.config['SQLALCHEMY_DATABASE_URI'] = url_render
 
+app.config.update(
+    CELERY_BROKER_URL='redis://localhost:6379/0', 
+    CELERY_RESULT_BACKEND='redis://localhost:6379/0')
 celery = make_celery(app)
 
 @celery.task
