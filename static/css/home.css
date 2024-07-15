@@ -501,11 +501,15 @@ input[type="search"] + button:hover {
     margin-right: -30%;    
 }
    .search{
+        margin-left: 2%;
         z-index: 100;
         display: block;
         right: auto;
    }
 
+   .navbar-center{
+    margin-left: -5%;
+   }
 
    .main-content{
         margin-left: 32%;

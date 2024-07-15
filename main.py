@@ -141,11 +141,25 @@ def profile():
     user = session.get('user')
 
     store_name = request.form.get('store_name')
-    store_details = request.form.get('store_details')
-    opening_hours = request.form.get('opening_hours')
-    image_path = request.form.get('image_path')
+    
+    conn = conectar_banco()
+    store = conn.execute('SELECT * FROM lojas WHERE store_name = ?', (store_name,)).fetchone()
 
-    # Agora você pode usar esses dados no seu template ou processamento adicional
+
+    conn.close()
+    
+
+    if store:
+        store_details = store[2]
+        opening_hours = store[3]
+        image_path = store[6]
+    else:
+        store_details = "Detalhes não encontrados"
+        opening_hours = "Horário de funcionamento não encontrado"
+        image_path = "Caminho da imagem não encontrado"
+
+    
+
     return render_template('profile.html', store_name=store_name, store_details=store_details, opening_hours=opening_hours, image_path=image_path, user=user)
 
 #Rota para area de login

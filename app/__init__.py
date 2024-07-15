@@ -16,7 +16,9 @@ app.config['SQLALCHEMY_DATABASE_URI'] = url_render
 
 app.config.update(
     CELERY_BROKER_URL='redis://localhost:6379/0', 
-    CELERY_RESULT_BACKEND='redis://localhost:6379/0')
+    CELERY_RESULT_BACKEND='redis://localhost:6379/0'
+)
+
 celery = make_celery(app)
 
 @celery.task

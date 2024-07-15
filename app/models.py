@@ -59,6 +59,7 @@ def create_new_table():
 
 #Função para inserir novos dados manualmente atraves da pagina divulgar
 def insert_store(conn, store_name, store_details, opening_hours, address, contact, image_path):
+
     cursor = conn.cursor()
     # Primeiro, movemos todos os IDs existentes para cima
     shift_ids(conn)
@@ -70,10 +71,10 @@ def insert_store(conn, store_name, store_details, opening_hours, address, contac
     '''
     cursor.execute(insert_query, (1, store_name, store_details, opening_hours, address, contact, image_path))
     conn.commit()
-    conn.close()
 
 #Função para inserir dados de scrapping ao banco
 def insert_data(conn, store_name, store_details, opening_hours, address, contact,image_path):
+
     # Definindo o comando SQL para inserir os dados na tabela
     insert_query = '''
     INSERT INTO lojas (store_name, store_details, opening_hours, address, contact,image_path)
@@ -83,7 +84,7 @@ def insert_data(conn, store_name, store_details, opening_hours, address, contact
     conn.execute(insert_query, (store_name, store_details, opening_hours, address, contact,image_path))
     # Comitando as mudanças
     conn.commit()
-    conn.close()
+
 
 class User:
     def __init__(self, username, email, password):
