@@ -49,34 +49,37 @@ document.addEventListener("DOMContentLoaded", function() {
 });
 
 
-document.querySelectorAll('.loja-item').forEach(item => {
-    item.addEventListener('click', function(event) {
-        // Obtém os dados da loja a partir dos elementos HTML
-        const storeName = this.querySelector('h3').textContent;
-        const storeDetails = this.querySelectorAll('p')[0].textContent;
-        const openingHours = this.querySelectorAll('p')[1].textContent;
-        const imagePath = this.querySelector('img').src;
-
-        selectStore(event, storeName, storeDetails, openingHours, imagePath);
-    });
-});
-
-// Função para guardar as informações da loja para abrir o perfil da mesma
-function selectStore(event, storeName) {
+//Função para guardar as informacoes da loja para abrir o perfil da mesma
+function selectStore(event, storeName, storeDetails, openingHours, imagePath) {
     event.preventDefault();
+
+    console.log("aqui veio")
 
     // Crie um formulário para enviar os dados para o servidor
     let form = document.createElement('form');
     form.method = 'POST';
     form.action = '/profile';
 
-    try {
-        // Adicione campos ocultos ao formulário com os dados da loja
-        let nameField = document.createElement('input');
-        nameField.type = 'hidden';
-        nameField.name = 'store_name';
-        nameField.value = storeName;
+    // Adicione campos ocultos ao formulário com os dados da loja
+    let nameField = document.createElement('input');
+    nameField.type = 'hidden';
+    nameField.name = 'store_name';
+    nameField.value = storeName;
 
+    let detailsField = document.createElement('input');
+    detailsField.type = 'hidden';
+    detailsField.name = 'store_details';
+    detailsField.value = storeDetails;
+
+    let hoursField = document.createElement('input');
+    hoursField.type = 'hidden';
+    hoursField.name = 'opening_hours';
+    hoursField.value = openingHours;
+
+    let imageField = document.createElement('input');
+    imageField.type = 'hidden';
+    imageField.name = 'image_path';
+    imageField.value = imagePath;
 
         form.appendChild(nameField);
 
