@@ -49,46 +49,40 @@ document.addEventListener("DOMContentLoaded", function() {
 });
 
 
-//Função para guardar as informacoes da loja para abrir o perfil da mesma
-function selectStore(event, storeName, storeDetails, openingHours, imagePath) {
+document.querySelectorAll('.loja-item').forEach(item => {
+    item.addEventListener('click', function(event) {
+        // Obtém o nome da loja a partir do elemento HTML
+        const storeName = this.querySelector('h3').textContent;
+
+        selectStore(event, storeName);
+    });
+});
+
+// Função para guardar as informações da loja para abrir o perfil da mesma
+function selectStore(event, storeName) {
     event.preventDefault();
 
-    console.log("aqui veio")
+    console.log("aqui veio");
 
     // Crie um formulário para enviar os dados para o servidor
     let form = document.createElement('form');
     form.method = 'POST';
     form.action = '/profile';
 
-    // Adicione campos ocultos ao formulário com os dados da loja
-    let nameField = document.createElement('input');
-    nameField.type = 'hidden';
-    nameField.name = 'store_name';
-    nameField.value = storeName;
+    try {
+        // Adicione campos ocultos ao formulário com os dados da loja
+        let nameField = document.createElement('input');
+        nameField.type = 'hidden';
+        nameField.name = 'store_name';
+        nameField.value = storeName;
 
-    let detailsField = document.createElement('input');
-    detailsField.type = 'hidden';
-    detailsField.name = 'store_details';
-    detailsField.value = storeDetails;
+        form.appendChild(nameField);
 
-    let hoursField = document.createElement('input');
-    hoursField.type = 'hidden';
-    hoursField.name = 'opening_hours';
-    hoursField.value = openingHours;
-
-    let imageField = document.createElement('input');
-    imageField.type = 'hidden';
-    imageField.name = 'image_path';
-    imageField.value = imagePath;
-
-    form.appendChild(nameField);
-    form.appendChild(detailsField);
-    form.appendChild(hoursField);
-    form.appendChild(imageField);
-
-    
-    // Adicione o formulário ao corpo do documento e envie-o
-    document.body.appendChild(form);
-    form.submit();
+        // Adicione o formulário ao corpo do documento e envie-o
+        document.body.appendChild(form);
+        form.submit();
+    } catch (error) {
+        console.log('Erro capturado:', error.message);
+    }
 }
 
