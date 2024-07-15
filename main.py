@@ -153,6 +153,7 @@ def profile():
         store_details = store[2]
         opening_hours = store[3]
         image_path = store[6]
+
     else:
         store_details = "Detalhes não encontrados"
         opening_hours = "Horário de funcionamento não encontrado"
