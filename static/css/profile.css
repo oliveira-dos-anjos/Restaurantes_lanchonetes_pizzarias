@@ -17,7 +17,7 @@ body {
     align-items: center;
     justify-content: center;
     height: auto;
-    background-color: rgba(0, 0, 0, 0.7); /* Fundo preto com 80% de transparência */
+    background-color: rgba(0, 0, 0, 0.7); /* Fundo preto com 70% de transparência */
     border-bottom: 1px solid #e70d0d;
     border-top: 1px solid #e70d0d;
     position: relative;

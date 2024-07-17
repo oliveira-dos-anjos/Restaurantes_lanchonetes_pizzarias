@@ -4,9 +4,12 @@ body {
     justify-content: center;
     align-items: center;
     height: 100vh;
-    background-color: #d4792e;
+    background-color: #cccbca;
+    background: url('../images/cadastro_lojas.jpg') no-repeat center center;
+    background-size: cover;
     margin: 0;
     padding: 0;
+    overflow: hidden; 
     z-index: -1;
 }
 
@@ -21,11 +24,35 @@ body {
     border-top: 1px solid #e70d0d;
     border-radius: 10px;
     padding: 20px;
+    position: relative;
+    z-index: 1;
+}
+
+@keyframes zoomBackground {
+    0% {
+        background-size: 130%;
+    }
+    100% {
+        background-size: 105%;
+    }
+}
+
+body::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: url('../images/cadastro_lojas.jpg') no-repeat center center;
+    background-size: cover;
+    z-index: -1;
+    animation: zoomBackground 20s linear infinite alternate;
 }
 
 #divulgar-form {
     display: flex;
-    flex-direction: row; /* Alinha os filhos em uma linha */
+    flex-direction: row;
     width: 100%;
 }
 
@@ -121,10 +148,12 @@ input[type="time"] {
 
 @media  only screen and (max-width: 599px){
 
+    #divulgar-form {   
+        flex-direction: column;
+    }
 
     .container-divulgar{
-        align-items: center;
-        max-width: 360px;
+        max-width: 90%;
     }
     
     .image-upload {
