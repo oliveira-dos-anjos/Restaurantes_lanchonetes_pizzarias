@@ -4,6 +4,9 @@
 <link rel="stylesheet" href="{{ url_for('static', filename='css/divulgar.css') }}">
 
 <section class="lojas-container">
+    <div class="background-image">
+        <img src="{{ url_for('static', filename='images/cadastro_lojas.jpg') }}" alt="Background Image">
+    </div>
     <div class="container-divulgar">
         <form id="divulgar-form" action="/divulgar" method="POST" enctype="multipart/form-data">
         

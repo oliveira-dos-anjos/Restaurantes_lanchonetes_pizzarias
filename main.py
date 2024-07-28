@@ -159,7 +159,7 @@ def profile():
         opening_hours = "Horário de funcionamento não encontrado"
         image_path = "Caminho da imagem não encontrado"
 
-    
+    print(f"\033[31m{image_path}")
 
     return render_template('profile.html', store_name=store_name, store_details=store_details, opening_hours=opening_hours, image_path=image_path, user=user)
 
