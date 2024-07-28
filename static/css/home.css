@@ -384,6 +384,7 @@ input[type="search"] + button:hover {
 
     .show-menu .Sidebar{
         left: 0;
+        z-index: 100;
     }
 
     .menu{
