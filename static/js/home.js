@@ -1,77 +1,28 @@
 document.addEventListener("DOMContentLoaded", function() {
-    // Função para ajustar a altura do main-content
-    function setMainContentHeight() {
-        var mainContent = document.getElementById('main-content');
-        if (mainContent) {
-            // Define a altura do main-content igual à altura da janela menos 20 pixels
-            mainContent.style.height = (window.innerHeight - 20) + 'px';
-        } else {
-            console.error('Elemento main-content não encontrado.');
-        }
-    }
-
-    // Define a altura inicial
-    setMainContentHeight();
-
-    // Ajusta a altura quando a janela é redimensionada
-    window.addEventListener('resize', setMainContentHeight);
-
-    // Função para entrar em tela cheia
-    function enterFullscreen() {
-        var mainContent = document.getElementById('main-content');
-        if (mainContent.requestFullscreen) {
-            mainContent.requestFullscreen();
-        } else if (mainContent.mozRequestFullScreen) { // Firefox
-            mainContent.mozRequestFullScreen();
-        } else if (mainContent.webkitRequestFullscreen) { // Chrome, Safari and Opera
-            mainContent.webkitRequestFullscreen();
-        } else if (mainContent.msRequestFullscreen) { // IE/Edge
-            mainContent.msRequestFullscreen();
-        }
-    }
-
-    // Função para sair da tela cheia
-    function exitFullscreen() {
-        if (document.exitFullscreen) {
-            document.exitFullscreen();
-        } else if (document.mozCancelFullScreen) { // Firefox
-            document.mozCancelFullScreen();
-        } else if (document.webkitExitFullscreen) { // Chrome, Safari and Opera
-            document.webkitExitFullscreen();
-        } else if (document.msExitFullscreen) { // IE/Edge
-            document.msExitFullscreen();
-        }
-    }
+    // Seleciona a div main-content
+    var mainContent = document.getElementById('main-content');
 
     // Variável para armazenar a posição de rolagem anterior
     var lastScrollTop = 0;
 
-    // Seleciona a div main-content
-    var mainContent = document.getElementById('main-content');
-
     // Adiciona o ouvinte de rolagem
-    if (mainContent) {
-        mainContent.addEventListener('scroll', function() {
-            // Pega a posição de rolagem atual
-            var scrollTop = mainContent.scrollTop;
+    mainContent.addEventListener('scroll', function() {
+        // Pega a posição de rolagem atual
+        var scrollTop = mainContent.scrollTop;
 
-            // Compara a posição atual com a posição anterior
-            if (scrollTop > lastScrollTop) {
-                console.log('Rolou para baixo');
-                enterFullscreen(); // Ação para rolar para baixo
-            } else {
-                console.log('Rolou para cima');
-                exitFullscreen(); // Ação para rolar para cima
-            }
+        // Compara a posição atual com a posição anterior
+        if (scrollTop > lastScrollTop) {
+            console.log('Rolou para baixo');
+            // Ação para rolar para baixo
+        } else {
+            console.log('Rolou para cima');
+            // Ação para rolar para cima
+        }
 
-            // Atualiza a posição de rolagem anterior
-            lastScrollTop = scrollTop;
-        });
-    } else {
-        console.error('Elemento main-content não encontrado.');
-    }
+        // Atualiza a posição de rolagem anterior
+        lastScrollTop = scrollTop;
+    });
 });
-
 
 document.addEventListener("DOMContentLoaded", function() {
     // Função para ajustar a altura do main-content
