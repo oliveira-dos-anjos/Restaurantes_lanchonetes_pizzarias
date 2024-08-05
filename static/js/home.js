@@ -1,53 +1,96 @@
 document.addEventListener("DOMContentLoaded", function() {
-    // Seleciona o elemento com a classe 'lojas-container'
-    const target = document.querySelector('.lojas-container');
-
-    // Verifica se o elemento existe
-    if (target) {
-        function animeNavBar() {
-            console.log("rolando");
-
-            // Verifica se o documento está em modo de tela cheia
-            if (document.fullscreenElement || document.mozFullScreenElement || document.webkitFullscreenElement || document.msFullscreenElement) {
-                console.log("Saindo do modo de tela cheia");
-
-                // Sair do modo de tela cheia
-                if (document.exitFullscreen) {
-                    document.exitFullscreen();
-                } else if (document.mozCancelFullScreen) { // Para Firefox
-                    document.mozCancelFullScreen();
-                } else if (document.webkitExitFullscreen) { // Para Chrome, Safari e Opera
-                    document.webkitExitFullscreen();
-                } else if (document.msExitFullscreen) { // Para IE/Edge
-                    document.msExitFullscreen();
-                }
-            } else {
-                console.log("Entrando em modo de tela cheia");
-
-                // Entrar no modo de tela cheia
-                const elem = document.documentElement; // ou use um elemento específico, por exemplo, target
-                if (elem.requestFullscreen) {
-                    elem.requestFullscreen();
-                } else if (elem.mozRequestFullScreen) { // Para Firefox
-                    elem.mozRequestFullScreen();
-                } else if (elem.webkitRequestFullscreen) { // Para Chrome, Safari e Opera
-                    elem.webkitRequestFullscreen();
-                } else if (elem.msRequestFullscreen) { // Para IE/Edge
-                    elem.msRequestFullscreen();
-                }
-            }
+    // Função para ajustar a altura do main-content
+    function setMainContentHeight() {
+        var mainContent = document.getElementById('main-content');
+        if (mainContent) {
+            // Define a altura do main-content igual à altura da janela menos 20 pixels
+            mainContent.style.height = (window.innerHeight - 20) + 'px';
+        } else {
+            console.error('Elemento main-content não encontrado.');
         }
+    }
 
-        // Adiciona o ouvinte de evento de rolagem ao window
-        window.addEventListener('scroll', function() {
-            animeNavBar();
+    // Define a altura inicial
+    setMainContentHeight();
+
+    // Ajusta a altura quando a janela é redimensionada
+    window.addEventListener('resize', setMainContentHeight);
+
+    // Função para entrar em tela cheia
+    function enterFullscreen() {
+        var mainContent = document.getElementById('main-content');
+        if (mainContent.requestFullscreen) {
+            mainContent.requestFullscreen();
+        } else if (mainContent.mozRequestFullScreen) { // Firefox
+            mainContent.mozRequestFullScreen();
+        } else if (mainContent.webkitRequestFullscreen) { // Chrome, Safari and Opera
+            mainContent.webkitRequestFullscreen();
+        } else if (mainContent.msRequestFullscreen) { // IE/Edge
+            mainContent.msRequestFullscreen();
+        }
+    }
+
+    // Função para sair da tela cheia
+    function exitFullscreen() {
+        if (document.exitFullscreen) {
+            document.exitFullscreen();
+        } else if (document.mozCancelFullScreen) { // Firefox
+            document.mozCancelFullScreen();
+        } else if (document.webkitExitFullscreen) { // Chrome, Safari and Opera
+            document.webkitExitFullscreen();
+        } else if (document.msExitFullscreen) { // IE/Edge
+            document.msExitFullscreen();
+        }
+    }
+
+    // Variável para armazenar a posição de rolagem anterior
+    var lastScrollTop = 0;
+
+    // Seleciona a div main-content
+    var mainContent = document.getElementById('main-content');
+
+    // Adiciona o ouvinte de rolagem
+    if (mainContent) {
+        mainContent.addEventListener('scroll', function() {
+            // Pega a posição de rolagem atual
+            var scrollTop = mainContent.scrollTop;
+
+            // Compara a posição atual com a posição anterior
+            if (scrollTop > lastScrollTop) {
+                console.log('Rolou para baixo');
+                enterFullscreen(); // Ação para rolar para baixo
+            } else {
+                console.log('Rolou para cima');
+                exitFullscreen(); // Ação para rolar para cima
+            }
+
+            // Atualiza a posição de rolagem anterior
+            lastScrollTop = scrollTop;
         });
-
     } else {
-        console.log("Elemento 'lojas-container' não encontrado.");
+        console.error('Elemento main-content não encontrado.');
     }
 });
 
+
+document.addEventListener("DOMContentLoaded", function() {
+    // Função para ajustar a altura do main-content
+    function setMainContentHeight() {
+        var mainContent = document.getElementById('main-content');
+        if (mainContent) {
+            // Define a altura do main-content igual à altura da janela
+            mainContent.style.height = (window.innerHeight - 50) + 'px';
+        } else {
+            console.error('Elemento main-content não encontrado.');
+        }
+    }
+
+    // Define a altura inicial
+    setMainContentHeight();
+
+    // Ajusta a altura quando a janela é redimensionada
+    window.addEventListener('resize', setMainContentHeight);
+});
 
 document.querySelectorAll('.loja-item').forEach(item => {
     item.addEventListener('click', function(event) {
@@ -61,8 +104,6 @@ document.querySelectorAll('.loja-item').forEach(item => {
 // Função para guardar as informações da loja para abrir o perfil da mesma
 function selectStore(event, storeName) {
     event.preventDefault();
-
-    console.log("aqui veio");
 
     // Crie um formulário para enviar os dados para o servidor
     let form = document.createElement('form');

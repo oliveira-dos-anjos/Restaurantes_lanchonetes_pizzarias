@@ -8,12 +8,12 @@
     
     <div class="separator-l"></div> 
 
-    <div class="main-content">
+    <div class="main-content" id="main-content">
         <h1>{{ content.title }}</h1>
         <p>{{ content.content }}</p>
         
         {% if content.lojas %}
-        <div class="lojas-container" id="lojas-container">
+        <div class="lojas-container">
             {% for loja in content.lojas %}
             <a href="#" class="loja-item-link" onclick="selectStore(event, '{{ loja['store_name'] }}', '{{ loja['store_details'] }}', '{{ loja['opening_hours'] }}', '{{ url_for('static', filename=loja['image_path']) }}')">
                 <div class="loja-item">

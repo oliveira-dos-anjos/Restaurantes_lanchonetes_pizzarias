@@ -1,8 +1,7 @@
 body {
     font-family: Arial, sans-serif;
     background-color: #cabbbb;
-    margin: 0rem;
-    overflow: hidden;
+    margin: 0;
 }
 
 
@@ -195,7 +194,7 @@ input[type="search"] + button:hover {
 }
 
 
-.main-content {
+#main-content {
     margin-top: 3rem; 
     margin-left: 300px; 
     margin-right: 300px;
@@ -248,6 +247,7 @@ input[type="search"] + button:hover {
     max-height: 510px; 
     flex-wrap: wrap;
 }
+
 
 .loja-item {
     display: grid;
@@ -412,10 +412,12 @@ input[type="search"] + button:hover {
         color: #360a4e;
     }
 
-    .main-content{
+
+    #main-content {
         margin-left: .5rem;
         margin-right: .5rem;
         overflow-y: scrool;
+        height: 100px;
     }
 
     .home-icon{
@@ -452,7 +454,7 @@ input[type="search"] + button:hover {
 
     .lojas-container {
         grid-template-columns: 1fr;
-        max-height: 45rem;
+        max-height: 4rem;
     }
 
 
@@ -512,7 +514,7 @@ input[type="search"] + button:hover {
     margin-left: -5%;
    }
 
-   .main-content{
+   #main-content{
         margin-left: 32%;
         margin-right: 2%;
    }

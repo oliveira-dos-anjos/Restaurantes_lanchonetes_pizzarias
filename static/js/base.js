@@ -8,12 +8,10 @@ let cont = 0
 hamburger.addEventListener("click", function() {
     container.classList.toggle("show-menu");
     if (cont % 2 !== 0) {
-        console.log("O número é par");
         lojasContainer.classList.remove('disabled-click');
     } else {
         lojasContainer.classList.add('disabled-click');
     }
-    console.log(cont);
     cont += 1;
 });
 
