@@ -1,80 +1,27 @@
 document.addEventListener("DOMContentLoaded", function() {
-    // Função para ajustar a altura do main-content
-    function setMainContentHeight() {
-        var mainContent = document.getElementById('main-content');
-        if (mainContent) {
-            // Define a altura do main-content igual à altura da janela menos 20 pixels
-            mainContent.style.height = (window.innerHeight - 20) + 'px';
-        } else {
-            console.error('Elemento main-content não encontrado.');
-        }
-    }
-
-    // Define a altura inicial
-    setMainContentHeight();
-
-    // Ajusta a altura quando a janela é redimensionada
-    window.addEventListener('resize', setMainContentHeight);
-
-    // Função para verificar se o navegador é Safari
-    function isSafari() {
-        return /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
-    }
-
-    // Função para entrar em tela cheia
-    function enterFullscreen() {
-        var mainContent = document.getElementById('main-content');
-        if (mainContent) {
-            if (mainContent.webkitRequestFullscreen) { // Safari
-                mainContent.webkitRequestFullscreen().catch((err) => {
-                    console.error(`Erro ao entrar em tela cheia: ${err.message} (${err.name})`);
-                });
-            }
-        } else {
-            console.error('Elemento main-content não encontrado.');
-        }
-    }
-
-    // Função para sair da tela cheia
-    function exitFullscreen() {
-        if (document.webkitExitFullscreen) { // Safari
-            document.webkitExitFullscreen().catch((err) => {
-                console.error(`Erro ao sair da tela cheia: ${err.message} (${err.name})`);
-            });
-        }
-    }
+    // Seleciona a div main-content
+    var mainContent = document.getElementById('main-content');
 
     // Variável para armazenar a posição de rolagem anterior
     var lastScrollTop = 0;
 
-    // Seleciona a div main-content
-    var mainContent = document.getElementById('main-content');
-
     // Adiciona o ouvinte de rolagem
-    if (mainContent) {
-        mainContent.addEventListener('scroll', function() {
-            // Pega a posição de rolagem atual
-            var scrollTop = mainContent.scrollTop;
+    mainContent.addEventListener('scroll', function() {
+        // Pega a posição de rolagem atual
+        var scrollTop = mainContent.scrollTop;
 
-            // Compara a posição atual com a posição anterior
-            if (scrollTop > lastScrollTop) {
-                console.log('Rolou para baixo');
-                if (isSafari()) {
-                    enterFullscreen(); // Ação para rolar para baixo
-                }
-            } else {
-                console.log('Rolou para cima');
-                if (isSafari()) {
-                    exitFullscreen(); // Ação para rolar para cima
-                }
-            }
+        // Compara a posição atual com a posição anterior
+        if (scrollTop > lastScrollTop) {
+            console.log('Rolou para baixo');
+            // Ação para rolar para baixo
+        } else {
+            console.log('Rolou para cima');
+            // Ação para rolar para cima
+        }
 
-            // Atualiza a posição de rolagem anterior
-            lastScrollTop = scrollTop;
-        });
-    } else {
-        console.error('Elemento main-content não encontrado.');
-    }
+        // Atualiza a posição de rolagem anterior
+        lastScrollTop = scrollTop;
+    });
 });
 
 document.addEventListener("DOMContentLoaded", function() {
@@ -83,7 +30,7 @@ document.addEventListener("DOMContentLoaded", function() {
         var mainContent = document.getElementById('main-content');
         if (mainContent) {
             // Define a altura do main-content igual à altura da janela
-            mainContent.style.height = (window.innerHeight - 50) + 'px';
+            mainContent.style.height = (window.innerHeight - 0) + 'px';
         } else {
             console.error('Elemento main-content não encontrado.');
         }

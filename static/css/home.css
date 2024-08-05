@@ -395,6 +395,7 @@ input[type="search"] + button:hover {
     }
     
     .menu-item{
+        margin-top: -1rem;
         text-align: center;
         margin-bottom: 3rem;
         transition: color 1s;
