@@ -5,24 +5,56 @@ document.addEventListener("DOMContentLoaded", function() {
     // Variável para armazenar a posição de rolagem anterior
     var lastScrollTop = 0;
 
-    // Adiciona o ouvinte de rolagem
-    mainContent.addEventListener('scroll', function() {
-        // Pega a posição de rolagem atual
-        var scrollTop = mainContent.scrollTop;
-
-        // Compara a posição atual com a posição anterior
-        if (scrollTop > lastScrollTop) {
-            console.log('Rolou para baixo');
-            // Ação para rolar para baixo
-        } else {
-            console.log('Rolou para cima');
-            // Ação para rolar para cima
+    // Função para entrar em tela cheia
+    function enterFullScreen() {
+        if ((document.fullScreenElement && document.fullScreenElement !== null) ||    
+            (!document.mozFullScreen && !document.webkitIsFullScreen)) {
+            if (document.documentElement.requestFullScreen) {  
+                document.documentElement.requestFullScreen();  
+            } else if (document.documentElement.mozRequestFullScreen) {  
+                document.documentElement.mozRequestFullScreen();  
+            } else if (document.documentElement.webkitRequestFullScreen) {  
+                document.documentElement.webkitRequestFullScreen(Element.ALLOW_KEYBOARD_INPUT);  
+            }  
         }
+    }
 
-        // Atualiza a posição de rolagem anterior
-        lastScrollTop = scrollTop;
-    });
+    // Função para sair de tela cheia
+    function exitFullScreen() {
+        if (document.fullScreenElement || document.mozFullScreen || document.webkitIsFullScreen) {
+            if (document.cancelFullScreen) {  
+                document.cancelFullScreen();  
+            } else if (document.mozCancelFullScreen) {  
+                document.mozCancelFullScreen();  
+            } else if (document.webkitCancelFullScreen) {  
+                document.webkitCancelFullScreen();  
+            }
+        }
+    }
+
+    // Adiciona o ouvinte de rolagem
+    if (mainContent) {
+        mainContent.addEventListener('scroll', function() {
+            // Pega a posição de rolagem atual
+            var scrollTop = mainContent.scrollTop;
+
+            // Compara a posição atual com a posição anterior
+            if (scrollTop > lastScrollTop) {
+                console.log('Rolou para baixo');
+                enterFullScreen(); // Ação para rolar para baixo
+            } else {
+                console.log('Rolou para cima');
+                exitFullScreen(); // Ação para rolar para cima
+            }
+
+            // Atualiza a posição de rolagem anterior
+            lastScrollTop = scrollTop;
+        });
+    } else {
+        console.error('Elemento main-content não encontrado.');
+    }
 });
+
 
 document.addEventListener("DOMContentLoaded", function() {
     // Função para ajustar a altura do main-content
