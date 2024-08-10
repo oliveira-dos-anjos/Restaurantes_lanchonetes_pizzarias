@@ -1,51 +1,53 @@
 document.addEventListener("DOMContentLoaded", function() {
+    // Seleciona a div main-content
     var mainContent = document.getElementById('main-content');
+
+    // Variável para armazenar a posição de rolagem anterior
     var lastScrollTop = 0;
-    var userPrompted = false;
 
     // Função para entrar em tela cheia
     function enterFullScreen() {
-        if (document.documentElement.requestFullscreen) {
-            document.documentElement.requestFullscreen();
-        } else if (document.documentElement.mozRequestFullScreen) {  
-            document.documentElement.mozRequestFullScreen();  
-        } else if (document.documentElement.webkitRequestFullscreen) {  
-            document.documentElement.webkitRequestFullscreen(Element.ALLOW_KEYBOARD_INPUT);  
-        } else if (document.documentElement.msRequestFullscreen) {  
-            document.documentElement.msRequestFullscreen();  
+        if ((document.fullScreenElement && document.fullScreenElement !== null) ||    
+            (!document.mozFullScreen && !document.webkitIsFullScreen)) {
+            if (document.documentElement.requestFullScreen) {  
+                document.documentElement.requestFullScreen();  
+            } else if (document.documentElement.mozRequestFullScreen) {  
+                document.documentElement.mozRequestFullScreen();  
+            } else if (document.documentElement.webkitRequestFullScreen) {  
+                document.documentElement.webkitRequestFullScreen(Element.ALLOW_KEYBOARD_INPUT);  
+            }  
         }
     }
 
     // Função para sair de tela cheia
     function exitFullScreen() {
         if (document.fullScreenElement || document.mozFullScreen || document.webkitIsFullScreen) {
-            if (document.exitFullscreen) {
-                document.exitFullscreen();
-            } else if (document.mozCancelFullScreen) {
-                document.mozCancelFullScreen();
-            } else if (document.webkitExitFullscreen) {
-                document.webkitExitFullscreen();
-            } else if (document.msExitFullscreen) {
-                document.msExitFullscreen();
+            if (document.cancelFullScreen) {  
+                document.cancelFullScreen();  
+            } else if (document.mozCancelFullScreen) {  
+                document.mozCancelFullScreen();  
+            } else if (document.webkitCancelFullScreen) {  
+                document.webkitCancelFullScreen();  
             }
         }
     }
 
+    // Adiciona o ouvinte de rolagem
     if (mainContent) {
         mainContent.addEventListener('scroll', function() {
+            // Pega a posição de rolagem atual
             var scrollTop = mainContent.scrollTop;
 
-            if (scrollTop > lastScrollTop && !userPrompted) {
-                userPrompted = true;
-                // Solicita permissão ao usuário
-                var confirmFullScreen = confirm("Você gostaria de entrar em tela cheia?");
-                if (confirmFullScreen) {
-                    enterFullScreen();
-                }
-            } else if (scrollTop <= lastScrollTop && userPrompted) {
-                exitFullScreen();
+            // Compara a posição atual com a posição anterior
+            if (scrollTop > lastScrollTop) {
+                console.log('Rolou para baixo');
+                enterFullScreen(); // Ação para rolar para baixo
+            } else {
+                console.log('Rolou para cima');
+                exitFullScreen(); // Ação para rolar para cima
             }
 
+            // Atualiza a posição de rolagem anterior
             lastScrollTop = scrollTop;
         });
     } else {
@@ -55,13 +57,14 @@ document.addEventListener("DOMContentLoaded", function() {
 
 
 
+
 document.addEventListener("DOMContentLoaded", function() {
     // Função para ajustar a altura do main-content
     function setMainContentHeight() {
         var mainContent = document.getElementById('main-content');
         if (mainContent) {
             // Define a altura do main-content igual à altura da janela
-            mainContent.style.height = (window.innerHeight - 50) + 'px';
+            mainContent.style.height = (window.innerHeight - 70) + 'px';
         } else {
             console.error('Elemento main-content não encontrado.');
         }
