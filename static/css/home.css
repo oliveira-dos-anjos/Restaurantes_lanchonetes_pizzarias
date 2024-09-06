@@ -306,7 +306,8 @@ input[type="search"] + button:hover {
     .separator-l,
     .separator-r,
     .search,
-    .navbar-center {
+    .navbar-center,
+    .barra-vertical{
         display: none;
     }
 
