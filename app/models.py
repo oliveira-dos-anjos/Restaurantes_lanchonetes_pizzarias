@@ -63,7 +63,7 @@ def insert_store(conn, store_name, store_details, opening_hours, address, contac
     cursor = conn.cursor()
     # Primeiro, movemos todos os IDs existentes para cima
     shift_ids(conn)
-
+    
     # Então, inserimos a nova loja no ID 1
     insert_query = '''
     INSERT INTO lojas (id, store_name, store_details, opening_hours, address, contact, image_path)

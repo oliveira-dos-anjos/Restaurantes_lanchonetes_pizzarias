@@ -11,7 +11,7 @@ app = Flask(__name__)
 
 
 # Configuração do banco de dados do Render
-url_render = "postgresql://locais_na_regiao_user:Kt7jO2Gp0AItHphEktRs4Xs16cXB8W9F@dpg-cq09p8aju9rs73aqcqvg-a.oregon-postgres.render.com/locais_na_regiao"
+url_render = "postgresql://hota_de_comer_user:3wvAseQk8wtXq43khrJDWdfNeGKXhVIE@dpg-ctkm9ot2ng1s73br8thg-a.oregon-postgres.render.com/hota_de_comer"
 app.config['SQLALCHEMY_DATABASE_URI'] = url_render
 
 app.config.update(
@@ -74,7 +74,8 @@ def enviar_email_otp(destinatario, codigo):
     
 # Função de configuração da pasta de upload
 def configure_upload_folder(app):
-    UPLOAD_FOLDER = os.path.join(app.root_path, 'static/imagens_lojas')
+    UPLOAD_FOLDER = os.path.join(app.root_path, 'Data/imagens')
     if not os.path.exists(UPLOAD_FOLDER):
         os.makedirs(UPLOAD_FOLDER)  # Criar o diretório se não existir
     app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+

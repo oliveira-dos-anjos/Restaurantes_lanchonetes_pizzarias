@@ -41,7 +41,7 @@ def search_and_save(city):
                     image_name = f"{store_name.replace(' ', '_')}.png"
 
                     # Verificar se o diretório 'imagens_lojas' existe, e criar se não existir
-                    imagens_lojas_dir = 'static/imagens_lojas'
+                    imagens_lojas_dir = 'Data/imagens'
                     if not os.path.exists(imagens_lojas_dir):
                         os.makedirs(imagens_lojas_dir)
                         

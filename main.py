@@ -2,6 +2,7 @@ import base64
 import sqlite3
 from app import *
 from app.models import *
+from flask import send_from_directory
 from werkzeug.utils import secure_filename
 from werkzeug.security import generate_password_hash
 from flask import Flask, request, render_template, redirect, url_for, session
@@ -15,16 +16,26 @@ original_content = {
 }
 
 # Configurar a pasta de upload
-configure_upload_folder(app)
+upload_folder = configure_upload_folder(app)
+
 
 # Criando tabela para usuarios
 create_table()
+
+# Configuração da rota para servir imagens da pasta Data
+@app.route('/Data/<path:filename>')
+def serve_data(filename):
+    filepath = os.path.join(app.root_path, 'Data', filename)
+
+    return send_from_directory(os.path.join(app.root_path,), filename)
+
 
 # Rota para saída de usuário
 @app.route('/logout')
 def logout():
     session.clear()
     return redirect(url_for('home'))
+
 
 # Rota para tela inicial
 @app.route("/")
@@ -50,9 +61,8 @@ def home():
         # Substituir as contra barras nos caminhos das imagens
         for loja in lojas_dict:
             if 'image_path' in loja:
+                print(loja["image_path"])
                 loja['image_path'] = loja['image_path'].replace('\\', '/')
-                loja['image_path'] = loja['image_path'].replace('static', '')
-
 
         # Adicionar as lojas ao conteúdo principal
         content_with_lojas = {
@@ -113,7 +123,7 @@ def divulgar():
                 # Salvar o arquivo no caminho especificado
                 image_data.save(save_path)
 
-                image_path = f"static/imagens_lojas/{filename}"
+                image_path = f"Data/imagens/{filename}"
 
                 # Inserir os dados na nova tabela
                 insert_store(conn, store_name, store_details, opening_hours, address, contact,image_path)
@@ -160,6 +170,7 @@ def profile():
         image_path = "Caminho da imagem não encontrado"
 
     print(f"\033[31m{image_path}")
+
 
     return render_template('profile.html', store_name=store_name, store_details=store_details, opening_hours=opening_hours, image_path=image_path, user=user)
 
