@@ -74,8 +74,11 @@ def enviar_email_otp(destinatario, codigo):
     
 # Função de configuração da pasta de upload
 def configure_upload_folder(app):
+    
     UPLOAD_FOLDER = os.path.join(app.root_path, 'Data/imagens')
     if not os.path.exists(UPLOAD_FOLDER):
         os.makedirs(UPLOAD_FOLDER)  # Criar o diretório se não existir
     app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
-
+    
+    # Retorna o caminho configurado
+    return upload_folder
