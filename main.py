@@ -25,9 +25,15 @@ create_table()
 # Configuração da rota para servir imagens da pasta Data
 @app.route('/Data/<path:filename>')
 def serve_data(filename):
-    filepath = os.path.join(app.root_path, 'Data', filename)
+    # Obtenha o caminho da pasta de upload a partir da configuração do Flask
+    upload_folder = app.config.get('UPLOAD_FOLDER')
+    
+    if not upload_folder:
+        return "Pasta de upload não configurada.", 500
+    
+    # Use send_from_directory para servir o arquivo
+    return send_from_directory(upload_folder, filename)
 
-    return send_from_directory(os.path.join(app.root_path,), filename)
 
 
 # Rota para saída de usuário
