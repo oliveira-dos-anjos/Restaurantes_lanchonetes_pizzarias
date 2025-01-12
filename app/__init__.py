@@ -81,4 +81,4 @@ def configure_upload_folder(app):
     app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
     
     # Retorna o caminho configurado
-    return upload_folder
+    return UPLOAD_fOLDER
