@@ -1,6 +1,7 @@
 import os
 import pyotp
 import smtplib
+from .utils import *
 from flask import Flask, jsonify
 from .celery_config import make_celery
 from email.mime.text import MIMEText
@@ -11,7 +12,7 @@ app = Flask(__name__)
 
 
 # Configuração do banco de dados do Render
-url_render = "postgresql://hota_de_comer_user:3wvAseQk8wtXq43khrJDWdfNeGKXhVIE@dpg-ctkm9ot2ng1s73br8thg-a.oregon-postgres.render.com/hota_de_comer"
+url_render = "postgresql://meu_banco_vvlj_user:4CVqUxj8QyBpMzu4LD3CxDxgUXH1C8r7@dpg-cuaekdtds78s739mhjig-a.oregon-postgres.render.com/meu_banco_vvlj"
 app.config['SQLALCHEMY_DATABASE_URI'] = url_render
 
 app.config.update(
@@ -72,10 +73,3 @@ def enviar_email_otp(destinatario, codigo):
         return None
     
     
-# Função de configuração da pasta de upload
-def configure_upload_folder(app):
-    UPLOAD_FOLDER = os.path.join(app.root_path, 'Data/imagens')
-    if not os.path.exists(UPLOAD_FOLDER):
-        os.makedirs(UPLOAD_FOLDER)  # Criar o diretório se não existir
-    app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
-

@@ -1,6 +1,7 @@
 import base64
 import sqlite3
 from app import *
+from app.utils import *
 from app.models import *
 from flask import send_from_directory
 from werkzeug.utils import secure_filename
@@ -23,9 +24,9 @@ upload_folder = configure_upload_folder(app)
 create_table()
 
 # Configuração da rota para servir imagens da pasta Data
-@app.route('/Data/<path:filename>')
+@app.route('/<path:filename>')
 def serve_data(filename):
-    filepath = os.path.join(app.root_path, 'Data', filename)
+    filepath = imagens_lojas_dir = configure_upload_folder(app)
 
     return send_from_directory(os.path.join(app.root_path,), filename)
 
@@ -61,8 +62,8 @@ def home():
         # Substituir as contra barras nos caminhos das imagens
         for loja in lojas_dict:
             if 'image_path' in loja:
-                print(loja["image_path"])
                 loja['image_path'] = loja['image_path'].replace('\\', '/')
+            
 
         # Adicionar as lojas ao conteúdo principal
         content_with_lojas = {
@@ -96,47 +97,36 @@ def divulgar():
 
         # Verificar se a loja já existe no banco de dados
         if not loja_existe(conn, store_name):
-
             # Verificar se o arquivo foi enviado
             if image_data and image_data.filename:
+                opening_hours = f"Fecha as: {closing_time}" if closing_time else "Não encontrado"
+                store_details = (
+                    f"Entrega {min_delivery_time[-2:]} min - {max_delivery_time} min"
+                    if min_delivery_time != "00:00" or max_delivery_time != "00:00"
+                    else "Não informado"
+                )
 
-                opening_hours = f"Fecha as: {closing_time}"
-                if closing_time == "":
-                    opening_hours = "Não encontrado"
-
-                print(min_delivery_time, max_delivery_time)
-
-                if min_delivery_time != "00:00" or max_delivery_time != "00:00":
-                    store_details = f"Entrega {min_delivery_time[-2:]} min - {max_delivery_time} min"
-                else:
-                    store_details = "Não informado"
-
-                # Obter a extensão do arquivo
+                # Obter a extensão do arquivo e criar um nome seguro
                 _, file_extension = os.path.splitext(image_data.filename)
-
-                # Criar um nome de arquivo seguro com o nome da loja e a extensão original
                 filename = secure_filename(f"{store_name}{file_extension}")
 
-                # Construir o caminho para salvar o arquivo
-                save_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
+                # Salvar o arquivo em um subdiretório chamado "uploads"
+                save_path = save_uploaded_file(app, image_data, filename, subfolder="imagens")
 
-                # Salvar o arquivo no caminho especificado
-                image_data.save(save_path)
-
+                # Caminho da imagem para o banco de dados
                 image_path = f"Data/imagens/{filename}"
 
-                # Inserir os dados na nova tabela
-                insert_store(conn, store_name, store_details, opening_hours, address, contact,image_path)
+                # Inserir os dados na tabela
+                insert_store(conn, store_name, store_details, opening_hours, address, contact, image_path)
 
                 conn.close()
 
                 msg = "Loja cadastrada com sucesso"
-
                 return render_template('divulgar.html', user=user, msg=msg)
             else:
                 # Tratar o caso em que nenhum arquivo foi enviado
                 return "Nenhum arquivo enviado ou o arquivo é inválido", 400
-            
+                
         else:
             mensagem = "Nome de loja existente, altere o nome ou numero da loja"
             return render_template("divulgar.html", user=user, mensagem=mensagem)

@@ -1,8 +1,12 @@
 import os
 import requests
 from app import *
+from app.utils import *
 from app.models import *
 from bs4 import BeautifulSoup
+
+
+app = Flask(__name__)
 
 # Função para verificar se a loja existe no banco
 def loja_existe(conn, store_name):
@@ -40,11 +44,9 @@ def search_and_save(city):
                 if image_link:
                     image_name = f"{store_name.replace(' ', '_')}.png"
 
-                    # Verificar se o diretório 'imagens_lojas' existe, e criar se não existir
-                    imagens_lojas_dir = 'Data/imagens'
-                    if not os.path.exists(imagens_lojas_dir):
-                        os.makedirs(imagens_lojas_dir)
-                        
+                    # Configurar a pasta de upload
+                    imagens_lojas_dir = configure_upload_folder(app, 'imagens')
+
                     # Definir o caminho completo do arquivo de imagem
                     image_path = os.path.join(imagens_lojas_dir, image_name)
 
