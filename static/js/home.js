@@ -10,13 +10,10 @@ document.addEventListener("DOMContentLoaded", function() {
         if ((document.fullScreenElement && document.fullScreenElement !== null) ||    
             (!document.mozFullScreen && !document.webkitIsFullScreen)) {
             if (document.documentElement.requestFullScreen) {  
-                document.documentElement.requestFullScreen();  
-            } else if (document.documentElement.mozRequestFullScreen) {  
-                document.documentElement.mozRequestFullScreen();  
+                document.documentElement.requestFullScreen();    
             } else if (document.documentElement.webkitRequestFullScreen) {  
                 document.documentElement.webkitRequestFullScreen(Element.ALLOW_KEYBOARD_INPUT);  
-            }  
-        }
+            }}
     }
 
     // Função para sair de tela cheia
@@ -24,8 +21,6 @@ document.addEventListener("DOMContentLoaded", function() {
         if (document.fullScreenElement || document.mozFullScreen || document.webkitIsFullScreen) {
             if (document.cancelFullScreen) {  
                 document.cancelFullScreen();  
-            } else if (document.mozCancelFullScreen) {  
-                document.mozCancelFullScreen();  
             } else if (document.webkitCancelFullScreen) {  
                 document.webkitCancelFullScreen();  
             }
