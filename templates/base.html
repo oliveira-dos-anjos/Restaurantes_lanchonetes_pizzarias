@@ -62,7 +62,8 @@
                 <div class="navbar-right">
                     <div class="usuario">
                         {% if user %}
-                            <p>{{ user[:10] }}</p>
+                            <p>{{ user.get("username", "Usuário Desconhecido") }}</p>
+
                         {% else %}
                             <span class="placeholder_user"></span> <!-- Espaço reservado de 10 caracteres -->
                         {% endif %}
@@ -77,7 +78,8 @@
                         </a>
                         <div class="dropdown-content">
                             {% if user %}
-                                <a href="">{{ user[:15] }}</a>
+                            <p>{{ user.get("username", "Usuário Desconhecido") }}</p>
+
                             {% endif %}
                             <a href="">Editar Perfil</a>
                             <a href="{{ url_for('divulgar') }}">Divulgar</a>

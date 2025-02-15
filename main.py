@@ -1,34 +1,37 @@
-import base64
 import sqlite3
 from app import *
 from app.utils import *
 from app.models import *
+from app.scrapping import *
 from flask import send_from_directory
 from werkzeug.utils import secure_filename
 from werkzeug.security import generate_password_hash
-from flask import Flask, request, render_template, redirect, url_for, session
+from flask import Flask, request, render_template, redirect, url_for, session, flash
+from app import create_app
 
-app = Flask(__name__)
+app = create_app()
+
 app.secret_key = 'sua_chave_secreta_aqui'
+
+
+# Configurar a pasta de upload
+upload_folder = configure_upload_folder(app)
+
+
+with app.app_context():
+    search_and_save(app, 'sp/campinas')
 
 original_content = {
     "title": "Locais recentes",
     "content": ""
 }
 
-# Configurar a pasta de upload
-upload_folder = configure_upload_folder(app)
-
-
-# Criando tabela para usuarios
-create_table()
-
 # Configuração da rota para servir imagens da pasta Data
-@app.route('/<path:filename>')
+@app.route('/data/imagens/<filename>')
 def serve_data(filename):
-    filepath = imagens_lojas_dir = configure_upload_folder(app)
-
-    return send_from_directory(os.path.join(app.root_path,), filename)
+    # Caminho absoluto para a pasta Data/imagens
+    imagens_dir = os.path.join(app.root_path, '..', 'Data', 'imagens')
+    return send_from_directory(imagens_dir, filename)
 
 
 # Rota para saída de usuário
@@ -79,14 +82,10 @@ def home():
 #Rota para pagina de divulgação
 @app.route('/divulgar', methods=['GET', 'POST'])
 def divulgar():
-    # Recuperar usuário da sessão (se necessário)
+    # Recuperar usuário da sessão
     user = session.get('user')
 
-    #Conectando ao banco de dados
-    conn = conectar_banco()
-    
     if request.method == 'POST':
-        # Recuperar os dados do formulário
         store_name = request.form.get('store-name')
         closing_time = request.form.get('closing-time')
         min_delivery_time = request.form.get('min-delivery-time')
@@ -95,74 +94,82 @@ def divulgar():
         contact = request.form.get('phone')
         image_data = request.files.get('preview-image')
 
-        # Verificar se a loja já existe no banco de dados
-        if not loja_existe(conn, store_name):
-            # Verificar se o arquivo foi enviado
-            if image_data and image_data.filename:
-                opening_hours = f"Fecha as: {closing_time}" if closing_time else "Não encontrado"
-                store_details = (
-                    f"Entrega {min_delivery_time[-2:]} min - {max_delivery_time} min"
-                    if min_delivery_time != "00:00" or max_delivery_time != "00:00"
-                    else "Não informado"
-                )
+        try:
+            # Verificar se a loja já existe
+            if loja_existe(store_name):
+                return render_template("divulgar.html", user=user, mensagem="Nome de loja já existe.")
 
-                # Obter a extensão do arquivo e criar um nome seguro
+            # Criar detalhes e horários formatados
+            opening_hours = f"Fecha às: {closing_time}" if closing_time else "Não informado"
+            
+            if min_delivery_time and max_delivery_time:
+                store_details = f"Entrega {min_delivery_time} min - {max_delivery_time} min"
+            else:
+                store_details = "Não informado"
+
+            # Processamento da imagem
+            image_path = None
+            if image_data and image_data.filename:
                 _, file_extension = os.path.splitext(image_data.filename)
                 filename = secure_filename(f"{store_name}{file_extension}")
 
-                # Salvar o arquivo em um subdiretório chamado "uploads"
+                # Salvar imagem na pasta correta
                 save_path = save_uploaded_file(app, image_data, filename, subfolder="imagens")
-
-                # Caminho da imagem para o banco de dados
                 image_path = f"Data/imagens/{filename}"
 
-                # Inserir os dados na tabela
-                insert_store(conn, store_name, store_details, opening_hours, address, contact, image_path)
+            # Inserir a nova loja no banco de dados (no ID 1)
+            insert_store(store_name, store_details, opening_hours, address, contact, image_path)
 
-                conn.close()
+            return render_template('divulgar.html', user=user, msg="Loja cadastrada com sucesso!")
 
-                msg = "Loja cadastrada com sucesso"
-                return render_template('divulgar.html', user=user, msg=msg)
-            else:
-                # Tratar o caso em que nenhum arquivo foi enviado
-                return "Nenhum arquivo enviado ou o arquivo é inválido", 400
-                
-        else:
-            mensagem = "Nome de loja existente, altere o nome ou numero da loja"
-            return render_template("divulgar.html", user=user, mensagem=mensagem)
-        
+        except Exception as e:
+            db.session.rollback()  # Reverte a transação em caso de erro
+            return f"Erro ao cadastrar a loja: {str(e)}", 500
 
     return render_template("divulgar.html", user=user)
+
+
 
 #rota para acessar o perfil da loja
 @app.route('/profile', methods=['POST'])
 def profile():
-    # recupera a sessão do usuario
+    # Recupera a sessão do usuário
     user = session.get('user')
 
+    # Obtém o nome da loja enviado pelo formulário
     store_name = request.form.get('store_name')
-    
+
+    # Conecta ao banco de dados
     conn = conectar_banco()
-    store = conn.execute('SELECT * FROM lojas WHERE store_name = ?', (store_name,)).fetchone()
+    if not conn:
+        return "Erro ao conectar ao banco de dados.", 500
 
+    try:
+        cursor = conn.cursor()
+        cursor.execute('SELECT * FROM lojas WHERE store_name = %s', (store_name,))
+        store = cursor.fetchone()
 
-    conn.close()
-    
+        if store:
+            store_details = store[2]  # Descrição da loja
+            opening_hours = store[3]  # Horário de funcionamento
+            image_path = store[6]  # Caminho da imagem
 
-    if store:
-        store_details = store[2]
-        opening_hours = store[3]
-        image_path = store[6]
+            # Extrair apenas o nome do arquivo do caminho completo
+            image_filename = image_path.split('/')[-1]
+        else:
+            store_details = "Detalhes não encontrados"
+            opening_hours = "Horário de funcionamento não encontrado"
+            image_filename = "imagem_padrao.png"  # Imagem padrão caso não haja imagem
 
-    else:
-        store_details = "Detalhes não encontrados"
-        opening_hours = "Horário de funcionamento não encontrado"
-        image_path = "Caminho da imagem não encontrado"
+    except Exception as e:
+        return f"Erro ao buscar loja: {e}", 500
 
-    print(f"\033[31m{image_path}")
+    finally:
+        cursor.close()
+        conn.close()
 
+    return render_template('profile.html',store_name=store_name,store_details=store_details,opening_hours=opening_hours,image_path=image_filename,user=user)
 
-    return render_template('profile.html', store_name=store_name, store_details=store_details, opening_hours=opening_hours, image_path=image_path, user=user)
 
 #Rota para area de login
 @app.route("/login", methods=["GET", "POST"])
@@ -174,18 +181,27 @@ def login():
         password = request.form["password"]
 
         try:
-            # Verificar se o login é um email ou um username
+            conn = conectar_banco()
+            cursor = conn.cursor()
+
+            # Verificar se o login é por email ou username
             if "@" in email_or_username:
-                user = User.find_by_email(email_or_username)
+                cursor.execute("SELECT * FROM users WHERE email = %s", (email_or_username,))
             else:
-                user = User.find_by_username(email_or_username)
+                cursor.execute("SELECT * FROM users WHERE username = %s", (email_or_username,))
+
+            user = cursor.fetchone()  # Retorna uma tupla com os dados do usuário
+
+            cursor.close()
+            conn.close()
 
             if user:
-                if User.verify_password(user, password):
+                user_id, username, email, hashed_password = user[:4]  # Pega os primeiros 4 valores
 
+                if check_password_hash(hashed_password, password):
                     # Autenticação bem-sucedida, armazenar o usuário na sessão
-                    session['user'] = user
-                    return redirect(url_for('home')) 
+                    session['user'] = {"id": user_id, "username": username, "email": email}
+                    return redirect(url_for('home'))  
                 else:
                     mensagem = "Senha incorreta!"
             else:
@@ -193,7 +209,6 @@ def login():
         except Exception as e:
             mensagem = f"Ocorreu um erro ao processar o login: {str(e)}"
 
-    # Passar a mensagem para o template e renderizar o template
     return render_template("login.html", mensagem=mensagem)
 
 
@@ -205,94 +220,82 @@ def register():
         email = request.form['email']
         password = request.form['password']
         confirm_password = request.form['confirm_password']
-        
-        # Verificar se o usuário já existe no banco de dados
-        conn = conectar_banco()
-        cursor = conn.cursor()
 
-        cursor.execute('SELECT * FROM users WHERE username = ?', (username,))
-        if cursor.fetchone():
-            conn.close()
-            return render_template('register.html', mensagem='Nome de usuário já cadastrado.')
-        
-        cursor.execute('SELECT * FROM users WHERE email = ?', (email,))
-        if cursor.fetchone():
-            conn.close()
-            return render_template('register.html', mensagem='Email já cadastrado.')
-
+        # Validação básica
         if password != confirm_password:
-            conn.close()
-            return render_template('register.html', mensagem='Senhas não coincidem.')
-        
-        # Criar um novo usuário
-        hashed_password = generate_password_hash(password)
-        cursor.execute('INSERT INTO users (username, email, password) VALUES (?, ?, ?)', (username, email, hashed_password))
-        conn.commit()
-        conn.close()
-       
+            flash('Senhas não coincidem.', 'danger')
+            return render_template('register.html')
 
-        
-        return render_template('login.html',  msg= "Faça login para continuar.")
+        # Verificar se o usuário já existe
+        if User.find_by_username(username) or User.find_by_email(email):
+            flash('Nome de usuário ou email já cadastrado.', 'danger')
+            return render_template('register.html')
 
+        # Criar novo usuário
+        try:
+            new_user = User(username=username, email=email, password=password)
+            new_user.save()
+            flash('Cadastro realizado com sucesso! Faça login para continuar.', 'success')
+            return redirect(url_for('login'))
+        except Exception as e:
+            flash(f'Erro ao cadastrar usuário: {str(e)}', 'danger')
 
     return render_template('register.html')
 
-# Rota para solicitar redefinição de senha
+
 @app.route('/recuperar', methods=['GET', 'POST'])
 def recuperar():
     if request.method == 'POST':
-        try:
-            # Verificar se o email está cadastrado no banco de dados
-            email = request.form['email']
-            conn = conectar_banco()
-            cursor = conn.cursor()
-            cursor.execute('SELECT * FROM users WHERE email = ?', (email,))
-            usuario = cursor.fetchone()
-            conn.close()
+        email = request.form['email']
+        usuario = User.find_by_email(email)  # Busca usuário via SQLAlchemy
 
-            if usuario:
-                # Gerar e armazenar código OTP na sessão
-                codigo_otp = gerar_codigo_otp()
-                session['codigo_otp'] = codigo_otp
-                enviar_email_otp(email, codigo_otp)
+        if usuario:
+            # Gerar código OTP e armazenar na sessão
+            codigo_otp = gerar_codigo_otp()
+            session['codigo_otp'] = codigo_otp
+            session['email_redefinicao'] = email  # Armazena email na sessão
+            enviar_email_otp(email, codigo_otp)
 
-                # Carregar página de redefinição com o email
-                return redirect(url_for('redefinir', email=email))
-            else:
-                return render_template('recuperar.html', mensagem='Email não cadastrado.')
+            flash("Código enviado para seu email.", "success")
+            return redirect(url_for('redefinir'))
 
-        except sqlite3.Error as e:
-            # Lidar com erros de banco de dados
-            return render_template('erro.html', mensagem='Erro no banco de dados: ' + str(e))
+        flash("Email não cadastrado.", "danger")
 
     return render_template('recuperar.html')
 
 # Rota para redefinir senha com verificação do código de autenticação
 @app.route('/redefinir', methods=['GET', 'POST'])
 def redefinir():
+    email = session.get('email_redefinicao')  # Recupera email armazenado na sessão
+    codigo_otp = session.get('codigo_otp')
+
     if request.method == 'POST':
-        email = request.form['email']
         codigo_usuario = request.form['codigo']
         nova_senha = request.form['nova_senha']
         confirmar_senha = request.form['confirmar_senha']
-        codigo_otp = session.get('codigo_otp')
+
+        if not email or not codigo_otp:
+            flash("Sessão expirada. Tente novamente.", "warning")
+            return redirect(url_for('recuperar'))
 
         if codigo_usuario == codigo_otp and nova_senha == confirmar_senha:
-            # Redefinir a senha do usuário
+            if len(nova_senha) < 6:
+                flash("A senha deve ter pelo menos 6 caracteres.", "danger")
+                return render_template('redefinir.html', email=email)
+
+            # Atualiza a senha do usuário
             User.new_password(email, nova_senha)
 
-            # Limpar o código OTP da sessão após a redefinição da senha
+            # Limpa os dados da sessão após a redefinição da senha
             session.pop('codigo_otp', None)
+            session.pop('email_redefinicao', None)
 
+            flash("Senha redefinida com sucesso!", "success")
             return redirect(url_for('login'))
 
-        else:
-            return render_template('redefinir.html', email=email, mensagem='Código incorreto ou senhas não correspondem.')
+        flash("Código incorreto ou senhas não correspondem.", "danger")
 
-    email = request.args.get('email', '')
-    codigo = session.get('codigo_otp')
-    print("Código OTP:", codigo)
-    return render_template('redefinir.html', email=email, codigo=codigo)
+    return render_template('redefinir.html', email=email)
 
 @app.route("/search", methods=["GET"])
 def search():

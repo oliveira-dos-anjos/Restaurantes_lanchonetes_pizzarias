@@ -1,48 +1,65 @@
 import os
 import pyotp
 import smtplib
-from .utils import *
 from flask import Flask, jsonify
-from .celery_config import make_celery
+from flask_sqlalchemy import SQLAlchemy
 from email.mime.text import MIMEText
-from .scrapping import *
+from .celery_config import make_celery  # Importe a função make_celery do celery.py
+from .extensions import db
 
+def create_app():
+    # Caminho absoluto para as pastas templates e static
+    base_dir = os.path.abspath(os.path.dirname(__file__))  # Diretório atual (app/)
+    templates_path = os.path.join(base_dir, '..', 'templates')  # Volta uma pasta e entra em templates/
+    static_path = os.path.join(base_dir, '..', 'static')  # Volta uma pasta e entra em static/
 
-app = Flask(__name__)
+    # Criar a instância do Flask com os caminhos personalizados
+    app = Flask(__name__, template_folder=templates_path, static_folder=static_path)
 
+    # Configuração do banco de dados
+    app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://meu_banco_92dn_user:smC07EuSDkTeQFzALUAh1pkn3ncImAez@dpg-cultktbtq21c73b3fje0-a.oregon-postgres.render.com/meu_banco_92dn'
+    app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
-# Configuração do banco de dados do Render
-url_render = "postgresql://meu_banco_vvlj_user:4CVqUxj8QyBpMzu4LD3CxDxgUXH1C8r7@dpg-cuaekdtds78s739mhjig-a.oregon-postgres.render.com/meu_banco_vvlj"
-app.config['SQLALCHEMY_DATABASE_URI'] = url_render
+    # Configuração do Celery
+    app.config.update(
+        CELERY_BROKER_URL='redis://localhost:6379/0', 
+        CELERY_RESULT_BACKEND='redis://localhost:6379/0'
+    )
 
-app.config.update(
-    CELERY_BROKER_URL='redis://localhost:6379/0', 
-    CELERY_RESULT_BACKEND='redis://localhost:6379/0'
-)
+    # Inicializar SQLAlchemy
+    db.init_app(app)
 
-celery = make_celery(app)
+    # Inicializar Celery
+    celery = make_celery(app)
 
-@celery.task
-def async_scraping(location):
-    # Implementação da tarefa de scraping
-    # Exemplo: scraping(location)
-    pass
+    # Criar as tabelas, se necessário
+    with app.app_context():
+        db.create_all()
 
-@app.route('/start_scraping')
-def start_scraping():
-    async_scraping.delay('sp/campinas')
-    return jsonify({'message': 'Scraping started in background.'}), 200
+    # Rota para iniciar o scraping em segundo plano
+    @app.route('/start_scraping')
+    def start_scraping():
+        async_scraping.delay('sp/campinas')
+        return jsonify({'message': 'Scraping started in background.'}), 200
+
+    # Tarefa assíncrona para scraping
+    @celery.task
+    def async_scraping(location):
+        # Implementação da tarefa de scraping
+        # Exemplo: scraping(location)
+        pass
+
+    return app
+
 
 # Função para gerar o código OTP
 def gerar_codigo_otp():
-
     chave_mestra = "K4XO47QRE75L4KTTPM775SOY4ESGSMIN"
-    
     totp = pyotp.TOTP(chave_mestra)
     codigo = totp.now()
     return codigo
 
-#Funçao para enviar o codigo otp para o email cadastrado
+# Função para enviar o código OTP por e-mail
 def enviar_email_otp(destinatario, codigo):
     # Configuração do servidor SMTP
     email_enviador = 'raffasadol@gmail.com'
@@ -50,7 +67,7 @@ def enviar_email_otp(destinatario, codigo):
     servidor_smtp = 'smtp.gmail.com'
     porta = 587
 
-    # Mensagem de email
+    # Mensagem de e-mail
     mensagem = MIMEText(f'Seu código de autenticação é: {codigo}')
     mensagem['From'] = email_enviador
     mensagem['To'] = destinatario
@@ -62,14 +79,13 @@ def enviar_email_otp(destinatario, codigo):
         server.starttls()
         server.login(email_enviador, senha)
 
-        # Enviar email
+        # Enviar e-mail
         server.sendmail(email_enviador, destinatario, mensagem.as_string())
 
         # Encerrar conexão SMTP
         server.quit()
         return codigo
     except Exception as e:
-        print("Erro ao enviar email:", e)
+        print("Erro ao enviar e-mail:", e)
         return None
-    
-    
+

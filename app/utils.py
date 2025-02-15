@@ -1,11 +1,24 @@
 import os
-from flask import Flask
+import psycopg2
+from .extensions import db  # Importe o db de extensions.py
 
-# Configuração do banco de dados e do Flask
-app = Flask(__name__)
 
-app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get("DATABASE_URL")
-# Exemplo alternativo: "postgresql://user:password@host:port/dbname"
+def conectar_banco():
+    # Pegue as variáveis de ambiente configuradas no Render (como credenciais do banco de dados)
+    db_url = "postgresql://meu_banco_92dn_user:smC07EuSDkTeQFzALUAh1pkn3ncImAez@dpg-cultktbtq21c73b3fje0-a.oregon-postgres.render.com/meu_banco_92dn"
+
+    if db_url is None:
+        raise Exception("DATABASE_URL não configurado.")
+
+    # Conectar ao banco de dados usando a URL de conexão
+    try:
+        conn = psycopg2.connect(db_url)
+        print("Conexão bem-sucedida ao banco de dados!")
+        return conn
+    except Exception as e:
+        print(f"Erro ao conectar ao banco de dados: {e}")
+        return None
+    
 
 # Função para configurar a pasta de upload
 def configure_upload_folder(app, subfolder=None):
@@ -23,9 +36,6 @@ def configure_upload_folder(app, subfolder=None):
     # Atualizar a configuração do aplicativo
     app.config['UPLOAD_FOLDER'] = upload_folder
     return upload_folder
-
-# Configurar a pasta de upload principal no início
-configure_upload_folder(app)
 
 # Função para salvar arquivos enviados
 def save_uploaded_file(app, image_data, filename, subfolder=None):
