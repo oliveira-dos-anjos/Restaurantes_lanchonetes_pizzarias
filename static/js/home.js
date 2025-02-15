@@ -5,24 +5,37 @@ document.addEventListener("DOMContentLoaded", function() {
     // Variável para armazenar a posição de rolagem anterior
     var lastScrollTop = 0;
 
+    // Função para verificar se o usuário está no Chrome ou Safari mobile
+    function isMobileChromeOrSafari() {
+        const userAgent = navigator.userAgent.toLowerCase();
+        const isChromeMobile = /chrome/.test(userAgent) && /mobile/.test(userAgent);
+        const isSafariMobile = /safari/.test(userAgent) && /mobile/.test(userAgent);
+        return isChromeMobile || isSafariMobile;
+    }
+
     // Função para entrar em tela cheia
     function enterFullScreen() {
-        if ((document.fullScreenElement && document.fullScreenElement !== null) ||    
-            (!document.mozFullScreen && !document.webkitIsFullScreen)) {
-            if (document.documentElement.requestFullScreen) {  
-                document.documentElement.requestFullScreen();    
-            } else if (document.documentElement.webkitRequestFullScreen) {  
-                document.documentElement.webkitRequestFullScreen(Element.ALLOW_KEYBOARD_INPUT);  
-            }}
+        if (isMobileChromeOrSafari()) {
+            if ((document.fullScreenElement && document.fullScreenElement !== null) ||    
+                (!document.mozFullScreen && !document.webkitIsFullScreen)) {
+                if (document.documentElement.requestFullScreen) {  
+                    document.documentElement.requestFullScreen();    
+                } else if (document.documentElement.webkitRequestFullScreen) {  
+                    document.documentElement.webkitRequestFullScreen(Element.ALLOW_KEYBOARD_INPUT);  
+                }
+            }
+        }
     }
 
     // Função para sair de tela cheia
     function exitFullScreen() {
-        if (document.fullScreenElement || document.mozFullScreen || document.webkitIsFullScreen) {
-            if (document.cancelFullScreen) {  
-                document.cancelFullScreen();  
-            } else if (document.webkitCancelFullScreen) {  
-                document.webkitCancelFullScreen();  
+        if (isMobileChromeOrSafari()) {
+            if (document.fullScreenElement || document.mozFullScreen || document.webkitIsFullScreen) {
+                if (document.cancelFullScreen) {  
+                    document.cancelFullScreen();  
+                } else if (document.webkitCancelFullScreen) {  
+                    document.webkitCancelFullScreen();  
+                }
             }
         }
     }
