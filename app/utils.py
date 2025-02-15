@@ -26,7 +26,7 @@ def configure_upload_folder(app, subfolder=None):
     """
     Configura a pasta de upload para o aplicativo.
     """
-    upload_folder = 'Data'
+    upload_folder = 'Data/imagens'
     
     if subfolder:
         upload_folder = os.path.join(upload_folder, subfolder)
@@ -38,21 +38,7 @@ def configure_upload_folder(app, subfolder=None):
     app.config['UPLOAD_FOLDER'] = upload_folder
     return upload_folder
 
-# Função para salvar arquivos enviados
-def save_uploaded_file(app, image_data, filename, subfolder=None):
-    """
-    Salva um arquivo enviado pelo usuário na pasta configurada.
-    """
-    # Configurar a pasta de upload específica, se necessário
-    upload_folder = configure_upload_folder(app, subfolder)
-    
-    # Construir o caminho completo para salvar o arquivo
-    save_path = os.path.join(upload_folder, filename)
-    
-    # Salvar o arquivo no caminho especificado
-    image_data.save(save_path)
-    
-    return save_path
+
 
 def resize_and_crop(image, target_size=(800, 800)):
 

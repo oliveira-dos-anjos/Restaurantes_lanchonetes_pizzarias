@@ -3,6 +3,7 @@ from app import *
 from app.utils import *
 from app.models import *
 from app.scrapping import *
+from urllib.parse import unquote
 from flask import send_from_directory
 from werkzeug.utils import secure_filename
 from werkzeug.security import generate_password_hash
@@ -27,7 +28,7 @@ original_content = {
 }
 
 # Configuração da rota para servir imagens da pasta Data
-@app.route('/data/imagens/<filename>')
+@app.route('/Data/imagens/<filename>')
 def serve_data(filename):
     # Caminho absoluto para a pasta Data/imagens
     imagens_dir = os.path.join(app.root_path, '..', 'Data', 'imagens')
@@ -129,8 +130,8 @@ def profile():
     # Recupera a sessão do usuário
     user = session.get('user')
 
-    # Obtém o nome da loja enviado pelo formulário
-    store_name = request.form.get('store_name')
+    # Obtém o nome da loja enviado pelo formulário e decodifica
+    store_name = unquote(request.form.get('store_name'))
 
     # Conecta ao banco de dados
     conn = conectar_banco()
@@ -290,6 +291,7 @@ def redefinir():
 
     return render_template('redefinir.html', email=email)
 
+#Rota para pesquisa de lojas
 @app.route("/search", methods=["GET"])
 def search():
     try:
@@ -305,12 +307,13 @@ def search():
 
         # Verificar se há lojas correspondentes com a pesquisa no banco
         pesquisa = f"%{termo_pesquisa}%"
-        cursor.execute('SELECT id FROM lojas WHERE store_name LIKE ?', (pesquisa,))
+        cursor.execute("SELECT id FROM lojas WHERE store_name ILIKE %s", (pesquisa,))  # Use %s para PostgreSQL
         ids_lojas = [row[0] for row in cursor.fetchall()]
 
         if ids_lojas:
             # Consultar todas as informações das lojas correspondentes
-            cursor.execute('SELECT * FROM lojas WHERE id IN ({})'.format(','.join('?' for _ in ids_lojas)), ids_lojas)
+            query = "SELECT * FROM lojas WHERE id IN ({})".format(','.join(['%s'] * len(ids_lojas)))
+            cursor.execute(query, ids_lojas)
             lojas = cursor.fetchall()
 
             # Fechar a conexão com o banco de dados
@@ -336,8 +339,9 @@ def search():
         else:
             return render_template("home.html", content=original_content, user=user)   
 
-    except sqlite3.Error as e:
+    except Exception as e:
         # Se ocorrer uma exceção ao executar a consulta SQL, renderize uma página com mensagem de erro
+        print(f"Erro ao buscar lojas: {e}")
         return render_template("home.html", content=original_content, user=user)
  
 if __name__ == "__main__":

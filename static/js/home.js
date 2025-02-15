@@ -108,7 +108,7 @@ function selectStore(event, storeName) {
         let nameField = document.createElement('input');
         nameField.type = 'hidden';
         nameField.name = 'store_name';
-        nameField.value = storeName;
+        nameField.value = encodeURIComponent(storeName); // Escapar caracteres especiais
 
         form.appendChild(nameField);
 
@@ -119,5 +119,4 @@ function selectStore(event, storeName) {
         console.log('Erro capturado:', error.message);
     }
 }
-
 
