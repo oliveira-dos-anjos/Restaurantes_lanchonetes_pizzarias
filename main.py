@@ -76,7 +76,7 @@ def home():
         }
 
         return render_template("home.html", content=content_with_lojas, user=user)
-    except sqlite3.Error as e:
+    except:
         # Se ocorrer uma exceção ao executar a consulta SQL, renderize uma página em branco
         return render_template("home.html", content=original_content, user=user)
 
