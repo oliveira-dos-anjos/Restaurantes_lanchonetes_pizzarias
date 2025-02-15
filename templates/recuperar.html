@@ -24,11 +24,17 @@
         <div class="content">
             <form action="/recuperar" method="POST">
                 <h2>Confirmação de Email</h2>
-                <div>             
-                    {% if mensagem %}
-                    <p class="error-message">{{ mensagem }}</p>
-                    {% endif %}
+                
+                <div class="msg">
+                    {% with messages = get_flashed_messages(with_categories=true) %}
+                        {% if messages %}
+                            {% for category, message in messages %}
+                                <p class="{{ category }}-message">{{ message }}</p>
+                            {% endfor %}
+                        {% endif %}
+                    {% endwith %}
                 </div>
+                
                 <div class="form-group">
                     <label for="email">Email:</label>
                     <input type="email" id="email" name="email" required>

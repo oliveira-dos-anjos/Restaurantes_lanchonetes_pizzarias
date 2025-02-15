@@ -144,7 +144,7 @@ input[type="time"] {
 }
 
 .success-message {
-    color: rgb(3, 247, 3);
+    color: green;
 }
 
 @media only screen and (max-width: 599px) {

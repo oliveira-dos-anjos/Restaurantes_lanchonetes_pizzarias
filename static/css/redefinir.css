@@ -4,6 +4,21 @@ body {
     margin: 0rem;
 }
 
+.success-message {
+    color: green;
+    font-weight: bold;
+}
+
+.danger-message {
+    color: red;
+    font-weight: bold;
+}
+
+.warning-message {
+    color: orange;
+    font-weight: bold;
+}
+
 .background-image {
     position: absolute;
     top: 0;

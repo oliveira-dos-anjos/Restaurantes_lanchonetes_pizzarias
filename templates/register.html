@@ -24,11 +24,15 @@
         <div class="content">
             <form action="/register" method="POST">
                 <h2>Registro de Usuário</h2>
-                <!-- Aqui será exibida a mensagem de erro, se houver -->
-                {% if mensagem %}
-                    <p class="error-message">{{ mensagem }}</p>
-                {% endif %}
-                <!-- Fim da exibição da mensagem de erro -->
+                            
+                    {% with messages = get_flashed_messages(with_categories=true) %}
+                        {% if messages %}
+                            {% for category, message in messages %}
+                                <p class="{{ category }}">{{ message }}</p>
+                            {% endfor %}
+                        {% endif %}
+                    {% endwith %}
+
                 <div class="form-group">
                     <label for="username">Nome de Usuário:</label>
                     <input type="text" id="username" name="username" required>

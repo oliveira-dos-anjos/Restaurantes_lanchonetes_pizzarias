@@ -25,10 +25,14 @@
             <form action="/redefinir" method="POST">
                 <h2>Redefinição de Senha</h2>
 
-                <div>             
-                    {% if mensagem %}
-                        <p class="error-message">{{ mensagem }}</p>
-                    {% endif %}
+                <div class="msg">             
+                    {% with messages = get_flashed_messages(with_categories=true) %}
+                        {% if messages %}
+                            {% for category, message in messages %}
+                                <p class="{{ category }}">{{ message }}</p>
+                            {% endfor %}
+                        {% endif %}
+                    {% endwith %}
                 </div>
 
                 <div class="form-group">

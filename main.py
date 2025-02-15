@@ -82,7 +82,6 @@ def home():
 #Rota para pagina de divulgação
 @app.route('/divulgar', methods=['GET', 'POST'])
 def divulgar():
-    # Recuperar usuário da sessão
     user = session.get('user')
 
     if request.method == 'POST':
@@ -95,35 +94,29 @@ def divulgar():
         image_data = request.files.get('preview-image')
 
         try:
-            # Verificar se a loja já existe
             if loja_existe(store_name):
                 return render_template("divulgar.html", user=user, mensagem="Nome de loja já existe.")
 
-            # Criar detalhes e horários formatados
             opening_hours = f"Fecha às: {closing_time}" if closing_time else "Não informado"
-            
-            if min_delivery_time and max_delivery_time:
-                store_details = f"Entrega {min_delivery_time} min - {max_delivery_time} min"
-            else:
-                store_details = "Não informado"
+            store_details = f"Entrega {min_delivery_time} min - {max_delivery_time} min" if min_delivery_time and max_delivery_time else "Não informado"
 
-            # Processamento da imagem
             image_path = None
             if image_data and image_data.filename:
                 _, file_extension = os.path.splitext(image_data.filename)
                 filename = secure_filename(f"{store_name}{file_extension}")
+                save_path = os.path.join(app.config["UPLOAD_FOLDER"], filename)
 
-                # Salvar imagem na pasta correta
-                save_path = save_uploaded_file(app, image_data, filename, subfolder="imagens")
+                # Abrir e processar a imagem
+                image = Image.open(image_data)
+                processed_image = resize_and_crop(image)
+
+                processed_image.save(save_path)  # Salvar imagem tratada
                 image_path = f"Data/imagens/{filename}"
 
-            # Inserir a nova loja no banco de dados (no ID 1)
             insert_store(store_name, store_details, opening_hours, address, contact, image_path)
-
             return render_template('divulgar.html', user=user, msg="Loja cadastrada com sucesso!")
 
         except Exception as e:
-            db.session.rollback()  # Reverte a transação em caso de erro
             return f"Erro ao cadastrar a loja: {str(e)}", 500
 
     return render_template("divulgar.html", user=user)
@@ -170,12 +163,9 @@ def profile():
 
     return render_template('profile.html',store_name=store_name,store_details=store_details,opening_hours=opening_hours,image_path=image_filename,user=user)
 
-
 #Rota para area de login
 @app.route("/login", methods=["GET", "POST"])
 def login():
-    mensagem = None 
-
     if request.method == "POST":
         email_or_username = request.form["email_or_username"]
         password = request.form["password"]
@@ -201,15 +191,18 @@ def login():
                 if check_password_hash(hashed_password, password):
                     # Autenticação bem-sucedida, armazenar o usuário na sessão
                     session['user'] = {"id": user_id, "username": username, "email": email}
+                    flash("Login realizado com sucesso!", "success")
                     return redirect(url_for('home'))  
                 else:
-                    mensagem = "Senha incorreta!"
+                    flash("Senha incorreta!", "danger")
             else:
-                mensagem = "Usuário não encontrado!"
-        except Exception as e:
-            mensagem = f"Ocorreu um erro ao processar o login: {str(e)}"
+                flash("Usuário não encontrado!", "danger")
 
-    return render_template("login.html", mensagem=mensagem)
+        except Exception as e:
+            flash(f"Ocorreu um erro ao processar o login: {str(e)}", "danger")
+
+    return render_template("login.html")
+
 
 
 #Rota para registrar novo usuario

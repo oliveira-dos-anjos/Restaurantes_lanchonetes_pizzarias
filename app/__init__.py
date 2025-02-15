@@ -17,7 +17,7 @@ def create_app():
     app = Flask(__name__, template_folder=templates_path, static_folder=static_path)
 
     # Configuração do banco de dados
-    app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://meu_banco_92dn_user:smC07EuSDkTeQFzALUAh1pkn3ncImAez@dpg-cultktbtq21c73b3fje0-a.oregon-postgres.render.com/meu_banco_92dn'
+    app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://meu_banco_mt3b_user:1Jf8r16mQCFj1hXvZHlPggxRXmz9lxTv@dpg-cuodihij1k6c73985kt0-a.oregon-postgres.render.com/meu_banco_mt3b'
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
     # Configuração do Celery
