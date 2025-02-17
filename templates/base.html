@@ -79,7 +79,7 @@
                         </a>
                         <div class="dropdown-content">
                             {% if user %}
-                            <p>{{ user.get("username", "Usuário Desconhecido") }}</p>
+                            <a>{{ user.get("username", "Usuário Desconhecido") }}</a>
 
                             {% endif %}
                             <a href="">Editar Perfil</a>
