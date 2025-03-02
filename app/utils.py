@@ -6,7 +6,7 @@ from .extensions import db
 
 def conectar_banco():
     # Pegue as variáveis de ambiente configuradas no Render (como credenciais do banco de dados)
-    db_url = "postgresql://meu_banco_mt3b_user:1Jf8r16mQCFj1hXvZHlPggxRXmz9lxTv@dpg-cuodihij1k6c73985kt0-a.oregon-postgres.render.com/meu_banco_mt3b"
+    db_url = "postgresql://meu_banco_4eqw_user:xRafujf8y9H0EESnPi73N6XIQUe0pyM6@dpg-cv2djsogph6c73bf7rog-a.oregon-postgres.render.com/meu_banco_4eqw"
 
     if db_url is None:
         raise Exception("DATABASE_URL não configurado.")
@@ -26,7 +26,7 @@ def configure_upload_folder(app, subfolder=None):
     """
     Configura a pasta de upload para o aplicativo.
     """
-    upload_folder = 'Data/imagens'
+    upload_folder = 'Data'
     
     if subfolder:
         upload_folder = os.path.join(upload_folder, subfolder)

@@ -7,13 +7,6 @@ from .extensions import db
 from .utils import * 
 from .models import * 
 
-# Função para verificar se a loja existe no banco (usando SQLAlchemy)
-def loja_existe(store_name):
-    with db.engine.connect() as conn:
-        # Usar a função text para criar uma consulta executável
-        query = text("SELECT 1 FROM lojas WHERE store_name = :store_name")
-        result = conn.execute(query, {"store_name": store_name})
-        return result.fetchone() is not None
 
 # Função para fazer uma busca por lojas na região e salvar no banco
 def search_and_save(app, city):

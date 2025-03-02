@@ -1,7 +1,8 @@
 from .utils import conectar_banco
 from werkzeug.security import generate_password_hash, check_password_hash
-from .extensions import db  # Importe o db de extensions.py
-
+from .extensions import db 
+from sqlalchemy import text  
+from sqlalchemy.exc import IntegrityError
 # Classe de modelo User para a tabela 'users'
 class User(db.Model):
     __tablename__ = 'users'
@@ -54,9 +55,23 @@ class Loja(db.Model):
 
     def __repr__(self):
         return f"<Loja {self.store_name}>"
+    
+# Função para verificar se a loja existe no banco (usando SQLAlchemy)
+def loja_existe(store_name):
+    with db.engine.connect() as conn:
+        # Usar a função text para criar uma consulta executável
+        query = text("SELECT 1 FROM lojas WHERE store_name = :store_name")
+        result = conn.execute(query, {"store_name": store_name})
+        return result.fetchone() is not None
 
 # Função para inserir dados de scrapping ao banco
 def insert_data(store_name, store_details, opening_hours, address, contact, image_path):
+    # Verifica se a loja já existe no banco de dados
+    if loja_existe(store_name):
+        print(f"Loja '{store_name}' já existe no banco de dados.")
+        return  # Sai da função sem inserir
+
+    # Cria um novo registro
     new_store = Loja(
         store_name=store_name,
         store_details=store_details,
@@ -65,8 +80,14 @@ def insert_data(store_name, store_details, opening_hours, address, contact, imag
         contact=contact,
         image_path=image_path
     )
-    db.session.add(new_store)
-    db.session.commit()
+
+    try:
+        db.session.add(new_store)
+        db.session.commit()
+        print(f"Loja '{store_name}' adicionada com sucesso.")
+    except IntegrityError:
+        db.session.rollback()  # Desfaz a transação em caso de erro
+        print(f"Erro: Loja '{store_name}' já existe no banco de dados.")
 
 def insert_store(store_name, store_details, opening_hours, address, contact, image_path):
     try:

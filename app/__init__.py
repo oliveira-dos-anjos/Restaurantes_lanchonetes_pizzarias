@@ -17,7 +17,7 @@ def create_app():
     app = Flask(__name__, template_folder=templates_path, static_folder=static_path)
 
     # Configuração do banco de dados
-    app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://meu_banco_mt3b_user:1Jf8r16mQCFj1hXvZHlPggxRXmz9lxTv@dpg-cuodihij1k6c73985kt0-a.oregon-postgres.render.com/meu_banco_mt3b'
+    app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://meu_banco_4eqw_user:xRafujf8y9H0EESnPi73N6XIQUe0pyM6@dpg-cv2djsogph6c73bf7rog-a.oregon-postgres.render.com/meu_banco_4eqw'
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
     # Configuração do Celery
@@ -88,4 +88,5 @@ def enviar_email_otp(destinatario, codigo):
     except Exception as e:
         print("Erro ao enviar e-mail:", e)
         return None
+
 
