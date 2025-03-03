@@ -16,7 +16,7 @@ app.secret_key = 'sua_chave_secreta_aqui'
 
 
 # Configurar a pasta de upload
-upload_folder = configure_upload_folder(app)
+upload_folder = configure_upload_folder(app, 'imagens')
 
 
 with app.app_context():
@@ -99,14 +99,14 @@ def divulgar():
                 return render_template("divulgar.html", user=user, mensagem="Nome de loja já existe.")
 
             opening_hours = f"Fecha às: {closing_time}" if closing_time else "Não informado"
-            store_details = f"Entrega {min_delivery_time} min - {max_delivery_time} min" if min_delivery_time and max_delivery_time else "Não informado"
+            store_details = f"Entrega {min_delivery_time} min - {max_delivery_time} min" if min_delivery_time != max_delivery_time else "Não informado"
 
             image_path = None
             if image_data and image_data.filename:
                 _, file_extension = os.path.splitext(image_data.filename)
                 filename = secure_filename(f"{store_name}{file_extension}")
-                save_path = os.path.join(app.config["UPLOAD_FOLDER"], filename)
-
+                save_path = os.path.join(upload_folder, filename)
+                
                 # Abrir e processar a imagem
                 image = Image.open(image_data)
                 processed_image = resize_and_crop(image)

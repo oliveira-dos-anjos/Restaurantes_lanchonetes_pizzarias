@@ -68,7 +68,6 @@ def loja_existe(store_name):
 def insert_data(store_name, store_details, opening_hours, address, contact, image_path):
     # Verifica se a loja já existe no banco de dados
     if loja_existe(store_name):
-        print(f"Loja '{store_name}' já existe no banco de dados.")
         return  # Sai da função sem inserir
 
     # Cria um novo registro
@@ -84,10 +83,8 @@ def insert_data(store_name, store_details, opening_hours, address, contact, imag
     try:
         db.session.add(new_store)
         db.session.commit()
-        print(f"Loja '{store_name}' adicionada com sucesso.")
     except IntegrityError:
         db.session.rollback()  # Desfaz a transação em caso de erro
-        print(f"Erro: Loja '{store_name}' já existe no banco de dados.")
 
 def insert_store(store_name, store_details, opening_hours, address, contact, image_path):
     try:
@@ -109,10 +106,8 @@ def insert_store(store_name, store_details, opening_hours, address, contact, ima
         db.session.add(new_store)
         db.session.commit()
 
-        print(f"Loja '{store_name}' inserida no topo da lista (ID 1).")
     except Exception as e:
         db.session.rollback()  # Reverte a transação em caso de erro
-        print(f"Erro ao inserir a loja: {e}")
         raise  # Re-lança a exceção para ser tratada na rota
 
 
