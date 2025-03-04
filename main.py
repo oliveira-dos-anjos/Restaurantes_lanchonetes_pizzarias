@@ -42,6 +42,8 @@ def logout():
     return redirect(url_for('home'))
 
 
+from flask import Flask, render_template, session
+
 # Rota para tela inicial
 @app.route("/")
 def home():
@@ -67,17 +69,21 @@ def home():
         for loja in lojas_dict:
             if 'image_path' in loja:
                 loja['image_path'] = loja['image_path'].replace('\\', '/')
-            
+
+        # Reverter a ordem da lista de lojas
+        lojas_dict_reversed = list(reversed(lojas_dict))  # Ou usar lojas_dict[::-1]
 
         # Adicionar as lojas ao conteúdo principal
         content_with_lojas = {
             "title": "Locais na região",
-            "lojas": lojas_dict
+            "lojas": lojas_dict_reversed  # Usar a lista revertida
         }
 
         return render_template("home.html", content=content_with_lojas, user=user)
-    except:
+    
+    except Exception as e:
         # Se ocorrer uma exceção ao executar a consulta SQL, renderize uma página em branco
+        print(f"Erro: {e}")  # Log do erro para depuração
         return render_template("home.html", content=original_content, user=user)
 
 #Rota para pagina de divulgação
