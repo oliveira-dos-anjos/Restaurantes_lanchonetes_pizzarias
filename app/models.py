@@ -93,7 +93,7 @@ def insert_store(store_name, store_details, opening_hours, address, contact, ima
 
         # Inserir a nova loja no ID 1
         new_store = Loja(
-            id = 01
+            id=1
             store_name=store_name,
             store_details=store_details,
             opening_hours=opening_hours,
