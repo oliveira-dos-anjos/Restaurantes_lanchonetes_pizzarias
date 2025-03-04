@@ -120,7 +120,7 @@ def divulgar():
                 processed_image.save(save_path)  # Salvar imagem tratada
                 image_path = f"Data/imagens/{filename}"
 
-            insert_data(store_name, store_details, opening_hours, address, contact, image_path)
+            insert_store(store_name, store_details, opening_hours, address, contact, image_path)
             return render_template('divulgar.html', user=user, msg="Loja cadastrada com sucesso!")
 
         except Exception as e:
