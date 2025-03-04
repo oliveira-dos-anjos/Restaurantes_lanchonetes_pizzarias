@@ -105,7 +105,7 @@ def divulgar():
                 return render_template("divulgar.html", user=user, mensagem="Nome de loja já existe.")
 
             opening_hours = f"Fecha às: {closing_time}" if closing_time else "Não informado"
-            store_details = f"Entrega {min_delivery_time} min - {max_delivery_time} min" if min_delivery_time != max_delivery_time else "Não informado"
+            store_details = f"Entrega {min_delivery_time} min - {max_delivery_time} min" if min_delivery_time != max_delivery_time else "Entrega : Não informado"
 
             image_path = None
             if image_data and image_data.filename:
