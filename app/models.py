@@ -88,10 +88,6 @@ def insert_data(store_name, store_details, opening_hours, address, contact, imag
 
 def insert_store(store_name, store_details, opening_hours, address, contact, image_path):
     try:
-        # Iniciar uma transação
-        conn = conectar_banco()
-        # Atualizar os IDs em ordem decrescente para evitar conflitos
-        shift_ids(conn)
 
         # Inserir a nova loja no ID 1
         new_store = Loja(
