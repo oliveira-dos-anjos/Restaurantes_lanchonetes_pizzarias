@@ -4,7 +4,7 @@ from PIL import Image
 from .extensions import db 
 
 
-def conectar_banco():
+"""def conectar_banco():
     # Pegue as variáveis de ambiente configuradas no Render (como credenciais do banco de dados)
     db_url = "postgresql://meu_banco_4eqw_user:xRafujf8y9H0EESnPi73N6XIQUe0pyM6@dpg-cv2djsogph6c73bf7rog-a.oregon-postgres.render.com/meu_banco_4eqw"
 
@@ -18,7 +18,20 @@ def conectar_banco():
         return conn
     except Exception as e:
         print(f"Erro ao conectar ao banco de dados: {e}")
-        return None
+        return None"""
+
+def conectar_banco():
+    db_url = "postgresql://meu_banco_4eqw_user:xRafujf8y9H0EESnPi73N6XIQUe0pyM6@dpg-cv2djsogph6c73bf7rog-a.oregon-postgres.render.com/meu_banco_4eqw"
+    
+    try:
+        conn = psycopg2.connect(db_url)
+        print("✅ Conexão bem-sucedida ao banco de dados!")
+        return conn
+    except psycopg2.OperationalError as e:
+        print(f"❌ Falha na conexão (OperationalError): {e}")
+    except Exception as e:
+        print(f"❌ Erro inesperado: {e}")
+    return None  # Explícito
     
 
 # Função para configurar a pasta de upload
