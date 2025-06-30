@@ -21,7 +21,7 @@ from .extensions import db
         return None"""
 
 def conectar_banco():
-    db_url = "postgresql://meu_banco_4eqw_user:xRafujf8y9H0EESnPi73N6XIQUe0pyM6@dpg-cv2djsogph6c73bf7rog-a.oregon-postgres.render.com/meu_banco_4eqw"
+    db_url = "postgresql://hora_de_comer_user:Je7JHMeWD6GC8TVCHOKUlEhd3FDEXLOO@dpg-d0u52fm3jp1c73feg3e0-a/hora_de_comer"
     
     try:
         conn = psycopg2.connect(db_url)
