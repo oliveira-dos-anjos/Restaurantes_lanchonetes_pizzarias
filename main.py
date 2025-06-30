@@ -171,7 +171,7 @@ def profile():
     return render_template('profile.html',store_name=store_name,store_details=store_details,opening_hours=opening_hours,image_path=image_filename,user=user)
 
 #Rota para area de login
-@app.route("/login", methods=["GET", "POST"])
+"""@app.route("/login", methods=["GET", "POST"])
 def login():
     if request.method == "POST":
         email_or_username = request.form["email_or_username"]
@@ -208,9 +208,55 @@ def login():
         except Exception as e:
             flash(f"Ocorreu um erro ao processar o login: {str(e)}", "danger")
 
+    return render_template("login.html")"""
+
+@app.route("/login", methods=["GET", "POST"])
+def login():
+    if request.method == "POST":
+        email_or_username = request.form["email_or_username"]
+        password = request.form["password"]
+
+        conn = None
+        cursor = None
+        try:
+            conn = conectar_banco()
+            if conn is None:  # Se a conexão falhar
+                flash("Erro interno: banco de dados offline.", "danger")
+                return redirect(url_for('login'))
+
+            cursor = conn.cursor()
+
+            # Consulta segura (evita SQL injection)
+            query = """
+                SELECT id, username, email, password 
+                FROM users 
+                WHERE email = %s OR username = %s
+            """
+            cursor.execute(query, (email_or_username, email_or_username))
+            user = cursor.fetchone()
+
+            if user and check_password_hash(user[3], password):  # user[3] = password
+                session['user'] = {
+                    "id": user[0],
+                    "username": user[1],
+                    "email": user[2]
+                }
+                flash("Login bem-sucedido!", "success")
+                return redirect(url_for('home'))
+            else:
+                flash("Usuário ou senha incorretos.", "danger")
+
+        except Exception as e:
+            flash(f"Erro durante o login: {str(e)}", "danger")
+            print(f"Erro no login: {e}")  # Log para debug
+
+        finally:
+            if cursor:
+                cursor.close()
+            if conn:
+                conn.close()
+
     return render_template("login.html")
-
-
 
 #Rota para registrar novo usuario
 @app.route('/register', methods=['GET', 'POST'])
