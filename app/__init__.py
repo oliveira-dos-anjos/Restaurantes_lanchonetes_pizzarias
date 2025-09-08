@@ -16,7 +16,7 @@ def create_app():
     # Criar a instância do Flask com os caminhos personalizados
     app = Flask(__name__, template_folder=templates_path, static_folder=static_path)
 
-    app.config['SQLALCHEMY_DATABASE_URI'] = ('postgresql://hora_de_comer_vwe0_user:gu0yEWyDsrRgmhQJcHrKWBsnAXy9Gste@dpg-d1hv2ajuibrs7380jvhg-a.oregon-postgres.render.com/hora_de_comer_vwe0' )
+    app.config['SQLALCHEMY_DATABASE_URI'] = ('postgresql://db_4hx9_user:uXVyzIzrhZij6rWXZ4xzdDbwRhq79rTG@dpg-d2v4mr95pdvs73b1vgtg-a.oregon-postgres.render.com/db_4hx9' )
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
     # Configuração do Celery
